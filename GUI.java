@@ -1,4 +1,5 @@
-package FST;// Project name: untitled
+package FST;
+// Project name: untitled
 // Program name: FST.GUI.java
 // Purpose: 
 // Created by Natan Parker on Wednesday April 03 2019.
