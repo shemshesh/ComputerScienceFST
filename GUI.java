@@ -1,7 +1,6 @@
 package FST;
-
 // Project name: untitled
-// Program name: GUI.java
+// Program name: FST.GUI.java
 // Purpose: 
 // Created by Natan Parker on Wednesday April 03 2019.
 // Copyright © 2019 Natan Parker. All rights reserved.
@@ -9,7 +8,6 @@ package FST;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class GUI extends JFrame implements ActionListener {
 
