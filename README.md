@@ -1,2 +1,2 @@
 # ComputerScienceFST
-David was here and natan is un-gay
+David was here and Natan is un-gay
