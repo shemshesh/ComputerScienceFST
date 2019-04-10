@@ -9,10 +9,9 @@ package FST;
 //
 
 
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class UsernameAndPassword {
     String user;
@@ -23,12 +22,35 @@ public class UsernameAndPassword {
         this.password = password;
     }
 
+    public static void signIn() throws Exception{
+        boolean login;
+
+        UsernameAndPassword user1 = new UsernameAndPassword("David", "shemesh");
+
+        FileReader fr = new FileReader("usernameAndPassword.txt");
+        BufferedReader br = new BufferedReader(fr);
 
 
-    public static void main(String[] args) {
-        Path user = Paths.get("/Users/davidshemesh/IdeaProjects/firstProject", "username");
-        Path password = Paths.get("/Users/davidshemesh/IdeaProjects/firstProject", "password");
-        RandomAccessFile rafU = new RandomAccessFile("username", "rw");
-        RandomAccessFile rafP = new RandomAccessFile("password", "rw");
+        for (int i = 1; i <= 5; i++) {
+            String name = br.readLine();
+            if(name.equalsIgnoreCase(user1.user)){
+                String wordOfPass = br.readLine();
+                if(wordOfPass.equalsIgnoreCase(user1.password)){
+                    login = true;
+                }else{
+                    login = false;
+                }
+            }else{
+                br.readLine();
+            }
+        }
+
+    }
+
+    public static void create() throws Exception{
+        FileWriter fw = new FileWriter("usernameAndPassword.txt");
+        PrintWriter pw = new PrintWriter(fw);
+
+        
     }
 }
