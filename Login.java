@@ -18,6 +18,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
+
+import java.awt.*;
 
 public class Login extends Application {
 
@@ -43,7 +46,7 @@ public class Login extends Application {
 		//noinspection SpellCheckingInspection
 		
 
-		Text welcomeText = new Text ("Welcome To De Bank!");
+		Text welcomeText = new Text("Welcome To De Bank!");
 		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL,20 ));
 		welcomeGrid.add(welcomeText, 0,0,2,1);
 
@@ -108,7 +111,7 @@ public class Login extends Application {
 				actionTarget.setText("No password entered");
 			}
 			if (userNameField.getText().equals("")) {
-				actionTarget.setText("No username entered");
+				actionTarget.setText("No usernameAndPassword entered");
 			}else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
 			}
@@ -175,7 +178,7 @@ public class Login extends Application {
 				actionTarget.setText("No password entered");
 			}
 			if (userNameField2.getText().equals("")) {
-				actionTarget.setText("No username entered");
+				actionTarget.setText("No usernameAndPassword entered");
 			}else
 			if (!passwordBox2.getText().equals(confirmPasswordBox.getText())){
 				actionTarget.setText("Passwords do not match!");
