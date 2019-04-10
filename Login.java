@@ -62,6 +62,8 @@ public class Login extends Application {
 		final Text actionTarget = new Text();
 		welcomeGrid.add(actionTarget, 1, 6);
 
+		final Text actionTarget1 = new Text();
+
 		signInButton.setOnAction(e -> primaryStage.setScene(loginPage));
 
 		createAccountButton.setOnAction(e -> primaryStage.setScene(createAccountPage));
@@ -111,7 +113,7 @@ public class Login extends Application {
 				actionTarget.setText("No password entered");
 			}
 			if (userNameField.getText().equals("")) {
-				actionTarget.setText("No usernameAndPassword entered");
+				actionTarget.setText("No username entered");
 			}else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
 			}
@@ -153,7 +155,7 @@ public class Login extends Application {
 		createAccountGrid.add(backButton2, 0, 4);
 		backButton2.setOnAction(e -> {
 			primaryStage.setScene(login);
-			actionTarget.setText("");
+			actionTarget1.setText("");
 		});
 
 
@@ -163,7 +165,7 @@ public class Login extends Application {
 		horizontalButtonStack3.getChildren().add(continueButton2);
 		createAccountGrid.add(horizontalButtonStack3, 1, 4);
 
-		createAccountGrid.add(actionTarget, 1, 6);
+		createAccountGrid.add(actionTarget1, 1, 6);
 
 		Text createAccountTitle = new Text("Create Account:");
 		createAccountTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
@@ -171,17 +173,17 @@ public class Login extends Application {
 
 
 		continueButton2.setOnAction(e -> {
-			actionTarget.setFill(Color.RED);
-			actionTarget.setText("");
+			actionTarget1.setFill(Color.RED);
+			actionTarget1.setText("");
 
 			if (passwordBox2.getText().equals("")) {
-				actionTarget.setText("No password entered");
+				actionTarget1.setText("No password entered");
 			}
 			if (userNameField2.getText().equals("")) {
-				actionTarget.setText("No usernameAndPassword entered");
+				actionTarget1.setText("No username entered");
 			}else
 			if (!passwordBox2.getText().equals(confirmPasswordBox.getText())){
-				actionTarget.setText("Passwords do not match!");
+				actionTarget1.setText("Passwords do not match!");
 			}
 		});
 
