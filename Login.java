@@ -1,4 +1,4 @@
-
+package FST;
 // Project name: untitled
 // Program name: Login.java
 // Purpose: 
@@ -18,9 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
-
-import java.awt.*;
 
 public class Login extends Application {
 
