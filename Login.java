@@ -1,5 +1,4 @@
 package FST;
-// Project name: untitled
 // Program name: Login.java
 // Purpose: 
 // Created by Natan Parker on Saturday April 06 2019.
