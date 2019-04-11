@@ -39,8 +39,7 @@ public class Login extends Application {
 		welcomeGrid.setVgap(10);
 //		welcomeGrid.setPadding(new Insets(25, 25, 25, 25));
 
-		//noinspection SpellCheckingInspection
-		
+
 
 		Text welcomeText = new Text("Welcome To De Bank!");
 		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL,20 ));
@@ -119,6 +118,8 @@ public class Login extends Application {
 		backButton.setOnAction(e -> {
 			primaryStage.setScene(login);
 			actionTarget.setText("");
+			userNameField.setText("");
+			passwordBox.setText("");
 		});
 
 		loginPage = new Scene(signInGrid, 800, 450);
@@ -152,6 +153,9 @@ public class Login extends Application {
 		backButton2.setOnAction(e -> {
 			primaryStage.setScene(login);
 			actionTarget1.setText("");
+			userNameField2.setText("");
+			passwordBox2.setText("");
+			confirmPasswordBox.setText("");
 		});
 
 
