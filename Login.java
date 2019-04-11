@@ -5,12 +5,11 @@ package FST;
 // Copyright © 2019 Natan Parker. All rights reserved.
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -39,11 +38,9 @@ public class Login extends Application {
 		welcomeGrid.setVgap(10);
 //		welcomeGrid.setPadding(new Insets(25, 25, 25, 25));
 
-
-
 		Text welcomeText = new Text("Welcome To De Bank!");
-		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL,20 ));
-		welcomeGrid.add(welcomeText, 0,0,2,1);
+		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL, 20));
+		welcomeGrid.add(welcomeText, 0, 0, 2, 1);
 
 		Button signInButton = new Button("Sign In");
 
@@ -69,7 +66,7 @@ public class Login extends Application {
 
 		GridPane signInGrid = new GridPane();
 		signInGrid.setAlignment(Pos.CENTER);
-		signInGrid.setHgap(10);
+		signInGrid.setHgap(100);
 		signInGrid.setVgap(10);
 //		signInGrid.setPadding(new Insets(25, 25, 25, 25));
 
@@ -109,7 +106,7 @@ public class Login extends Application {
 			}
 			if (userNameField.getText().equals("")) {
 				actionTarget.setText("No username entered");
-			}else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
+			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
 			}
 
@@ -126,9 +123,8 @@ public class Login extends Application {
 
 		GridPane createAccountGrid = new GridPane();
 		createAccountGrid.setAlignment(Pos.CENTER);
-		createAccountGrid.setHgap(10);
+		createAccountGrid.setHgap(100);
 		createAccountGrid.setVgap(10);
-
 
 		Label userName2 = new Label("User Name:");
 		createAccountGrid.add(userName2, 0, 1);
@@ -158,7 +154,6 @@ public class Login extends Application {
 			confirmPasswordBox.setText("");
 		});
 
-
 		Button continueButton2 = new Button("Continue");
 		HBox horizontalButtonStack3 = new HBox(10);
 		horizontalButtonStack3.setAlignment(Pos.BOTTOM_RIGHT);
@@ -171,7 +166,6 @@ public class Login extends Application {
 		createAccountTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
 		createAccountGrid.add(createAccountTitle, 0, 0, 2, 1);
 
-
 		continueButton2.setOnAction(e -> {
 			actionTarget1.setFill(Color.RED);
 			actionTarget1.setText("");
@@ -181,13 +175,37 @@ public class Login extends Application {
 			}
 			if (userNameField2.getText().equals("")) {
 				actionTarget1.setText("No username entered");
-			}else
-			if (!passwordBox2.getText().equals(confirmPasswordBox.getText())){
+			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
 			}
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
+
+		GridPane accountDetailsGrid = new GridPane();
+		accountDetailsGrid.setAlignment(Pos.CENTER);
+		accountDetailsGrid.setHgap(100);
+		accountDetailsGrid.setVgap(10);
+
+		Text accountDetailsTitle = new Text("Account Details:");
+		accountDetailsTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
+		accountDetailsGrid.add(accountDetailsTitle, 0, 0, 2, 1);
+
+		ObservableList<String> options =
+				FXCollections.observableArrayList(
+						"Option 1",
+						"Option 2",
+						"Option 3"
+				);
+
+		ComboBox<String> sortBy = new ComboBox<>(options);
+		accountDetailsGrid.add(sortBy, 0,0,1,1);
+		Scene accountDetailsPage = new Scene(accountDetailsGrid,800,450);
+
+		TextField depositBox = new TextField();
+		TextField withdrawBox = new TextField();
+
+
 	}
 
 }
