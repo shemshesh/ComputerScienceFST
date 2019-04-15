@@ -22,26 +22,36 @@ public class UsernameAndPassword {
         this.password = password;
     }
 
-    public static void signIn(String username, String password) throws Exception{
+    public static void signIn(String username, String password){
         boolean login;
 
         UsernameAndPassword user1 = new UsernameAndPassword("David", "shemesh");
 
-        FileReader fr = new FileReader("usernameAndPassword.txt");
+
+        FileReader fr = null;
+        try {
+            fr = new FileReader("usernameAndPassword.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         BufferedReader br = new BufferedReader(fr);
 
 
         for (int i = 1; i <= 5; i++) {
-            String name = br.readLine();
-            if(name.equalsIgnoreCase(user1.user)){
-                String wordOfPass = br.readLine();
-                if(wordOfPass.equalsIgnoreCase(user1.password)){
-                    login = true;
-                }else{
-                    login = false;
+            try {
+                String name = br.readLine();
+                if (name.equalsIgnoreCase(user1.user)) {
+                    String wordOfPass = br.readLine();
+                    if (wordOfPass.equalsIgnoreCase(user1.password)) {
+                        login = true;
+                    } else {
+                        login = false;
+                    }
+                } else {
+                    br.readLine();
                 }
-            }else{
-                br.readLine();
+            }catch (Exception e){
+
             }
         }
 
