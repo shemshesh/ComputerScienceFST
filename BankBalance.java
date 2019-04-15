@@ -1,5 +1,4 @@
 package FST;
-
 // Program name: BankBalance.java
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
@@ -12,9 +11,8 @@ public class BankBalance {
         this.accountBalance = accountBalance;
     }
 
-    private void setAccountBalance(double b) {
-        b = 0;
-        this.accountBalance = b;
+    @Override
+    public String toString() {
+        return "" + accountBalance;
     }
-
 }
