@@ -5,14 +5,14 @@ package FST;
 // Copyright © 2019 Evan Rimer. All rights reserved.
 public class BankBalance {
 
-    private double acountBalance;
+    private double accountBalance;
 
-    public BankBalance(double acountBalance) {
-        this.acountBalance = acountBalance;
+    public BankBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     @Override
     public String toString() {
-        return "" + acountBalance;
+        return "" + accountBalance;
     }
 }
