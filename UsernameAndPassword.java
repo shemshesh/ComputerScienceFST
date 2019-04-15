@@ -22,8 +22,10 @@ public class UsernameAndPassword {
         this.password = password;
     }
 
-    public static void signIn(String username, String password){
+    public static boolean signIn(String username, String password){
         boolean login;
+        System.out.println(username);
+        System.out.println(password);
 
         UsernameAndPassword user1 = new UsernameAndPassword("David", "shemesh");
 
@@ -55,12 +57,11 @@ public class UsernameAndPassword {
             }
         }
 
+        return true;
     }
 
     public static void create() throws Exception{
         FileWriter fw = new FileWriter("usernameAndPassword.txt");
         PrintWriter pw = new PrintWriter(fw);
-
-
     }
 }
