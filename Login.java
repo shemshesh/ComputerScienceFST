@@ -28,7 +28,7 @@ public class Login extends Application {
 	}
 
 	@Override
-	public void start (Stage primaryStage) throws Exception{
+	public void start (Stage primaryStage) throws Exception {
 		primaryStage.setTitle("De Bank");
 		primaryStage.show();
 
@@ -108,7 +108,8 @@ public class Login extends Application {
 				actionTarget.setText("No username entered");
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
-			}else UsernameAndPassword.signIn(userNameField.getText(), passwordBox.getText());
+			} else UsernameAndPassword.signIn(userNameField.getText(), passwordBox.getText());
+
 
 		});
 
@@ -177,7 +178,7 @@ public class Login extends Application {
 				actionTarget1.setText("No username entered");
 			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
-			}
+			}//else UsernameAndPassword.create(userNameField.getText(), passwordBox.getText());
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
@@ -199,12 +200,11 @@ public class Login extends Application {
 				);
 
 		ComboBox<String> sortBy = new ComboBox<>(options);
-		accountDetailsGrid.add(sortBy, 0,0,1,1);
-		Scene accountDetailsPage = new Scene(accountDetailsGrid,800,450);
+		accountDetailsGrid.add(sortBy, 0, 0, 1, 1);
+		Scene accountDetailsPage = new Scene(accountDetailsGrid, 800, 450);
 
 		TextField depositBox = new TextField();
 		TextField withdrawBox = new TextField();
-
 
 	}
 
