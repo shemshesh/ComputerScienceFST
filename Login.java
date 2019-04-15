@@ -1,6 +1,6 @@
 package FST;
 // Program name: Login.java
-// Purpose: 
+// Purpose:
 // Created by Natan Parker on Saturday April 06 2019.
 // Copyright © 2019 Natan Parker. All rights reserved.
 
@@ -108,7 +108,7 @@ public class Login extends Application {
 				actionTarget.setText("No username entered");
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
-			}
+			}else (UsernameAndPassword.signIn(userNameField.getText(), passwordBox.getText()));
 
 		});
 
