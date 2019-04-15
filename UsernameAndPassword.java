@@ -60,7 +60,7 @@ public class UsernameAndPassword {
         return true;
     }
 
-    public static void create() throws Exception{
+    public static void createAccount() throws Exception{
         FileWriter fw = new FileWriter("usernameAndPassword.txt");
         PrintWriter pw = new PrintWriter(fw);
     }
