@@ -60,8 +60,35 @@ public class UsernameAndPassword {
         return true;
     }
 
-    public static void createAccount() throws Exception{
-        FileWriter fw = new FileWriter("usernameAndPassword.txt");
+    public static void createAccount(String username, String password){
+        boolean properValues;
+
+        FileWriter fw = null;
+        try {
+            fw = new FileWriter("usernameAndPassword.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         PrintWriter pw = new PrintWriter(fw);
+
+
+        FileReader fr = null;
+        try {
+            fr = new FileReader("usernameAndPassword.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        BufferedReader br = new BufferedReader(fr);
+
+        while(true){
+            try{
+                String existing = br.readLine();
+                if(existing.equals(username)){
+                    properValues = false;
+                }
+            }catch (Exception e){
+                break;
+            }
+        }
     }
 }
