@@ -22,7 +22,7 @@ public class UsernameAndPassword {
         this.password = password;
     }
 
-    public static void signIn() throws Exception{
+    public static void signIn(String username, String password) throws Exception{
         boolean login;
 
         UsernameAndPassword user1 = new UsernameAndPassword("David", "shemesh");
@@ -51,6 +51,6 @@ public class UsernameAndPassword {
         FileWriter fw = new FileWriter("usernameAndPassword.txt");
         PrintWriter pw = new PrintWriter(fw);
 
-        
+
     }
 }
