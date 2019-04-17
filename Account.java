@@ -2,7 +2,7 @@ package FST;
 
 //
 // Project name: FSTGrade11
-// Program name: UsernameAndPassword.java
+// Program name: Account.java
 // Purpose: 
 // Created by David Shemesh on 2019-04-10.
 // Copyright © 2018 David Shemesh. All rights reserved.
@@ -10,42 +10,41 @@ package FST;
 
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
-public class UsernameAndPassword {
+public class Account {
     String user;
     String password;
 
-    public UsernameAndPassword(String user, String password) {
+    public Account(String user, String password) {
         this.user = user;
         this.password = password;
     }
 
     public static boolean signIn(String username, String password){
-        boolean login;
+        boolean login = false;
         System.out.println(username);
         System.out.println(password);
 
-        UsernameAndPassword user1 = new UsernameAndPassword("David", "shemesh");
+        Account user1 = new Account(username, password);
 
 
         FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPasswordFile.txt");
+            fr = new FileReader("usernameAndPasswordFile");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         BufferedReader br = new BufferedReader(fr);
 
 
-        for (int i = 1; i <= 5; i++) {
+        while(true){
             try {
                 String name = br.readLine();
-                if (name.equalsIgnoreCase(user1.user)) {
+                if (name.equalsIgnoreCase(username)) {
                     String wordOfPass = br.readLine();
-                    if (wordOfPass.equalsIgnoreCase(user1.password)) {
+                    if (wordOfPass.equalsIgnoreCase(password)) {
                         login = true;
+                        break;
                     } else {
                         login = false;
                     }
@@ -53,19 +52,18 @@ public class UsernameAndPassword {
                     br.readLine();
                 }
             }catch (Exception e){
-
+                break;
             }
         }
-
-        return true;
+        return login;
     }
 
-    public static void createAccount(String username, String password){
-        boolean properValues;
+    public static boolean createAccount(String username, String password){
+        boolean properValues = false;
 
         FileWriter fw = null;
         try {
-            fw = new FileWriter("usernameAndPasswordFile.txt");
+            fw = new FileWriter("usernameAndPasswordFile");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +72,7 @@ public class UsernameAndPassword {
 
         FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPasswordFile.txt");
+            fr = new FileReader("usernameAndPasswordFile");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -85,10 +83,19 @@ public class UsernameAndPassword {
                 String existing = br.readLine();
                 if(existing.equals(username)){
                     properValues = false;
+                    break;
+                }else{
+                    properValues = true;
                 }
             }catch (Exception e){
                 break;
             }
         }
+
+        pw.write(username);
+        pw.write(password);
+        pw.close();
+
+        return properValues;
     }
 }
