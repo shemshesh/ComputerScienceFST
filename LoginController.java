@@ -66,10 +66,8 @@ public class LoginController {
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
 
 		if (transactionLogsViewSortChoice.getValue().equals("Amount")){
-			System.out.println("Sorting by amount");
 		}
 		if (transactionLogsViewSortChoice.getValue().equals("Date")){
-			System.out.println("Sorting by date");
 		}
 
 	}
