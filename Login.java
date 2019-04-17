@@ -113,7 +113,7 @@ public class Login extends Application {
 				actionTarget.setText("No username entered");
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
-			} else UsernameAndPassword.signIn(userNameField.getText(), passwordBox.getText());
+			} else Account.signIn(userNameField.getText(), passwordBox.getText());
 
 		});
 
@@ -182,7 +182,7 @@ public class Login extends Application {
 				actionTarget1.setText("No username entered");
 			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
-			} else UsernameAndPassword.createAccount(userNameField.getText(), passwordBox.getText());
+			} else Account.createAccount(userNameField.getText(), passwordBox.getText());
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
