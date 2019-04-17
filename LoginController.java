@@ -12,16 +12,16 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.stage.Window;
 
-import java.util.regex.Pattern;
-
 public class LoginController {
 	@FXML
 	public Group withdrawDepositGroup;
 	public Button transactionLogsButton;
 	public Button logOutButton;
-	public ListView transactionLogsView;
+	public ListView<String> transactionLogsView;
 	public Button withdrawDepositButton;
 	public Label displayBalance;
+	public Group transactionLogsViewGroup;
+	public ComboBox<String> transactionLogsViewSortChoice;
 
 	@FXML
 	private TextField enterFundsField;
@@ -57,7 +57,21 @@ public class LoginController {
 	@FXML
 	protected void handleTransactionLogsButtonAction (ActionEvent event) {
 		withdrawDepositGroup.setVisible(false);
-		transactionLogsView.setVisible(true);
+		transactionLogsViewGroup.setVisible(true);
+		transactionLogsView.getItems().clear();
+		transactionLogsView.getItems().addAll("Item 1", "Item 2", "Item 3");
+		transactionLogsView.setFocusTraversable(false);
+		transactionLogsViewSortChoice.setPromptText("Sort by: ");
+		transactionLogsViewSortChoice.getItems().clear();
+		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
+
+		if (transactionLogsViewSortChoice.getValue().equals("Amount")){
+			System.out.println("Sorting by amount");
+		}
+		if (transactionLogsViewSortChoice.getValue().equals("Date")){
+			System.out.println("Sorting by date");
+		}
+
 	}
 
 	@FXML
@@ -67,7 +81,7 @@ public class LoginController {
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
 		withdrawDepositGroup.setVisible(true);
-		transactionLogsView.setVisible(false);
+		transactionLogsViewGroup.setVisible(false);
 
 	}
 
