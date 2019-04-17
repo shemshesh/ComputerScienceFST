@@ -2,7 +2,7 @@ package FST;
 
 //
 // Project name: FSTGrade11
-// Program name: UsernameAndPassword.java
+// Program name: Account.java
 // Purpose: 
 // Created by David Shemesh on 2019-04-10.
 // Copyright © 2018 David Shemesh. All rights reserved.
@@ -10,14 +10,12 @@ package FST;
 
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
-public class UsernameAndPassword {
+public class Account {
     String user;
     String password;
 
-    public UsernameAndPassword(String user, String password) {
+    public Account(String user, String password) {
         this.user = user;
         this.password = password;
     }
@@ -27,7 +25,7 @@ public class UsernameAndPassword {
         System.out.println(username);
         System.out.println(password);
 
-        UsernameAndPassword user1 = new UsernameAndPassword("David", "shemesh");
+        Account user1 = new Account("David", "shemesh");
 
 
         FileReader fr = null;
