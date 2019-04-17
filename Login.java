@@ -186,7 +186,7 @@ public class Login extends Application {
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
-		
+
 
 	}
 
