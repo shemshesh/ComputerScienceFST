@@ -7,7 +7,9 @@ package FST;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -28,9 +30,12 @@ public class Login extends Application {
 	}
 
 	@Override
-	public void start (Stage primaryStage) {
+	public void start (Stage primaryStage) throws Exception {
 		primaryStage.setTitle("De Bank");
 		primaryStage.show();
+
+		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml"));
+		primaryStage.setScene(new Scene(root, 800, 450));
 
 		GridPane welcomeGrid = new GridPane();
 		welcomeGrid.setAlignment(Pos.CENTER);
@@ -62,7 +67,7 @@ public class Login extends Application {
 
 		login = new Scene(welcomeGrid, 800, 450);
 
-		primaryStage.setScene(login);
+		//primaryStage.setScene(login);
 
 		GridPane signInGrid = new GridPane();
 		signInGrid.setAlignment(Pos.CENTER);
@@ -109,7 +114,6 @@ public class Login extends Application {
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
 			} else UsernameAndPassword.signIn(userNameField.getText(), passwordBox.getText());
-
 
 		});
 
@@ -178,33 +182,11 @@ public class Login extends Application {
 				actionTarget1.setText("No username entered");
 			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
-			}else UsernameAndPassword.createAccount(userNameField.getText(), passwordBox.getText());
+			} else UsernameAndPassword.createAccount(userNameField.getText(), passwordBox.getText());
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
-
-		GridPane accountDetailsGrid = new GridPane();
-		accountDetailsGrid.setAlignment(Pos.CENTER);
-		accountDetailsGrid.setHgap(100);
-		accountDetailsGrid.setVgap(10);
-
-		Text accountDetailsTitle = new Text("Account Details:");
-		accountDetailsTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
-		accountDetailsGrid.add(accountDetailsTitle, 0, 0, 2, 1);
-
-		ObservableList<String> options =
-				FXCollections.observableArrayList(
-						"Option 1",
-						"Option 2",
-						"Option 3"
-				);
-
-		ComboBox<String> sortBy = new ComboBox<>(options);
-		accountDetailsGrid.add(sortBy, 0, 0, 1, 1);
-		Scene accountDetailsPage = new Scene(accountDetailsGrid, 800, 450);
-
-		TextField depositBox = new TextField();
-		TextField withdrawBox = new TextField();
+		
 
 	}
 
