@@ -32,7 +32,7 @@ public class UsernameAndPassword {
 
         FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPassword.txt");
+            fr = new FileReader("usernameAndPasswordFile.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -65,7 +65,7 @@ public class UsernameAndPassword {
 
         FileWriter fw = null;
         try {
-            fw = new FileWriter("usernameAndPassword.txt");
+            fw = new FileWriter("usernameAndPasswordFile.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class UsernameAndPassword {
 
         FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPassword.txt");
+            fr = new FileReader("usernameAndPasswordFile.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
