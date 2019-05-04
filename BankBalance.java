@@ -6,23 +6,27 @@ import java.math.BigDecimal;
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
 // Copyright © 2019 Evan Rimer. All rights reserved.
-public class BankBalance extends Object {
+public class BankBalance {
 
     private double accountBalance;
 
-    public BankBalance(){
-        this.accountBalance=0;
+    public BankBalance(double initialBalance) {
+        accountBalance = initialBalance;
+        setAccountBalance(initialBalance);
     }
-
-    public BankBalance(double b) {
-        setAccountBalance(b);
-    }
-
-    private void setAccountBalance(double b) {
-        if (BigDecimal.valueOf(b).scale() > 2){
+    private void setAccountBalance(double initialBalance) {
+        if (BigDecimal.valueOf(initialBalance).scale() > 2) {
             throw new IllegalArgumentException("The Account Balance can not have more than two decimal places.");
         }
-        this.accountBalance = b;
+        this.accountBalance = initialBalance;
+    }
+
+    public void deposit(double amountToDeposit) {
+         accountBalance = accountBalance + amountToDeposit;
+    }
+
+    public void withdraw(double amountToWithdraw) {
+         accountBalance = accountBalance - amountToWithdraw;
     }
 
     public double getAccountBalance() {
@@ -32,5 +36,12 @@ public class BankBalance extends Object {
     @Override
     public String toString() {
         return "" + accountBalance;
+    }
+
+    public static void main(String[] args) {
+        BankBalance user = new BankBalance(100.99);
+        user.withdraw(25.46);
+        user.deposit(-2000);
+        System.out.println(user.getAccountBalance());
     }
 }
