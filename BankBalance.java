@@ -15,17 +15,23 @@ public class BankBalance {
         setAccountBalance(initialBalance);
     }
     private void setAccountBalance(double initialBalance) {
-        if (BigDecimal.valueOf(initialBalance).scale() > 2) {
-            throw new IllegalArgumentException("The Account Balance can not have more than two decimal places.");
-        }
+        twoDecimalPlaces(initialBalance);
         this.accountBalance = initialBalance;
     }
 
     public void deposit(double amountToDeposit) {
+        if (amountToDeposit<0){
+            throw new IllegalArgumentException("You can not deposit a negative value.");
+        }
+        twoDecimalPlaces(amountToDeposit);
          accountBalance = accountBalance + amountToDeposit;
     }
 
     public void withdraw(double amountToWithdraw) {
+        if (amountToWithdraw<0){
+            throw new IllegalArgumentException("You can not deposit a negative value.");
+        }
+        twoDecimalPlaces(amountToWithdraw);
          accountBalance = accountBalance - amountToWithdraw;
     }
 
@@ -37,11 +43,15 @@ public class BankBalance {
     public String toString() {
         return "" + accountBalance;
     }
-
+    public void twoDecimalPlaces(double num){
+        if (BigDecimal.valueOf(num).scale() > 2) {
+            throw new IllegalArgumentException("The Input can not have more than two decimal places.");
+        }
+    }
     public static void main(String[] args) {
         BankBalance user = new BankBalance(100.99);
-        user.withdraw(25.46);
-        user.deposit(-2000);
+        user.withdraw(25.465);
+        user.deposit(10);
         System.out.println(user.getAccountBalance());
     }
 }
