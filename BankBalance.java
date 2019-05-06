@@ -1,6 +1,7 @@
 package FST;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 // Program name: BankBalance.java
 // Purpose:
@@ -9,10 +10,14 @@ import java.math.BigDecimal;
 public class BankBalance {
 
     private double accountBalance;
+    private double annualInterestRate;
+
+    DecimalFormat decimal = new DecimalFormat("##.00");
 
     public BankBalance(double initialBalance) {
         accountBalance = initialBalance;
         setAccountBalance(initialBalance);
+        annualInterestRate = 0;
     }
 
     private void setAccountBalance(double initialBalance) {
@@ -30,13 +35,22 @@ public class BankBalance {
 
     public void withdraw(double amountToWithdraw) {
         if (amountToWithdraw < 0) {
-            throw new IllegalArgumentException("You can not deposit a negative value.");
+            throw new IllegalArgumentException("You can not withdraw a negative value.");
         }
         twoDecimalPlaces(amountToWithdraw);
         accountBalance = accountBalance - amountToWithdraw;
     }
 
+    public void setAnnualInterestRate(double interestRate) {
+        annualInterestRate = interestRate;
+    }
+
+    public void monthlyInterest() {
+        accountBalance = accountBalance + ((annualInterestRate / 12) * accountBalance);
+    }
+
     public double getAccountBalance() {
+        accountBalance = Double.parseDouble(decimal.format(accountBalance));
         return accountBalance;
     }
 
@@ -49,12 +63,5 @@ public class BankBalance {
         if (BigDecimal.valueOf(num).scale() > 2) {
             throw new IllegalArgumentException("The Input can not have more than two decimal places.");
         }
-    }
-
-    public static void main(String[] args) {
-        BankBalance user = new BankBalance(100.99);
-        user.withdraw(10);
-        user.deposit(10);
-        System.out.println(user.getAccountBalance());
     }
 }
