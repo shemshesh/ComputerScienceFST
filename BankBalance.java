@@ -2,6 +2,8 @@ package FST;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 // Program name: BankBalance.java
 // Purpose:
@@ -13,6 +15,8 @@ public class BankBalance {
     private double annualInterestRate;
 
     DecimalFormat decimal = new DecimalFormat("##.00");
+    ArrayList<String> transactionList=new ArrayList<>();//Creating arraylist of transactions
+
 
     public BankBalance(double initialBalance) {
         accountBalance = initialBalance;
@@ -31,6 +35,7 @@ public class BankBalance {
         }
         twoDecimalPlaces(amountToDeposit);
         accountBalance = accountBalance + amountToDeposit;
+        transactionList.add("Deposit of "+"$"+amountToDeposit+","+"Balance: "+"$"+accountBalance+".");
     }
 
     public void withdraw(double amountToWithdraw) {
@@ -39,6 +44,7 @@ public class BankBalance {
         }
         twoDecimalPlaces(amountToWithdraw);
         accountBalance = accountBalance - amountToWithdraw;
+        transactionList.add("Withdraw of "+"$"+amountToWithdraw+","+"Balance: "+"$"+accountBalance+".");
     }
 
     public void setAnnualInterestRate(double interestRate) {
@@ -46,14 +52,16 @@ public class BankBalance {
     }
 
     public void monthlyInterest() {
-        accountBalance = accountBalance + ((annualInterestRate / 12) * accountBalance);
+        double monthlyRate = ((annualInterestRate / 12) * accountBalance);
+        accountBalance = accountBalance + monthlyRate;
+        transactionList.add("Interest of "+"$"+monthlyRate+","+"Balance: "+"$"+accountBalance+".");
+
     }
 
     public double getAccountBalance() {
         accountBalance = Double.parseDouble(decimal.format(accountBalance));
         return accountBalance;
     }
-
     @Override
     public String toString() {
         return "" + accountBalance;

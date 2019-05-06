@@ -8,9 +8,8 @@ public class BankBalanceTransactions {
         BankBalance user = new BankBalance(100);
         user.withdraw(20);
         user.deposit(10);
-        System.out.println(user.getAccountBalance());
         user.setAnnualInterestRate(.25);
         user.monthlyInterest();
-        System.out.println(user.getAccountBalance());
+        System.out.println(user.transactionList);
     }
 }
