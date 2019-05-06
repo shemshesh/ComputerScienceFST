@@ -3,7 +3,6 @@ package FST;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 // Program name: BankBalance.java
 // Purpose:
@@ -14,7 +13,7 @@ public class BankBalance {
     private double accountBalance;
     private double annualInterestRate;
 
-    DecimalFormat decimal = new DecimalFormat("##.00");
+    DecimalFormat df = new DecimalFormat("##.00");
     ArrayList<String> transactionList=new ArrayList<>();//Creating arraylist of transactions
 
 
@@ -48,18 +47,21 @@ public class BankBalance {
     }
 
     public void setAnnualInterestRate(double interestRate) {
+        if (interestRate < 0){
+            throw new IllegalArgumentException("You can not have a negative interest rate.");
+        }
         annualInterestRate = interestRate;
     }
 
     public void monthlyInterest() {
         double monthlyRate = ((annualInterestRate / 12) * accountBalance);
+        monthlyRate = Double.valueOf(df.format(monthlyRate));
         accountBalance = accountBalance + monthlyRate;
         transactionList.add("Interest of "+"$"+monthlyRate+","+"Balance: "+"$"+accountBalance+".");
-
     }
 
     public double getAccountBalance() {
-        accountBalance = Double.parseDouble(decimal.format(accountBalance));
+        accountBalance = Double.valueOf(df.format(accountBalance));
         return accountBalance;
     }
     @Override
