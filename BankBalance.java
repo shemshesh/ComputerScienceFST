@@ -24,6 +24,9 @@ public class BankBalance {
     }
 
     private void setAccountBalance(double initialBalance) {
+        if (initialBalance < 0){
+            throw new IllegalArgumentException("The bank account can not have a negative balance.");
+        }
         twoDecimalPlaces(initialBalance);
         this.accountBalance = initialBalance;
     }
@@ -40,6 +43,10 @@ public class BankBalance {
     public void withdraw(double amountToWithdraw) {
         if (amountToWithdraw < 0) {
             throw new IllegalArgumentException("You can not withdraw a negative value.");
+        }
+        if (amountToWithdraw > accountBalance){
+            throw new IllegalArgumentException("You do not have enough money in your account."+"Balance: "+accountBalance+"."+" Amount to Withdraw: "+amountToWithdraw);
+
         }
         twoDecimalPlaces(amountToWithdraw);
         accountBalance = accountBalance - amountToWithdraw;
