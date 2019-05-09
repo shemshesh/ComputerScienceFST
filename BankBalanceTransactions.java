@@ -1,4 +1,9 @@
 package FST;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 // Program name: BankBalance.java
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
@@ -8,8 +13,12 @@ public class BankBalanceTransactions {
         BankBalance user = new BankBalance(100);
         user.withdraw(20);
         user.deposit(10);
+        user.deposit(100);
         user.setAnnualInterestRate(.25);
         user.monthlyInterest();
         System.out.println(user.transactionList);
+        Collections.sort(user.transactionList);
+        System.out.println(user.transactionList);
+        user.transactionList.sort(Transaction.inverseComparator);
     }
 }
