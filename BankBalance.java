@@ -1,5 +1,5 @@
 package FST;
-
+import java.util.Date;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -49,12 +49,6 @@ public class BankBalance {//Start of Class BankBalance
         var transaction = new Transaction(Transaction.Type.deposit, amountToDeposit, accountBalance);
         transactionList.add(transaction);
     }
-
-    public void sortArrayTransactions() {
-        //   transactionList.sort((a, b) -> );
-
-    }
-
     //Method to withdraw money from the account
     public void withdraw(double amountToWithdraw) {
         //Insure withdraw is a positive value
@@ -112,18 +106,21 @@ public class BankBalance {//Start of Class BankBalance
 }//End of Class BankBalance
 
 class Transaction implements Comparable<Transaction> {
-    private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+    private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+    private final Date date;
+    private final Type type;
+    private final double amount;
+    private final double balanceAfterTransaction;
 
-    private Type type;
-    private double amount;
-    private double balanceAfterTransaction;
 
     public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
     public Transaction(Type type, double amount, double balanceAfterTransaction) {
         this.type = type;
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
+        this.date = new Date();
     }
 
     @Override
@@ -138,11 +135,11 @@ class Transaction implements Comparable<Transaction> {
     public String toString() {
         switch (type) {
             case deposit:
-                return "Deposit: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction);
+                return "Deposit: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction)+" Time:"+date;
             case withdrawal:
-                return "Withdraw: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction);
+                return "Withdraw: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction)+" Time:"+date;
             case interest:
-                return "Interest: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction);
+                return "Interest: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction)+" Time:"+date;
             default:
                 throw new IllegalArgumentException("Impossible");
         }
