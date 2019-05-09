@@ -3,6 +3,7 @@ package FST;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 // Program name: BankBalance.java
 // Purpose:
@@ -13,8 +14,8 @@ public class BankBalance {//Start of Class BankBalance
     private double accountBalance;
     private double annualInterestRate;
 
-    private DecimalFormat df = new DecimalFormat("##.00");//Decimal format that rounds to two decimal places
-    ArrayList<String> transactionList = new ArrayList<>();//Creating array list of transactions
+    private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+    ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
 
     //Constructor method to initialize object accountBalance and annualInterestRate
     public BankBalance(double initialBalance) {
@@ -45,7 +46,13 @@ public class BankBalance {//Start of Class BankBalance
         //Adds deposit to accountBalance
         accountBalance = accountBalance + amountToDeposit;
         //Adds the transaction to transaction list
-        transactionList.add("Deposit of " + "$" + amountToDeposit + "," + "Balance: " + "$" + accountBalance + ".");
+        var transaction = new Transaction(Transaction.Type.deposit, amountToDeposit, accountBalance);
+        transactionList.add(transaction);
+    }
+
+    public void sortArrayTransactions() {
+        //   transactionList.sort((a, b) -> );
+
     }
 
     //Method to withdraw money from the account
@@ -61,9 +68,9 @@ public class BankBalance {//Start of Class BankBalance
         //Calls method to insure initial withdraw has two decimal places
         twoDecimalPlaces(amountToWithdraw);
         //Subtracts withdraw from account
-        accountBalance = accountBalance - amountToWithdraw;
-        //Adds the transaction to transaction list
-        transactionList.add("Withdraw of " + "$" + amountToWithdraw + "," + "Balance: " + "$" + accountBalance + ".");
+        accountBalance -= amountToWithdraw;
+        var transaction = new Transaction(Transaction.Type.withdrawal, amountToWithdraw, accountBalance);
+        transactionList.add(transaction);
     }
 
     //Method to set annual interest rate
@@ -78,9 +85,10 @@ public class BankBalance {//Start of Class BankBalance
     //Method to add monthly interest to account balance
     public void monthlyInterest() {
         double monthlyRate = ((annualInterestRate / 12) * accountBalance);
-        monthlyRate = Double.valueOf(df.format(monthlyRate));
-        accountBalance = accountBalance + monthlyRate;
-        transactionList.add("Interest of " + "$" + monthlyRate + "," + "Balance: " + "$" + accountBalance + ".");
+        accountBalance += monthlyRate;
+
+        var transaction = new Transaction(Transaction.Type.interest, monthlyRate, accountBalance);
+        transactionList.add(transaction);
     }
 
     //Method to get account balance
@@ -102,3 +110,42 @@ public class BankBalance {//Start of Class BankBalance
         }
     }
 }//End of Class BankBalance
+
+class Transaction implements Comparable<Transaction> {
+    private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+
+    private Type type;
+    private double amount;
+    private double balanceAfterTransaction;
+
+    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+
+    public Transaction(Type type, double amount, double balanceAfterTransaction) {
+        this.type = type;
+        this.amount = amount;
+        this.balanceAfterTransaction = balanceAfterTransaction;
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        return Double.compare(this.amount, o.amount);
+    }
+    enum Type {
+        deposit, withdrawal, interest
+    }
+
+    @Override
+    public String toString() {
+        switch (type) {
+            case deposit:
+                return "Deposit: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction);
+            case withdrawal:
+                return "Withdraw: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction);
+            case interest:
+                return "Interest: " + df.format(amount) + "," + "Balance: " + df.format(balanceAfterTransaction);
+            default:
+                throw new IllegalArgumentException("Impossible");
+        }
+    }
+}
+
