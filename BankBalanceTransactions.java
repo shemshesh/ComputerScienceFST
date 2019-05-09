@@ -1,7 +1,5 @@
 package FST;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 // Program name: BankBalance.java
@@ -20,5 +18,6 @@ public class BankBalanceTransactions {
         Collections.sort(user.transactionList);
         System.out.println(user.transactionList);
         user.transactionList.sort(Transaction.inverseComparator);
+        System.out.println(user.transactionList);
     }
 }
