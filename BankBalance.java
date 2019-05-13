@@ -18,7 +18,7 @@ public class BankBalance {//Start of Class BankBalance
     ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
 
     //Constructor method to initialize object accountBalance and annualInterestRate
-    public BankBalance(double initialBalance) {
+    BankBalance(double initialBalance) {
         accountBalance = initialBalance;
         setAccountBalance(initialBalance);
         annualInterestRate = 0;
@@ -91,7 +91,7 @@ public class BankBalance {//Start of Class BankBalance
         accountBalance = Double.valueOf(df.format(accountBalance));
         return accountBalance;
     }
-    public void lowBalance(){
+    private void lowBalance(){
         if (accountBalance < 10){
             System.out.println("Your balance is running low.");
         }
