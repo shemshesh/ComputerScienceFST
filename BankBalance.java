@@ -65,6 +65,7 @@ public class BankBalance {//Start of Class BankBalance
         accountBalance -= amountToWithdraw;
         var transaction = new Transaction(Transaction.Type.withdrawal, amountToWithdraw, accountBalance);
         transactionList.add(transaction);
+        lowBalance();
     }
 
     //Method to set annual interest rate
@@ -89,6 +90,11 @@ public class BankBalance {//Start of Class BankBalance
     public double getAccountBalance() {
         accountBalance = Double.valueOf(df.format(accountBalance));
         return accountBalance;
+    }
+    public void lowBalance(){
+        if (accountBalance < 10){
+            System.out.println("Your balance is running low");
+        }
     }
 
     //To string method to display object accountBalance as String
@@ -145,4 +151,3 @@ class Transaction implements Comparable<Transaction> {
         }
     }
 }
-
