@@ -9,7 +9,7 @@ import java.util.Collections;
 public class BankBalanceTransactions {
     public static void main(String[] args) {
         BankBalance user = new BankBalance(100);
-        user.withdraw(20);
+        user.withdraw(95);
         user.deposit(10);
         user.deposit(100);
         user.setAnnualInterestRate(.25);
@@ -17,7 +17,7 @@ public class BankBalanceTransactions {
         System.out.println(user.transactionList);
         Collections.sort(user.transactionList);
         System.out.println(user.transactionList);
-        user.transactionList.sort(Transaction.inverseComparator);
+        user.transactionList.sort(Transaction.timeComparator);
         System.out.println(user.transactionList);
     }
 }
