@@ -93,7 +93,7 @@ public class BankBalance {//Start of Class BankBalance
     }
     public void lowBalance(){
         if (accountBalance < 10){
-            System.out.println("Your balance is running low");
+            System.out.println("Your balance is running low.");
         }
     }
 
