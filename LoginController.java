@@ -8,11 +8,16 @@ package FST;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class LoginController {
+public class LoginController{//} extends Login {
 	@FXML
 	public Group withdrawDepositGroup;
 	public Button transactionLogsButton;
@@ -31,7 +36,6 @@ public class LoginController {
 
 	@FXML
 	private Button withdrawButton;
-
 
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
@@ -54,6 +58,7 @@ public class LoginController {
 			enterFundsField.setText("");
 		}
 	}
+
 	@FXML
 	protected void handleTransactionLogsButtonAction (ActionEvent event) {
 		withdrawDepositGroup.setVisible(false);
@@ -65,15 +70,13 @@ public class LoginController {
 		transactionLogsViewSortChoice.getItems().clear();
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
 
-		if (transactionLogsViewSortChoice.getValue().equals("Amount")){
-		}
-		if (transactionLogsViewSortChoice.getValue().equals("Date")){
-		}
+		transactionLogsViewSortChoice.setOnAction(e -> System.out.println(transactionLogsViewSortChoice.getValue()));
 
 	}
 
 	@FXML
-	protected void handleLogOutButtonAction (ActionEvent event) {
+	public void handleLogOutButtonAction (ActionEvent event) {
+//		Login.logOutButtonPressed();
 	}
 
 	@FXML
@@ -83,5 +86,5 @@ public class LoginController {
 
 	}
 
-	}
+}
 

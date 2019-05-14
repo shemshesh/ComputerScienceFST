@@ -21,9 +21,10 @@ import javafx.stage.Stage;
 
 public class Login extends Application {
 
-	private Scene login;
-	private Scene loginPage;
-	private Scene createAccountPage;
+	static Scene login;
+	 Scene loginPage;
+	 Scene createAccountPage;
+	 Stage primaryStage;
 
 	public static void main (String[] args) {
 		launch(args);
@@ -31,6 +32,7 @@ public class Login extends Application {
 
 	@Override
 	public void start (Stage primaryStage) throws Exception {
+
 		primaryStage.setTitle("De Bank");
 		primaryStage.show();
 
@@ -186,7 +188,10 @@ public class Login extends Application {
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
-
+	}
+	public void logOutButtonPressed(){
+		System.out.println("Logout action");
+		primaryStage.setScene(login);
 	}
 
 }
