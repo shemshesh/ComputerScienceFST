@@ -22,16 +22,15 @@ public class Account {
 
     public static boolean signIn(String username, String password){
         boolean login = false;
-        System.out.println(username);
-        System.out.println(password);
 
         Account user1 = new Account(username, password);
 
 
         FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPasswordFile");
+            fr = new FileReader("usernameAndPasswordFile.txt");
         } catch (FileNotFoundException e) {
+            System.out.println("File not found");
             e.printStackTrace();
         }
         BufferedReader br = new BufferedReader(fr);
@@ -54,6 +53,11 @@ public class Account {
             }catch (Exception e){
                 break;
             }
+        }
+        try {
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return login;
     }
@@ -97,5 +101,9 @@ public class Account {
         pw.close();
 
         return properValues;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(signIn("David", "Shemesh"));
     }
 }
