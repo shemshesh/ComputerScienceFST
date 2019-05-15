@@ -28,6 +28,10 @@ public class LoginController {//} extends Login {
 	public Group transactionLogsViewGroup;
 	public ComboBox<String> transactionLogsViewSortChoice;
 
+	public void setDisplayBalance (String balance) {
+		displayBalance.setText(balance);
+	}
+
 	@FXML
 	private TextField enterFundsField;
 
@@ -67,10 +71,11 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	protected void handleTransactionLogsButtonAction (ActionEvent event) {
+		BankBalanceTransactions transactionsList = new BankBalanceTransactions();
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
 		transactionLogsView.getItems().clear();
-		transactionLogsView.getItems().addAll("Item 1", "Item 2", "Item 3");
+		transactionLogsView.getItems().addAll(transactionsList.);
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();

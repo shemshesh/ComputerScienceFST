@@ -1,5 +1,7 @@
 package FST;
 
+import javafx.scene.control.Label;
+
 import java.util.Collections;
 
 // Program name: BankBalance.java
@@ -19,5 +21,7 @@ public class BankBalanceTransactions {
         System.out.println(user.transactionList);
         user.transactionList.sort(Transaction.timeComparator);
         System.out.println(user.transactionList);
+        LoginController setbalance = new LoginController();
+        setbalance.setDisplayBalance("Balance" + user.getAccountBalance());
     }
 }
