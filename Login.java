@@ -69,7 +69,7 @@ public class Login extends Application {
 
 		login = new Scene(welcomeGrid, 800, 450);
 
-//		primaryStage.setScene(login);
+		primaryStage.setScene(login);
 
 
 		GridPane signInGrid = new GridPane();
@@ -116,8 +116,9 @@ public class Login extends Application {
 				actionTarget.setText("No username entered");
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
-			} else Account.signIn(userNameField.getText(), passwordBox.getText());
-
+			} else if (Account.signIn(userNameField.getText(), passwordBox.getText())){
+				primaryStage.setScene(new Scene(root, 800, 450));
+			}
 		});
 
 		backButton.setOnAction(e -> {
