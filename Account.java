@@ -10,8 +10,9 @@ package FST;
 
 
 import java.io.*;
+import java.util.ArrayList;
 
-public class Account {
+public class Account implements Serializable {
     String user;
     String password;
 
@@ -21,86 +22,76 @@ public class Account {
     }
 
     public static boolean signIn(String username, String password){
-        boolean login = false;
 
-        Account user1 = new Account(username, password);
+        ArrayList<Account> accounts;
 
-
-        FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPassword");
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            e.printStackTrace();
+            var f = new FileInputStream(new File("usernameAndPassword.txt"));
+            var o = new ObjectInputStream(f);
+
+            accounts = (ArrayList<Account>) o.readObject();
+
+            f.close();
+            o.close();
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not read from file");
         }
-        BufferedReader br = new BufferedReader(fr);
 
-
-        while(true){
-            try {
-                String name = br.readLine();
-                if (name.equalsIgnoreCase(username)) {
-                    String wordOfPass = br.readLine();
-                    if (wordOfPass.equalsIgnoreCase(password)) {
-                        login = true;
-                        break;
-                    } else {
-                        login = false;
-                    }
-                } else {
-                    br.readLine();
+        for (var account: accounts) {
+            if (username.equalsIgnoreCase(account.user)) {
+                if (password.equals(account.password)) {
+                    return true;
                 }
-            }catch (Exception e){
-                break;
+                return false;
             }
         }
-        try {
-            br.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return login;
+
+        return false;
+
     }
 
-    public static boolean createAccount(String username, String password){
-        boolean properValues = false;
+    public static boolean createAccount(String username, String password) {
 
-        FileWriter fw = null;
+        var account = new Account(username, password);
+
+        ArrayList<Account> accounts;
         try {
-            fw = new FileWriter("usernameAndPassword");
-        } catch (IOException e) {
-            e.printStackTrace();
+            var f = new FileInputStream(new File("usernameAndPassword.txt"));
+            var o = new ObjectInputStream(f);
+
+            accounts = (ArrayList<Account>) o.readObject();
+
+            f.close();
+            o.close();
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not read from file");
         }
-        PrintWriter pw = new PrintWriter(fw);
 
-
-        FileReader fr = null;
-        try {
-            fr = new FileReader("usernameAndPassword");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        BufferedReader br = new BufferedReader(fr);
-
-        while(true){
-            try{
-                String existing = br.readLine();
-                if(existing.equals(username)){
-                    properValues = false;
-                    break;
-                }else{
-                    properValues = true;
-                }
-            }catch (Exception e){
-                break;
+        for (var a: accounts) {
+            if (username.equalsIgnoreCase(a.user)) {
+                return false;
             }
         }
 
-        pw.write(username);
-        pw.write(password);
-        pw.close();
+        accounts.add(account);
 
-        return properValues;
+        try {
+            var f = new FileOutputStream(new File("usernameAndPassword.txt"));
+            var o = new ObjectOutputStream(f);
+
+            o.writeObject(accounts);
+
+            f.close();
+            o.close();
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not write to file");
+        }
+
+        return true;
+
     }
 
     public static void main(String[] args) {
