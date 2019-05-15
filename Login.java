@@ -69,7 +69,7 @@ public class Login extends Application {
 
 		login = new Scene(welcomeGrid, 800, 450);
 
-		//primaryStage.setScene(login);
+		primaryStage.setScene(login);
 
 		GridPane signInGrid = new GridPane();
 		signInGrid.setAlignment(Pos.CENTER);
