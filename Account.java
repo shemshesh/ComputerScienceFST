@@ -10,6 +10,8 @@ package FST;
 
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
@@ -26,7 +28,7 @@ public class Account implements Serializable {
         ArrayList<Account> accounts;
 
         try {
-            var f = new FileInputStream(new File("usernameAndPassword.txt"));
+            var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
             var o = new ObjectInputStream(f);
 
             accounts = (ArrayList<Account>) o.readObject();
@@ -41,12 +43,15 @@ public class Account implements Serializable {
         for (var account: accounts) {
             if (username.equalsIgnoreCase(account.user)) {
                 if (password.equals(account.password)) {
+                    // Correct username and password
                     return true;
                 }
+                // Incorrect password for username
                 return false;
             }
         }
 
+        // Username does not exist
         return false;
 
     }
@@ -57,7 +62,7 @@ public class Account implements Serializable {
 
         ArrayList<Account> accounts;
         try {
-            var f = new FileInputStream(new File("usernameAndPassword.txt"));
+            var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
             var o = new ObjectInputStream(f);
 
             accounts = (ArrayList<Account>) o.readObject();
@@ -78,7 +83,7 @@ public class Account implements Serializable {
         accounts.add(account);
 
         try {
-            var f = new FileOutputStream(new File("usernameAndPassword.txt"));
+            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
             var o = new ObjectOutputStream(f);
 
             o.writeObject(accounts);
@@ -95,6 +100,9 @@ public class Account implements Serializable {
     }
 
     public static void main(String[] args) {
-        System.out.println(signIn("David", "Shemesh"));
+
+        System.out.println(createAccount("David", "123"));
+
+       // System.out.println(signIn("David", "Shemesh"));
     }
 }
