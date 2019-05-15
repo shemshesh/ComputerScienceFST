@@ -17,11 +17,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-public class LoginController{//} extends Login {
+public class LoginController {//} extends Login {
 	@FXML
 	public Group withdrawDepositGroup;
 	public Button transactionLogsButton;
-	public Button logOutButton;
+	private javafx.scene.control.Button logOutButton;
 	public ListView<String> transactionLogsView;
 	public Button withdrawDepositButton;
 	public Label displayBalance;
@@ -45,7 +45,10 @@ public class LoginController{//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
 			enterFundsField.setText("");
-		}
+		} else
+			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Deposit:",
+					enterFundsField.getText() + " dollars deposited.");
+		enterFundsField.setText("");
 	}
 
 	@FXML
@@ -56,7 +59,10 @@ public class LoginController{//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
-		}
+		} else
+			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
+					enterFundsField.getText() + " dollars withdrawn.");
+		enterFundsField.setText("");
 	}
 
 	@FXML
@@ -76,7 +82,10 @@ public class LoginController{//} extends Login {
 
 	@FXML
 	public void handleLogOutButtonAction (ActionEvent event) {
-//		Login.logOutButtonPressed();
+		// get a handle to the stage
+		Stage stage = (Stage) logOutButton.getScene().getWindow();
+		// do what you have to do
+		stage.close();
 	}
 
 	@FXML
