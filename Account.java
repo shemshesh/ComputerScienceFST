@@ -67,7 +67,7 @@ public class Account {
 
         FileWriter fw = null;
         try {
-            fw = new FileWriter("usernameAndPasswordFile");
+            fw = new FileWriter("usernameAndPasswordFile.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class Account {
 
         FileReader fr = null;
         try {
-            fr = new FileReader("usernameAndPasswordFile");
+            fr = new FileReader("usernameAndPasswordFile.txt");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
