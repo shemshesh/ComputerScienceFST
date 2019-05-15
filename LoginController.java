@@ -27,6 +27,8 @@ public class LoginController {//} extends Login {
 	public Label displayBalance;
 	public Group transactionLogsViewGroup;
 	public ComboBox<String> transactionLogsViewSortChoice;
+	public BankBalance user1 = new BankBalance(100);
+
 
 	public void setDisplayBalance (String balance) {
 		displayBalance.setText(balance);
@@ -49,10 +51,12 @@ public class LoginController {//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
 			enterFundsField.setText("");
-		} else
+		} else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Deposit:",
 					enterFundsField.getText() + " dollars deposited.");
-		enterFundsField.setText("");
+			user1.deposit(Double.parseDouble(enterFundsField.getText()));
+			enterFundsField.setText("");
+		}
 	}
 
 	@FXML
@@ -63,27 +67,28 @@ public class LoginController {//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
-		} else
+		} else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
-		enterFundsField.setText("");
+			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
+			enterFundsField.setText("");
+		}
 	}
 
 	@FXML
 	protected void handleTransactionLogsButtonAction (ActionEvent event) {
-		BankBalance user1 = new BankBalance(100);
-		user1.deposit(10);
-		user1.withdraw(20);
-		user1.setAnnualInterestRate(0.25);
+
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
-		transactionLogsView.getItems().clear();
-		transactionLogsView.getItems().addAll(user1.transactionList.toString());
+
+		for (int i = 0; i < user1.transactionList.size(); i++) {
+			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+		}
+
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
-
 		transactionLogsViewSortChoice.setOnAction(e -> System.out.println(transactionLogsViewSortChoice.getValue()));
 
 	}
