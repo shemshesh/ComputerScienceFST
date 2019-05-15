@@ -15,7 +15,7 @@ public class BankBalance {//Start of Class BankBalance
     private double annualInterestRate;
 
     private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
+    public ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
 
     //Constructor method to initialize object accountBalance and annualInterestRate
     BankBalance(double initialBalance) {

@@ -71,11 +71,14 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	protected void handleTransactionLogsButtonAction (ActionEvent event) {
-		BankBalanceTransactions transactionsList = new BankBalanceTransactions();
+		BankBalance user1 = new BankBalance(100);
+		user1.deposit(10);
+		user1.withdraw(20);
+		user1.setAnnualInterestRate(0.25);
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
 		transactionLogsView.getItems().clear();
-		transactionLogsView.getItems().addAll(transactionsList.);
+		transactionLogsView.getItems().addAll(user1.transactionList.toString());
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();
