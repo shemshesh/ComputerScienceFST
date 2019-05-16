@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
+    private static Account account;
     String user;
     String password;
 
@@ -28,6 +29,8 @@ public class Account implements Serializable {
     public static boolean signIn(String username, String password){
 
         ArrayList<Account> accounts;
+
+        account = new Account(username, password);
 
         try {
             var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
@@ -60,7 +63,7 @@ public class Account implements Serializable {
 
     public static boolean createAccount(String username, String password) {
 
-        var account = new Account(username, password);
+        account = new Account(username, password);
 
         ArrayList<Account> accounts;
         try {
@@ -102,15 +105,11 @@ public class Account implements Serializable {
 
     }
 
-//    public String returnUsername(){
-//        return user;
-//    }
-//ABOVE METHOD BROKEN. PLEASE FIX KIND SIR.
+    public static String returnUsername(){
+        return account.user;
+    }
+
     public static void main(String[] args) {
-       System.out.println(createAccount("Natan", "123"));
-       System.out.println(signIn("Evan", "34"));
-
-
 //        ArrayList<Account>accounts = new ArrayList<>();
 //        try {
 //            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
@@ -123,6 +122,5 @@ public class Account implements Serializable {
 //        } catch (Exception e) {
 //            throw new IllegalArgumentException("Could not write to file");
 //        }
-
     }
 }

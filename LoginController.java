@@ -34,7 +34,7 @@ public class LoginController {//} extends Login {
 	@FXML
 	private void initialize () {
 		displayBalance.setText(user1.getAccountBalance());
-		usernameLabel.setText("User: " + "Add method that returns username here");
+		usernameLabel.setText("User: " + Account.returnUsername());
 	}
 
 	@FXML
