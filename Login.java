@@ -22,9 +22,9 @@ import javafx.stage.Stage;
 public class Login extends Application {
 
 	static Scene login;
-	 Scene loginPage;
-	 Scene createAccountPage;
-	 Stage primaryStage;
+	Scene loginPage;
+	Scene createAccountPage;
+	Stage primaryStage;
 
 	public static void main (String[] args) {
 		launch(args);
@@ -37,7 +37,8 @@ public class Login extends Application {
 		primaryStage.show();
 
 		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml"));
-		primaryStage.setScene(new Scene(root, 800, 450));
+		Scene accountView = new Scene(root,800, 450);
+		primaryStage.setScene(accountView);
 
 		GridPane welcomeGrid = new GridPane();
 		welcomeGrid.setAlignment(Pos.CENTER);
@@ -70,7 +71,6 @@ public class Login extends Application {
 		login = new Scene(welcomeGrid, 800, 450);
 
 		primaryStage.setScene(login);
-
 
 		GridPane signInGrid = new GridPane();
 		signInGrid.setAlignment(Pos.CENTER);
@@ -116,9 +116,10 @@ public class Login extends Application {
 				actionTarget.setText("No username entered");
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
-			} else if (Account.signIn(userNameField.getText(), passwordBox.getText())){
+			} else if (Account.signIn(userNameField.getText(), passwordBox.getText())) {
 				primaryStage.setScene(new Scene(root, 800, 450));
-			}
+			} else actionTarget.setText("Account does not exist");
+
 		});
 
 		backButton.setOnAction(e -> {
@@ -186,12 +187,16 @@ public class Login extends Application {
 				actionTarget1.setText("No username entered");
 			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
-			} else Account.createAccount(userNameField.getText(), passwordBox.getText());
+			} else {
+				Account.createAccount(userNameField.getText(), passwordBox.getText());
+				primaryStage.setScene(accountView);
+			}
 		});
 
 		createAccountPage = new Scene(createAccountGrid, 800, 450);
 	}
-	public void logOutButtonPressed(){
+
+	public void logOutButtonPressed () {
 		System.out.println("Logout action");
 		primaryStage.setScene(login);
 	}
