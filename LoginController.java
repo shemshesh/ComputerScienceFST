@@ -33,7 +33,7 @@ public class LoginController {//} extends Login {
 	@FXML
 	private void initialize () {
 		displayBalance.setText(user1.getAccountBalance());
-		usernameLabel.setText("User: " + "");
+		usernameLabel.setText("User: " + "This part needs fixing");
 	}
 
 	@FXML
