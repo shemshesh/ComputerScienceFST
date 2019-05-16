@@ -71,11 +71,11 @@ public class LoginController {//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
-		} else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance())) {
+		}/* else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance())) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"You do not have enough money to withdraw that amount!");
 			enterFundsField.setText("");
-		}else {
+		}*/else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
