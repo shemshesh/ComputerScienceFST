@@ -107,8 +107,8 @@ public class Account implements Serializable {
 //    }
 //ABOVE METHOD BROKEN. PLEASE FIX KIND SIR.
     public static void main(String[] args) {
-    //   System.out.println(createAccount("Natan", "123"));
-    //   System.out.println(signIn("Evan", "34"));
+       System.out.println(createAccount("Natan", "123"));
+       System.out.println(signIn("Evan", "34"));
 
 
 //        ArrayList<Account>accounts = new ArrayList<>();
