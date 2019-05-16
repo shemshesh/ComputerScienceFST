@@ -17,19 +17,24 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 public class LoginController {//} extends Login {
+	public BankBalance user1 = new BankBalance(100);
+	public Account user2 = new Account("1", "2");
+
 	@FXML
 	public Group withdrawDepositGroup;
 	public Button transactionLogsButton;
-	private javafx.scene.control.Button logOutButton;
+	public javafx.scene.control.Button logOutButton;
 	public ListView<String> transactionLogsView;
 	public Button withdrawDepositButton;
 	public Label displayBalance;
 	public Group transactionLogsViewGroup;
 	public ComboBox<String> transactionLogsViewSortChoice;
-	public BankBalance user1 = new BankBalance(100);
+	public Label usernameLabel;
 
-	public void setDisplayBalance (String balance) {
-		displayBalance.setText(balance);
+	@FXML
+	private void initialize () {
+		displayBalance.setText("This is a test");
+		usernameLabel.setText("User: " + "Add method that returns username here");
 	}
 
 	@FXML
@@ -43,6 +48,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
+		//setDisplayBalance();
 		Window owner = depositButton.getScene().getWindow();
 
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("^\\d+$")) {
@@ -81,10 +87,10 @@ public class LoginController {//} extends Login {
 
 		LinkedHashSet<java.util.ArrayList<Transaction>> linkedHashSet = new LinkedHashSet<>(Arrays.asList(user1.transactionList));
 
-		transactionLogsView.getItems().addAll(linkedHashSet.toArray().toString());
-//		for (int i = 0; i < user1.transactionList.size(); i++) {
-//			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-//		}
+		transactionLogsView.getItems().clear();
+		for (int i = 0; i < user1.transactionList.size(); i++) {
+			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+		}
 
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");

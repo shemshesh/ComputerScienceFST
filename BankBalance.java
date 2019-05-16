@@ -87,9 +87,9 @@ public class BankBalance {//Start of Class BankBalance
     }
 
     //Method to get account balance
-    public double getAccountBalance() {
+    public String getAccountBalance() {
         accountBalance = Double.valueOf(df.format(accountBalance));
-        return accountBalance;
+        return String.valueOf(accountBalance);
     }
     private void lowBalance(){
         if (accountBalance < 10){
