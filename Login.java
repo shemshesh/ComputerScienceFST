@@ -117,7 +117,7 @@ public class Login extends Application {
 			} else if (userNameField.getText().equals("") || passwordBox.getText().equals("")) {
 				actionTarget.setText("No information entered");
 			} else if (Account.signIn(userNameField.getText(), passwordBox.getText())) {
-				primaryStage.setScene(new Scene(root, 800, 450));
+				primaryStage.setScene(accountView);
 			} else actionTarget.setText("Account does not exist");
 
 		});
