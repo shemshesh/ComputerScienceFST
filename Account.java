@@ -75,7 +75,7 @@ public class Account implements Serializable {
         }
 
         for (var a: accounts) {
-            if (username.equalsIgnoreCase(a.user)) {
+            if (account.user.equalsIgnoreCase(a.user)) {
                 return false;
             }
         }
@@ -102,8 +102,20 @@ public class Account implements Serializable {
 
     public static void main(String[] args) {
 
-        System.out.println(createAccount("Evan", "Rimer"));
+        System.out.println(createAccount("David", "123"));
+//        try {
+//            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
+//            var o = new ObjectOutputStream(f);
+//
+//            o.writeObject(new ArrayList<Account>());
+//
+//            f.close();
+//            o.close();
+//
+//        } catch (Exception e) {
+//            throw new IllegalArgumentException("Could not write to file");
+//        }
 
-        System.out.println(signIn("Evan", "34"));
+        System.out.println(signIn("David", "123"));
     }
 }
