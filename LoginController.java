@@ -18,7 +18,6 @@ import java.util.LinkedHashSet;
 
 public class LoginController {//} extends Login {
 	public BankBalance user1 = new BankBalance(100);
-	public Account user2 = new Account("1", "2");
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -34,7 +33,7 @@ public class LoginController {//} extends Login {
 	@FXML
 	private void initialize () {
 		displayBalance.setText(user1.getAccountBalance());
-		usernameLabel.setText("User: " + "Add method that returns username here");
+		usernameLabel.setText("User: " + "");
 	}
 
 	@FXML
