@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
-    private static Account account;
     String user;
     String password;
 
@@ -29,8 +28,6 @@ public class Account implements Serializable {
     public static boolean signIn(String username, String password){
 
         ArrayList<Account> accounts;
-
-        account = new Account(username, password);
 
         try {
             var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
@@ -63,7 +60,7 @@ public class Account implements Serializable {
 
     public static boolean createAccount(String username, String password) {
 
-        account = new Account(username, password);
+        var account = new Account(username, password);
 
         ArrayList<Account> accounts;
         try {
@@ -106,7 +103,7 @@ public class Account implements Serializable {
     }
 
     public static String returnUsername(){
-        return account.user;
+        return null;
     }
 
     public static void main(String[] args) {
