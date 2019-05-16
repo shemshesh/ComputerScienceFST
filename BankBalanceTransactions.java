@@ -21,7 +21,5 @@ public class BankBalanceTransactions {
         System.out.println(user.transactionList);
         user.transactionList.sort(Transaction.timeComparator);
         System.out.println(user.transactionList);
-        LoginController setbalance = new LoginController();
-        setbalance.setDisplayBalance("Balance" + user.getAccountBalance());
     }
 }
