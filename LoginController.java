@@ -49,7 +49,7 @@ public class LoginController {//} extends Login {
 	protected void handleDepositButtonAction (ActionEvent event) {
 		Window owner = depositButton.getScene().getWindow();
 
-		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("^\\d+$")) {
+		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
 			enterFundsField.setText("");
@@ -66,7 +66,7 @@ public class LoginController {//} extends Login {
 	protected void handleWithdrawButtonAction (ActionEvent event) {
 		Window owner = withdrawButton.getScene().getWindow();
 
-		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("^\\d+$")) {
+		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
