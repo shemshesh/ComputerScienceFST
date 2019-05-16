@@ -146,11 +146,11 @@ class Transaction implements Comparable<Transaction> {
     public String toString() {
         switch (type) {
             case deposit:
-                return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction)+", Time:"+date;
+                return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction)+", Time: "+date;
             case withdrawal:
-                return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction)+", Time:"+date;
+                return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction)+", Time: "+date;
             case interest:
-                return "Interest: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction)+", Time:"+date;
+                return "Interest: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction)+", Time: "+date;
             default:
                 throw new IllegalArgumentException("Impossible");
         }
