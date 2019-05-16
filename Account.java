@@ -100,7 +100,7 @@ public class Account implements Serializable {
 
     public static void main(String[] args) {
 
-        System.out.println(createAccount("Natan", "123"));
+        System.out.println(createAccount("Evan", "123"));
 //        try {
 //            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
 //            var o = new ObjectOutputStream(f);
