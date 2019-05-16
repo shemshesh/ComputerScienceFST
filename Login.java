@@ -38,7 +38,7 @@ public class Login extends Application {
 
 		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml"));
 		Scene accountView = new Scene(root,800, 450);
-		primaryStage.setScene(accountView);
+		//primaryStage.setScene(accountView);
 
 		GridPane welcomeGrid = new GridPane();
 		welcomeGrid.setAlignment(Pos.CENTER);

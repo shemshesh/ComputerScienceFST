@@ -33,7 +33,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	private void initialize () {
-		displayBalance.setText("This is a test");
+		displayBalance.setText(user1.getAccountBalance());
 		usernameLabel.setText("User: " + "Add method that returns username here");
 	}
 
@@ -48,7 +48,6 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
-		//setDisplayBalance();
 		Window owner = depositButton.getScene().getWindow();
 
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("^\\d+$")) {
@@ -61,6 +60,7 @@ public class LoginController {//} extends Login {
 			user1.deposit(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
+		initialize();
 	}
 
 	@FXML
@@ -71,12 +71,17 @@ public class LoginController {//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
-		} else {
+		} else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance())) {
+			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
+					"You do not have enough money to withdraw that amount!");
+			enterFundsField.setText("");
+		}else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
+		initialize();
 	}
 
 	@FXML
