@@ -8,14 +8,13 @@ package FST;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 
 public class LoginController {//} extends Login {
 	@FXML
@@ -28,7 +27,6 @@ public class LoginController {//} extends Login {
 	public Group transactionLogsViewGroup;
 	public ComboBox<String> transactionLogsViewSortChoice;
 	public BankBalance user1 = new BankBalance(100);
-
 
 	public void setDisplayBalance (String balance) {
 		displayBalance.setText(balance);
@@ -81,9 +79,12 @@ public class LoginController {//} extends Login {
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
 
-		for (int i = 0; i < user1.transactionList.size(); i++) {
-			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-		}
+		LinkedHashSet<java.util.ArrayList<Transaction>> linkedHashSet = new LinkedHashSet<>(Arrays.asList(user1.transactionList));
+
+		transactionLogsView.getItems().addAll(linkedHashSet.toArray().toString());
+//		for (int i = 0; i < user1.transactionList.size(); i++) {
+//			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+//		}
 
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
