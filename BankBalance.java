@@ -87,20 +87,25 @@ public class BankBalance {//Start of Class BankBalance
     }
 
     //Method to get account balance
-    public double getAccountBalance() {
-        accountBalance = Double.valueOf(df.format(accountBalance));
-        return accountBalance;
-    }
+
+//    public double getAccountBalance() {
+//        return df.format(accountBalance);
+//    }
+
     private void lowBalance(){
         if (accountBalance < 10){
             System.out.println("Your balance is running low.");
         }
     }
 
+    public String getAccountBalance() {
+        return df.format(accountBalance);
+    }
+
     //To string method to display object accountBalance as String
     @Override
     public String toString() {
-        return "" + accountBalance;
+        return "" + df.format(accountBalance);
     }
 
     //Method to make sure the double value only has two decimal points
