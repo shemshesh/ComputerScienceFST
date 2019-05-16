@@ -84,8 +84,6 @@ public class Account implements Serializable {
                 return false;
             }
         }
-        System.out.println(account.user);
-        System.out.println(account.password);
         accounts.add(account);
 
         try {
@@ -93,8 +91,6 @@ public class Account implements Serializable {
             var o = new ObjectOutputStream(f);
 
             o.writeObject(accounts);
-            System.out.println(account.user);
-            System.out.println(account.password);
             f.close();
             o.close();
 
@@ -111,9 +107,22 @@ public class Account implements Serializable {
 //    }
 //ABOVE METHOD BROKEN. PLEASE FIX KIND SIR.
     public static void main(String[] args) {
+    //   System.out.println(createAccount("Natan", "123"));
+    //   System.out.println(signIn("Evan", "34"));
 
-       System.out.println(createAccount("Mom", "Rimer"));
 
-        System.out.println(signIn("Evan", "34"));
+//        ArrayList<Account>accounts = new ArrayList<>();
+//        try {
+//            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
+//            var o = new ObjectOutputStream(f);
+//
+//            o.writeObject(accounts);
+//            f.close();
+//            o.close();
+//
+//        } catch (Exception e) {
+//            throw new IllegalArgumentException("Could not write to file");
+//        }
+
     }
 }
