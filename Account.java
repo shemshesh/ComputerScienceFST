@@ -8,106 +8,105 @@ package FST;
 // Copyright © 2018 David Shemesh. All rights reserved.
 //Evan Rimer
 
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
-	private static Account account;
-	String user;
-	String password;
+    String user;
+    String password;
 
-	public Account (String user, String password) {
-		this.user = user;
-		this.password = password;
-	}
+    public Account(String user, String password) {
+        this.user = user;
+        this.password = password;
+    }
 
-	public static boolean signIn (String username, String password) {
 
-		ArrayList<Account> accounts;
 
-		account = new Account(username, password);
+    public static boolean signIn(String username, String password){
 
-		try {
-			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
-			var o = new ObjectInputStream(f);
+        ArrayList<Account> accounts;
 
-			accounts = (ArrayList<Account>) o.readObject();
+        try {
+            var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
+            var o = new ObjectInputStream(f);
 
-			f.close();
-			o.close();
+            accounts = (ArrayList<Account>) o.readObject();
 
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Could not read from file");
-		}
+            f.close();
+            o.close();
 
-		for (var account : accounts) {
-			if (username.equalsIgnoreCase(account.user)) {
-				if (password.equals(account.password)) {
-					// Correct username and password
-					return true;
-				}
-				// Incorrect password for username
-				return false;
-			}
-		}
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not read from file");
+        }
 
-		// Username does not exist
-		return false;
+        for (var account: accounts) {
+            if (username.equalsIgnoreCase(account.user)) {
+                if (password.equals(account.password)) {
+                    // Correct username and password
+                    return true;
+                }
+                // Incorrect password for username
+                return false;
+            }
+        }
 
-	}
+        // Username does not exist
+        return false;
 
-	public static boolean createAccount (String username, String password) {
+    }
 
-		account = new Account(username, password);
+    public static boolean createAccount(String username, String password) {
 
-		ArrayList<Account> accounts;
-		try {
-			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
-			var o = new ObjectInputStream(f);
+        var account = new Account(username, password);
 
-			accounts = (ArrayList<Account>) o.readObject();
+        ArrayList<Account> accounts;
+        try {
+            var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
+            var o = new ObjectInputStream(f);
 
-			f.close();
-			o.close();
+            accounts = (ArrayList<Account>) o.readObject();
 
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Could not read from file");
-		}
+            f.close();
+            o.close();
 
-		System.out.println("account.user: " + account.user);
-		for (var a : accounts) {
-			System.out.println("a.user: " + a.user);
-			if (account.user.equalsIgnoreCase(a.user)) {
-				System.out.println("Already exists");
-				return false;
-			}
-		}
-		accounts.add(account);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not read from file");
+        }
 
-		try {
-			var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
-			var o = new ObjectOutputStream(f);
+        System.out.println("account.user: "+account.user);
+        for (var a: accounts) {
+            System.out.println("a.user: "+a.user);
+            if (account.user.equalsIgnoreCase(a.user)) {
+                System.out.println("Already exists");
+                return false;
+            }
+        }
+        accounts.add(account);
 
-			o.writeObject(accounts);
-			f.close();
-			o.close();
+        try {
+            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
+            var o = new ObjectOutputStream(f);
 
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Could not write to file");
-		}
+            o.writeObject(accounts);
+            f.close();
+            o.close();
 
-		return true;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not write to file");
+        }
 
-	}
+        return true;
 
-	public String returnUsername () {
-		System.out.println(user);
-		return user;
-	}
+    }
 
-	public static void main (String[] args) {
+    public static String returnUsername(){
+        return null;
+    }
+
+    public static void main(String[] args) {
 //        ArrayList<Account>accounts = new ArrayList<>();
 //        try {
 //            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
@@ -120,5 +119,5 @@ public class Account implements Serializable {
 //        } catch (Exception e) {
 //            throw new IllegalArgumentException("Could not write to file");
 //        }
-	}
+    }
 }
