@@ -6,7 +6,7 @@ package FST;
 // Purpose: 
 // Created by David Shemesh on 2019-04-10.
 // Copyright © 2018 David Shemesh. All rights reserved.
-//
+//Evan Rimer
 
 
 import java.io.*;
