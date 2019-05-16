@@ -37,7 +37,7 @@ public class Login extends Application {
 		primaryStage.show();
 
 		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml"));
-		Scene accountView = new Scene(root,800, 450);
+		Scene accountView = new Scene(root, 800, 450);
 		//primaryStage.setScene(accountView);
 
 		GridPane welcomeGrid = new GridPane();
@@ -188,8 +188,10 @@ public class Login extends Application {
 			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
 			} else {
-				Account.createAccount(userNameField.getText(), passwordBox.getText());
-				primaryStage.setScene(accountView);
+				if (Account.createAccount(userNameField2.getText(), passwordBox2.getText())) {
+					primaryStage.setScene(accountView);
+				} else actionTarget1.setText("That account already exists!");
+
 			}
 		});
 

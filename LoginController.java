@@ -75,7 +75,7 @@ public class LoginController {//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"You do not have enough money to withdraw that amount!");
 			enterFundsField.setText("");
-		}*/else {
+		}*/ else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
