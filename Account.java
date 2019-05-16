@@ -76,12 +76,16 @@ public class Account implements Serializable {
             throw new IllegalArgumentException("Could not read from file");
         }
 
+        System.out.println("account.user: "+account.user);
         for (var a: accounts) {
-            if (username.equalsIgnoreCase(a.user)) {
+            System.out.println("a.user: "+a.user);
+            if (account.user.equalsIgnoreCase(a.user)) {
+                System.out.println("Already exists");
                 return false;
             }
         }
-
+        System.out.println(account.user);
+        System.out.println(account.password);
         accounts.add(account);
 
         try {
@@ -108,7 +112,7 @@ public class Account implements Serializable {
 //ABOVE METHOD BROKEN. PLEASE FIX KIND SIR.
     public static void main(String[] args) {
 
-        System.out.println(createAccount("Evan", "Rimer"));
+       System.out.println(createAccount("Mom", "Rimer"));
 
         System.out.println(signIn("Evan", "34"));
     }
