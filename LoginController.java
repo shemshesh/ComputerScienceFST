@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 
 public class LoginController {//} extends Login {
-	public BankBalance user1 = new BankBalance(100);
+	private final BankBalance user1 = new BankBalance(100);
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -31,8 +31,12 @@ public class LoginController {//} extends Login {
 	public Label usernameLabel;
 
 	@FXML
-	private void initialize () {
+	private void initializeBalance () {
 		displayBalance.setText(user1.getAccountBalance());
+	}
+
+	@FXML
+	void initializeUsername () {
 		usernameLabel.setText("User: " + "This part needs fixing");
 	}
 
@@ -59,7 +63,7 @@ public class LoginController {//} extends Login {
 			user1.deposit(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
-		initialize();
+		initializeBalance();
 	}
 
 	@FXML
@@ -80,7 +84,7 @@ public class LoginController {//} extends Login {
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
-		initialize();
+		initializeBalance();
 	}
 
 	@FXML
@@ -88,8 +92,6 @@ public class LoginController {//} extends Login {
 
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
-
-		LinkedHashSet<java.util.ArrayList<Transaction>> linkedHashSet = new LinkedHashSet<>(Arrays.asList(user1.transactionList));
 
 		transactionLogsView.getItems().clear();
 		for (int i = 0; i < user1.transactionList.size(); i++) {
