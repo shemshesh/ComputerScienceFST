@@ -19,6 +19,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+//delete this
+
 public class Login extends Application {
 
 	static Scene login;
