@@ -52,7 +52,6 @@ public class LoginController {//} extends Login {
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
 		Window owner = depositButton.getScene().getWindow();
-
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
