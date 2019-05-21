@@ -30,9 +30,7 @@ public class Account implements Serializable {
 			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 
-			System.out.println("if there is an error the next line should not print");
 			accounts = (ArrayList<Account>) o.readObject();
-			System.out.println("Next line");
 
 			f.close();
 			o.close();
@@ -63,14 +61,10 @@ public class Account implements Serializable {
 
 		ArrayList<Account> accounts;
 		try {
-			System.out.println("Error check 1");
 			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
-			System.out.println("Error check 2");
 			var o = new ObjectInputStream(f);
-			System.out.println("Error check 3");
 
 			accounts = (ArrayList<Account>) o.readObject();
-			System.out.println("Error check 4");
 
 
 			f.close();
