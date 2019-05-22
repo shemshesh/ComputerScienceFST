@@ -15,7 +15,7 @@ import javafx.stage.Window;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class LoginController {
+public class LoginController {//} extends Login {
 	private final BankBalance user1 = new BankBalance(100);
 
 	@FXML
@@ -30,6 +30,7 @@ public class LoginController {
 	public Button refreshBalanceButton;
 	public CheckBox withdrawalsOnly;
 	public CheckBox depositsOnly;
+	public Label usernameLabel;
 
 	@FXML
 	void initializeBalance () {
@@ -75,10 +76,12 @@ public class LoginController {
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
 		} else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance().replace("$", ""))) {
+		}/* else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance())) {
+>>>>>>> 23bc4c8797b5942c10dd446f65d5e11af7d22a6e
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"You do not have enough money to withdraw that amount!");
 			enterFundsField.setText("");
-		} else {
+		}*/ else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
@@ -112,7 +115,7 @@ public class LoginController {
 					for (int i = 0; i < user1.transactionList.size(); i++) {
 						if (user1.transactionList.get(i).toString().contains("Deposit")) {
 							transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-						}else
+						}
 					}
 				} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {
 					System.out.println("Withdrawals only");
@@ -151,13 +154,14 @@ public class LoginController {
 
 	@FXML
 	public void handleLogOutButtonAction (ActionEvent event) {
+		// get a handle to the stage
 		Stage stage = (Stage) logOutButton.getScene().getWindow();
+		// do what you have to do
 		stage.close();
 	}
 
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
-		refreshBalanceButton.setVisible(true);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
 

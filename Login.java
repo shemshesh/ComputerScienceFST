@@ -28,8 +28,6 @@ public class Login extends Application {
 	Scene createAccountPage;
 	Stage primaryStage;
 
-	LoginController controller = new LoginController();
-
 	public static void main (String[] args) {
 		launch(args);
 	}

@@ -13,13 +13,14 @@ public class BankBalanceTransactions {
         BankBalance user = new BankBalance(100);
         user.withdraw(95);
         user.deposit(10);
-        user.deposit(100);
-        user.setAnnualInterestRate(.25);
-        user.monthlyInterest();
-        System.out.println(user.transactionList);
-        Collections.sort(user.transactionList);
-        System.out.println(user.transactionList);
-        user.transactionList.sort(Transaction.timeComparator);
-        System.out.println(user.transactionList);
+        user.writingArray();
+//        user.deposit(100);
+//        user.setAnnualInterestRate(.25);
+//        user.monthlyInterest();
+//        System.out.println(user.transactionList);
+//        Collections.sort(user.transactionList);
+//        System.out.println(user.transactionList);
+//        user.transactionList.sort(Transaction.inverseComparator);
+//        System.out.println(user.transactionList);
     }
 }
