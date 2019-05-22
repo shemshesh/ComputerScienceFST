@@ -15,8 +15,9 @@ import javafx.stage.Window;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class LoginController {//} extends Login {
+public class LoginController {
 	private final BankBalance user1 = new BankBalance(100);
+
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -43,6 +44,7 @@ public class LoginController {//} extends Login {
 	@FXML
 	private Button withdrawButton;
 
+
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
 		Window owner = depositButton.getScene().getWindow();
@@ -67,11 +69,11 @@ public class LoginController {//} extends Login {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
-		}/* else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance())) {
+		} else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance().replace("$",""))) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"You do not have enough money to withdraw that amount!");
 			enterFundsField.setText("");
-		}*/ else {
+		} else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
@@ -116,9 +118,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	public void handleLogOutButtonAction (ActionEvent event) {
-		// get a handle to the stage
 		Stage stage = (Stage) logOutButton.getScene().getWindow();
-		// do what you have to do
 		stage.close();
 	}
 

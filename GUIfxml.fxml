@@ -45,11 +45,6 @@
                <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#handleLogOutButtonAction" text="Log Out" />
             </buttons>
          </ButtonBar>
-         <Label fx:id="usernameLabel" layoutX="20.0" layoutY="14.0" prefHeight="47.0" prefWidth="758.0" text="User:">
-            <font>
-               <Font size="23.0" />
-            </font>
-         </Label>
       </children>
    </AnchorPane>
 </children>
