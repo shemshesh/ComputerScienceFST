@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -45,6 +47,15 @@
                <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#handleLogOutButtonAction" text="Log Out" />
             </buttons>
          </ButtonBar>
+            <Button fx:id="refreshBalanceButton" layoutX="243.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleRefreshBalanceButtonAction">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@ic_refresh_48px-512.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
       </children>
    </AnchorPane>
 </children>

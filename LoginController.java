@@ -28,7 +28,7 @@ public class LoginController {
 	public Label displayBalance;
 	public Group transactionLogsViewGroup;
 	public ComboBox<String> transactionLogsViewSortChoice;
-	public Label usernameLabel;
+	public Button refreshBalanceButton;
 
 	@FXML
 	void initializeBalance () {
@@ -44,8 +44,14 @@ public class LoginController {
 	@FXML
 	private Button withdrawButton;
 
-
 	@FXML
+	protected void handleRefreshBalanceButtonAction (ActionEvent event) {
+		initializeBalance();
+	}
+
+
+
+		@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
 		Window owner = depositButton.getScene().getWindow();
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
@@ -84,6 +90,8 @@ public class LoginController {
 
 	@FXML
 	protected void handleTransactionLogsButtonAction (ActionEvent event) {
+		refreshBalanceButton.setVisible(false);
+
 
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
@@ -124,6 +132,7 @@ public class LoginController {
 
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
+		refreshBalanceButton.setVisible(true);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
 
