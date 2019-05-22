@@ -13,8 +13,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LoginController {//} extends Login {
 	private final BankBalance user1 = new BankBalance(100);
@@ -31,13 +30,8 @@ public class LoginController {//} extends Login {
 	public Label usernameLabel;
 
 	@FXML
-	private void initializeBalance () {
+	void initializeBalance () {
 		displayBalance.setText(user1.getAccountBalance());
-	}
-
-	@FXML
-	void initializeUsername () {
-		usernameLabel.setText("User: " + "This part needs fixing");
 	}
 
 	@FXML
@@ -91,17 +85,32 @@ public class LoginController {//} extends Login {
 
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
-
-		transactionLogsView.getItems().clear();
-		for (int i = 0; i < user1.transactionList.size(); i++) {
-			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-		}
-
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
-		transactionLogsViewSortChoice.setOnAction(e -> System.out.println(transactionLogsViewSortChoice.getValue()));
+		transactionLogsViewSortChoice.setOnAction(e -> {
+			transactionLogsView.getItems().clear();
+			user1.transactionList.sort(Transaction.timeComparator);
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+			}
+			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
+				System.out.println("Sorting by date");
+				transactionLogsView.getItems().clear();
+				user1.transactionList.sort(Transaction.timeComparator);
+				for (int i = 0; i < user1.transactionList.size(); i++) {
+					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				}
+			} else {
+				System.out.println("Sorting by amount");
+				transactionLogsView.getItems().clear();
+				user1.transactionList.sort(Transaction.inverseComparator);
+				for (int i = 0; i < user1.transactionList.size(); i++) {
+					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				}
+			}
+		});
 
 	}
 
