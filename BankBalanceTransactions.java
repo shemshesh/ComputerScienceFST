@@ -19,7 +19,7 @@ public class BankBalanceTransactions {
         System.out.println(user.transactionList);
         Collections.sort(user.transactionList);
         System.out.println(user.transactionList);
-        user.transactionList.sort(Transaction.timeComparator);
+        user.transactionList.sort(Transaction.inverseComparator);
         System.out.println(user.transactionList);
     }
 }
