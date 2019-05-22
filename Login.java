@@ -120,7 +120,7 @@ public class Login extends Application {
 				actionTarget.setText("No information entered");
 			} else if (Account.signIn(userNameField.getText(), passwordBox.getText())) {
 				primaryStage.setScene(accountView);
-			} else actionTarget.setText("Account does not exist");
+			} else actionTarget.setText("Incorrect username or password");
 
 		});
 

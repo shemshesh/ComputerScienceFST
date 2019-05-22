@@ -13,11 +13,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LoginController {//} extends Login {
-	public BankBalance user1 = new BankBalance(100);
+	private final BankBalance user1 = new BankBalance(100);
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -31,9 +30,8 @@ public class LoginController {//} extends Login {
 	public Label usernameLabel;
 
 	@FXML
-	private void initialize () {
+	void initializeBalance () {
 		displayBalance.setText(user1.getAccountBalance());
-		usernameLabel.setText("User: " + "This part needs fixing");
 	}
 
 	@FXML
@@ -48,7 +46,6 @@ public class LoginController {//} extends Login {
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) {
 		Window owner = depositButton.getScene().getWindow();
-
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
@@ -59,7 +56,7 @@ public class LoginController {//} extends Login {
 			user1.deposit(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
-		initialize();
+		initializeBalance();
 	}
 
 	@FXML
@@ -80,7 +77,7 @@ public class LoginController {//} extends Login {
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
-		initialize();
+		initializeBalance();
 	}
 
 	@FXML
@@ -88,19 +85,32 @@ public class LoginController {//} extends Login {
 
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
-
-		LinkedHashSet<java.util.ArrayList<Transaction>> linkedHashSet = new LinkedHashSet<>(Arrays.asList(user1.transactionList));
-
-		transactionLogsView.getItems().clear();
-		for (int i = 0; i < user1.transactionList.size(); i++) {
-			transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-		}
-
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
-		transactionLogsViewSortChoice.setOnAction(e -> System.out.println(transactionLogsViewSortChoice.getValue()));
+		transactionLogsViewSortChoice.setOnAction(e -> {
+			transactionLogsView.getItems().clear();
+			user1.transactionList.sort(Transaction.timeComparator);
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+			}
+			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
+				System.out.println("Sorting by date");
+				transactionLogsView.getItems().clear();
+				user1.transactionList.sort(Transaction.timeComparator);
+				for (int i = 0; i < user1.transactionList.size(); i++) {
+					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				}
+			} else {
+				System.out.println("Sorting by amount");
+				transactionLogsView.getItems().clear();
+				user1.transactionList.sort(Transaction.inverseComparator);
+				for (int i = 0; i < user1.transactionList.size(); i++) {
+					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				}
+			}
+		});
 
 	}
 
