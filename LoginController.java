@@ -35,6 +35,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	void initializeBalance () {
+		usernameLabel.setText("User: " + Account.returnName());
 		displayBalance.setText(user1.getAccountBalance());
 	}
 
@@ -54,6 +55,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	public void handleRefreshButtonTransactionList (ActionEvent event) {
+
 		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
 			System.out.println("Neither selected");
 			transactionLogsView.getItems().clear();
@@ -132,8 +134,10 @@ public class LoginController {//} extends Login {
 		withdrawDepositGroup.setVisible(false);
 		transactionLogsViewGroup.setVisible(true);
 		transactionLogsView.setFocusTraversable(false);
-		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();
+		transactionLogsViewSortChoice.setValue(null);
+		transactionLogsViewSortChoice.setPromptText("Sort by: ");
+
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
 
 		transactionLogsViewSortChoice.setOnAction(e -> {
@@ -143,6 +147,8 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	public void handleLogOutButtonAction (ActionEvent event) {
+		user1.writingBalance(Account.returnName());
+		user1.writingArray(Account.returnName());
 		// get a handle to the stage
 		Stage stage = (Stage) logOutButton.getScene().getWindow();
 		// do what you have to do

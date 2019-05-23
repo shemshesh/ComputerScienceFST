@@ -68,6 +68,11 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Label fx:id="usernameLabel" layoutX="14.0" layoutY="14.0" prefHeight="40.0" prefWidth="768.0" text="User:">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
       </children>
    </AnchorPane>
 </children>
