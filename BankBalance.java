@@ -21,6 +21,8 @@ public class BankBalance {//Start of Class BankBalance
 
     private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
     public ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
+    public ArrayList<DepTransaction> depositList = new ArrayList<>();
+    public ArrayList<WithTransaction> withdrawList = new ArrayList<>();
 
     //Constructor method to initialize object accountBalance and annualInterestRate
     BankBalance(double initialBalance) {
@@ -53,6 +55,9 @@ public class BankBalance {//Start of Class BankBalance
         //Adds the transaction to transaction list
         var transaction = new Transaction(Transaction.Type.deposit, amountToDeposit, accountBalance);
         transactionList.add(transaction);
+        var transaction1 = new DepTransaction(DepTransaction.Type.deposit, amountToDeposit, accountBalance);
+        depositList.add(transaction1);
+
     }
 
     //Method to withdraw money from the account
@@ -71,6 +76,8 @@ public class BankBalance {//Start of Class BankBalance
         accountBalance -= amountToWithdraw;
         var transaction = new Transaction(Transaction.Type.withdrawal, amountToWithdraw, accountBalance);
         transactionList.add(transaction);
+        var transaction1 = new WithTransaction(WithTransaction.Type.withdraw, amountToWithdraw, accountBalance);
+        withdrawList.add(transaction1);
     }
 
     public void writingArray(String user) {
@@ -90,7 +97,8 @@ public class BankBalance {//Start of Class BankBalance
             System.out.println(e);
         }
     }
-    public void writingBalance(String user){
+
+    public void writingBalance(String user) {
         try {
             FileWriter fr = new FileWriter("balance.txt");
             BufferedWriter br = new BufferedWriter(fr);
@@ -103,6 +111,7 @@ public class BankBalance {//Start of Class BankBalance
             System.out.println(e);
         }
     }
+
     //Method to set annual interest rate
     public void setAnnualInterestRate(double interestRate) {
         //Insure interest rate is positive value
@@ -148,10 +157,10 @@ public class BankBalance {//Start of Class BankBalance
 
 class Transaction implements Comparable<Transaction> {
     private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    private final Date date;
-    private final Type type;
-    private final double amount;
-    private final double balanceAfterTransaction;
+    public Date date;
+    public Type type;
+    public final double amount;
+    public final double balanceAfterTransaction;
 
     public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
     public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
@@ -181,6 +190,69 @@ class Transaction implements Comparable<Transaction> {
                 return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
             case interest:
                 return "Interest: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+            default:
+                throw new IllegalArgumentException("Impossible");
+        }
+    }
+}
+
+class DepTransaction {
+    private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+    public   Date date;
+    public   Type type;
+    public double amount;
+    public double balanceAfterTransaction;
+
+    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+
+    public DepTransaction(Type type, double amount, double balanceAfterTransaction) {
+        this.type = type;
+        this.amount = amount;
+        this.balanceAfterTransaction = balanceAfterTransaction;
+        this.date = new Date();
+    }
+
+    enum Type {
+        deposit
+    }
+
+    @Override
+    public String toString() {
+        switch (type) {
+            case deposit:
+                return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+            default:
+                throw new IllegalArgumentException("Impossible");
+        }
+    }
+}
+class WithTransaction {
+    private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+    public   Date date;
+    public   Type type;
+    public double amount;
+    public double balanceAfterTransaction;
+
+    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+
+    public WithTransaction(Type type, double amount, double balanceAfterTransaction) {
+        this.type = type;
+        this.amount = amount;
+        this.balanceAfterTransaction = balanceAfterTransaction;
+        this.date = new Date();
+    }
+
+    enum Type {
+        withdraw
+    }
+
+    @Override
+    public String toString() {
+        switch (type) {
+            case withdraw:
+                return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
             default:
                 throw new IllegalArgumentException("Impossible");
         }
