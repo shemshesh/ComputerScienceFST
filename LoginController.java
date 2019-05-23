@@ -31,6 +31,7 @@ public class LoginController {//} extends Login {
 	public CheckBox withdrawalsOnly;
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
+	public Button refreshTransactionList;
 
 	@FXML
 	void initializeBalance () {
@@ -49,6 +50,37 @@ public class LoginController {//} extends Login {
 	@FXML
 	protected void handleRefreshBalanceButtonAction (ActionEvent event) {
 		initializeBalance();
+	}
+
+	@FXML
+	public void handleRefreshButtonTransactionList (ActionEvent event) {
+		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
+			System.out.println("Neither selected");
+			transactionLogsView.getItems().clear();
+		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
+			System.out.println("Deposits only");
+			transactionLogsView.getItems().clear();
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				if (user1.transactionList.get(i).toString().contains("Deposit")) {
+					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				}
+			}
+		} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {
+			System.out.println("Withdrawals only");
+			transactionLogsView.getItems().clear();
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				if (user1.transactionList.get(i).toString().contains("Withdraw")) {
+					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				}
+			}
+		} else {
+			System.out.println("Withdrawals and deposits");
+			transactionLogsView.getItems().clear();
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+			}
+
+		}
 	}
 
 	@FXML
@@ -76,12 +108,10 @@ public class LoginController {//} extends Login {
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
 		} else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance().replace("$", ""))) {
-		}/* else if (Double.parseDouble(enterFundsField.getText()) > Double.parseDouble(user1.getAccountBalance())) {
->>>>>>> 23bc4c8797b5942c10dd446f65d5e11af7d22a6e
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"You do not have enough money to withdraw that amount!");
 			enterFundsField.setText("");
-		}*/ else {
+		} else {
 			AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Withdrawal:",
 					enterFundsField.getText() + " dollars withdrawn.");
 			user1.withdraw(Double.parseDouble(enterFundsField.getText()));
@@ -98,49 +128,26 @@ public class LoginController {//} extends Login {
 		transactionLogsViewGroup.setVisible(true);
 		transactionLogsView.setFocusTraversable(false);
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
-//		transactionLogsViewSortChoice.getItems().clear();
+		transactionLogsViewSortChoice.getItems().clear();
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
 		transactionLogsViewSortChoice.setOnAction(e -> {
-			transactionLogsView.getItems().clear();
-			user1.transactionList.sort(Transaction.timeComparator);
-			for (int i = 0; i < user1.transactionList.size(); i++) {
-				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-			}
-			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
-				if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
-					System.out.println("Neither selected");
-					transactionLogsView.getItems().clear();
-				} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
-					System.out.println("Deposits only");
-					for (int i = 0; i < user1.transactionList.size(); i++) {
-						if (user1.transactionList.get(i).toString().contains("Deposit")) {
-							transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-						}
-					}
-				} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {
-					System.out.println("Withdrawals only");
-					transactionLogsView.getItems().clear();
-					for (int i = 0; i < user1.transactionList.size(); i++) {
-						if (user1.transactionList.get(i).toString().contains("Withdraw")) {
-							transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-						}
-					}
-				} else {
-					System.out.println("Withdrawals and deposits");
-					transactionLogsView.getItems().clear();
-					for (int i = 0; i < user1.transactionList.size(); i++) {
-						transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-					}
 
-				}
-				System.out.println("Sorting by date");
-				transactionLogsView.getItems().clear();
+			transactionLogsView.getItems().clear();
+
+			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
 				user1.transactionList.sort(Transaction.timeComparator);
 				for (int i = 0; i < user1.transactionList.size(); i++) {
 					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
 				}
+			}
+//				System.out.println("Sorting by date");
+//				transactionLogsView.getItems().clear();
+//				user1.transactionList.sort(Transaction.timeComparator);
+//				for (int i = 0; i < user1.transactionList.size(); i++) {
+//					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+//				}
 
-			} else {
+			else {
 				System.out.println("Sorting by amount");
 				transactionLogsView.getItems().clear();
 				user1.transactionList.sort(Transaction.inverseComparator);
@@ -148,8 +155,14 @@ public class LoginController {//} extends Login {
 					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
 				}
 			}
-		});
+//			System.out.println("Sorting by amount");
+//			transactionLogsView.getItems().clear();
+//			user1.transactionList.sort(Transaction.inverseComparator);
+//			for (int i = 0; i < user1.transactionList.size(); i++) {
+//				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+//			}
 
+		});
 	}
 
 	@FXML
@@ -162,6 +175,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
+		refreshBalanceButton.setVisible(true);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
 

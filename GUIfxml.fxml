@@ -24,6 +24,15 @@
                <ComboBox fx:id="transactionLogsViewSortChoice" layoutX="387.0" prefWidth="150.0" />
                   <CheckBox fx:id="depositsOnly" mnemonicParsing="false" text="Deposits" />
                   <CheckBox fx:id="withdrawalsOnly" layoutX="74.0" mnemonicParsing="false" text="Withdrawals" />
+                  <Button fx:id="refreshTransactionList" layoutX="168.0" mnemonicParsing="false" onAction="#handleRefreshButtonTransactionList">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@ic_refresh_48px-512.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
             </children>
          </Group>
          <Group fx:id="withdrawDepositGroup" layoutX="284.0" layoutY="73.0">
