@@ -71,14 +71,15 @@ public class BankBalance {//Start of Class BankBalance
         accountBalance -= amountToWithdraw;
         var transaction = new Transaction(Transaction.Type.withdrawal, amountToWithdraw, accountBalance);
         transactionList.add(transaction);
-        lowBalance();
     }
 
-    public void writingArray() {
+    public void writingArray(String user) {
         try {
             FileWriter fr = new FileWriter("transactionList.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
+            pw.write(user);
+            pw.write("\n");
             for (int i = 0; i < transactionList.size(); i++) {
                 if (transactionList.get(i) != null)
                     pw.write(String.valueOf(transactionList.get(i)));
@@ -89,7 +90,19 @@ public class BankBalance {//Start of Class BankBalance
             System.out.println(e);
         }
     }
-
+    public void writingBalance(String user){
+        try {
+            FileWriter fr = new FileWriter("balance.txt");
+            BufferedWriter br = new BufferedWriter(fr);
+            PrintWriter pw = new PrintWriter(br);
+            pw.write(user);
+            pw.write("\n");
+            pw.write(getAccountBalance());
+            pw.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
     //Method to set annual interest rate
     public void setAnnualInterestRate(double interestRate) {
         //Insure interest rate is positive value
@@ -108,17 +121,12 @@ public class BankBalance {//Start of Class BankBalance
         transactionList.add(transaction);
     }
 
-    //Method to get account balance
-
-//    public double getAccountBalance() {
-//        return df.format(accountBalance);
+//
+//    private void lowBalance() {
+//        if (accountBalance < 10) {
+//            System.out.println("Your balance is running low.");
+//        }
 //    }
-
-    private void lowBalance() {
-        if (accountBalance < 10) {
-            System.out.println("Your balance is running low.");
-        }
-    }
 
     public String getAccountBalance() {
         return df.format(accountBalance);
