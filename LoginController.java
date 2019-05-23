@@ -60,26 +60,31 @@ public class LoginController {//} extends Login {
 		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
 			System.out.println("Deposits only");
 			transactionLogsView.getItems().clear();
-			for (int i = 0; i < user1.transactionList.size(); i++) {
-				if (user1.transactionList.get(i).toString().contains("Deposit")) {
-					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-				}
+			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
+				user1.depositList.sort(DepTransaction.timeComparator);
+			} else user1.depositList.sort(DepTransaction.inverseComparator);
+
+			for (int i = 0; i < user1.depositList.size(); i++) {
+				transactionLogsView.getItems().add(user1.depositList.get(i).toString());
 			}
 		} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {
 			System.out.println("Withdrawals only");
 			transactionLogsView.getItems().clear();
-			for (int i = 0; i < user1.transactionList.size(); i++) {
-				if (user1.transactionList.get(i).toString().contains("Withdraw")) {
-					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-				}
+			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
+				user1.withdrawList.sort(WithTransaction.timeComparator);
+			} else user1.withdrawList.sort(WithTransaction.inverseComparator);
+			for (int i = 0; i < user1.withdrawList.size(); i++) {
+				transactionLogsView.getItems().add(user1.withdrawList.get(i).toString());
 			}
 		} else {
 			System.out.println("Withdrawals and deposits");
 			transactionLogsView.getItems().clear();
+			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
+				user1.transactionList.sort(Transaction.timeComparator);
+			} else user1.transactionList.sort(Transaction.inverseComparator);
 			for (int i = 0; i < user1.transactionList.size(); i++) {
 				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
 			}
-
 		}
 	}
 
@@ -130,38 +135,9 @@ public class LoginController {//} extends Login {
 		transactionLogsViewSortChoice.setPromptText("Sort by: ");
 		transactionLogsViewSortChoice.getItems().clear();
 		transactionLogsViewSortChoice.getItems().addAll("Amount", "Date");
+
 		transactionLogsViewSortChoice.setOnAction(e -> {
-
 			transactionLogsView.getItems().clear();
-
-			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
-				user1.transactionList.sort(Transaction.timeComparator);
-				for (int i = 0; i < user1.transactionList.size(); i++) {
-					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-				}
-			}
-//				System.out.println("Sorting by date");
-//				transactionLogsView.getItems().clear();
-//				user1.transactionList.sort(Transaction.timeComparator);
-//				for (int i = 0; i < user1.transactionList.size(); i++) {
-//					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-//				}
-
-			else {
-				System.out.println("Sorting by amount");
-				transactionLogsView.getItems().clear();
-				user1.transactionList.sort(Transaction.inverseComparator);
-				for (int i = 0; i < user1.transactionList.size(); i++) {
-					transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-				}
-			}
-//			System.out.println("Sorting by amount");
-//			transactionLogsView.getItems().clear();
-//			user1.transactionList.sort(Transaction.inverseComparator);
-//			for (int i = 0; i < user1.transactionList.size(); i++) {
-//				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
-//			}
-
 		});
 	}
 

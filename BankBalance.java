@@ -162,8 +162,8 @@ class Transaction implements Comparable<Transaction> {
     public final double amount;
     public final double balanceAfterTransaction;
 
-    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+    public static  Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static  Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
     public Transaction(Type type, double amount, double balanceAfterTransaction) {
         this.type = type;
@@ -196,21 +196,26 @@ class Transaction implements Comparable<Transaction> {
     }
 }
 
-class DepTransaction {
+class DepTransaction implements Comparable<DepTransaction>{
     private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
     public   Date date;
     public   Type type;
     public double amount;
     public double balanceAfterTransaction;
 
-    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+    public static final Comparator<DepTransaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static final Comparator<DepTransaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
     public DepTransaction(Type type, double amount, double balanceAfterTransaction) {
         this.type = type;
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
         this.date = new Date();
+    }
+
+    @Override
+    public int compareTo (DepTransaction o) {
+        return Double.compare(this.amount, o.amount);
     }
 
     enum Type {
@@ -227,21 +232,26 @@ class DepTransaction {
         }
     }
 }
-class WithTransaction {
+class WithTransaction implements Comparable<WithTransaction>{
     private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
     public   Date date;
     public   Type type;
     public double amount;
     public double balanceAfterTransaction;
 
-    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+    public static final Comparator<WithTransaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static final Comparator<WithTransaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
     public WithTransaction(Type type, double amount, double balanceAfterTransaction) {
         this.type = type;
         this.amount = amount;
         this.balanceAfterTransaction = balanceAfterTransaction;
         this.date = new Date();
+    }
+
+    @Override
+    public int compareTo (WithTransaction o) {
+        return Double.compare(this.amount, o.amount);
     }
 
     enum Type {
