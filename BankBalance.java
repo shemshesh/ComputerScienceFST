@@ -82,7 +82,7 @@ public class BankBalance {//Start of Class BankBalance
 
     public void writingArray(String user) {
         try {
-            FileWriter fr = new FileWriter("transactionList.txt");
+            FileWriter fr = new FileWriter(user + "transactionList.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
             pw.write(user);
@@ -100,7 +100,7 @@ public class BankBalance {//Start of Class BankBalance
 
     public void writingBalance(String user) {
         try {
-            FileWriter fr = new FileWriter("balance.txt");
+            FileWriter fr = new FileWriter(user + "balance.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
             pw.write(user);
