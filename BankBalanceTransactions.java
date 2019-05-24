@@ -8,10 +8,14 @@ public class BankBalanceTransactions{
 
     public static void main(String[] args) {
         BankBalance user = new BankBalance(100);
+        Account.signIn("Evan", "123");
         user.withdraw(95);
-        user.deposit(10);
-        user.writingBalance("");
-        user.writingArray("");
+        user.deposit(100);
+        user.withdraw(100);
+        System.out.println(user.withdrawList);
+        user.deposit(100);
+        user.writingBalance(Account.returnName());
+        user.writingArray("Evan");
 //        user.deposit(100);
 //        user.setAnnualInterestRate(.25);
 //        user.monthlyInterest();
