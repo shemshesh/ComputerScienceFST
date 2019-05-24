@@ -16,7 +16,7 @@ import javafx.stage.Window;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LoginController {//} extends Login {
-	private final BankBalance user1 = new BankBalance(100);
+	private static final BankBalance user1 = new BankBalance(100);
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -57,10 +57,8 @@ public class LoginController {//} extends Login {
 	public void handleRefreshButtonTransactionList (ActionEvent event) {
 
 		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
-			System.out.println("Neither selected");
 			transactionLogsView.getItems().clear();
 		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
-			System.out.println("Deposits only");
 			transactionLogsView.getItems().clear();
 			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
 				user1.depositList.sort(DepTransaction.timeComparator);
@@ -70,7 +68,6 @@ public class LoginController {//} extends Login {
 				transactionLogsView.getItems().add(user1.depositList.get(i).toString());
 			}
 		} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {
-			System.out.println("Withdrawals only");
 			transactionLogsView.getItems().clear();
 			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
 				user1.withdrawList.sort(WithTransaction.timeComparator);
@@ -79,7 +76,6 @@ public class LoginController {//} extends Login {
 				transactionLogsView.getItems().add(user1.withdrawList.get(i).toString());
 			}
 		} else {
-			System.out.println("Withdrawals and deposits");
 			transactionLogsView.getItems().clear();
 			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
 				user1.transactionList.sort(Transaction.timeComparator);
@@ -160,7 +156,6 @@ public class LoginController {//} extends Login {
 		refreshBalanceButton.setVisible(true);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
-
 	}
 
 }
