@@ -21,10 +21,10 @@ import javafx.stage.Stage;
 
 public class Login extends Application {
 
-	static Scene login;
-	Scene loginPage;
-	Scene createAccountPage;
-	Stage primaryStage;
+	private static Scene login;
+	private Scene loginPage;
+	private Scene createAccountPage;
+	private Stage primaryStage;
 
 	public static void main (String[] args) {
 		launch(args);
