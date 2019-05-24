@@ -30,7 +30,6 @@ public class Account implements Serializable {
 		try {
 			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
-
 			accounts = (ArrayList<Account>) o.readObject();
 
 			f.close();

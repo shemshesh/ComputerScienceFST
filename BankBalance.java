@@ -1,7 +1,5 @@
 package FST;
 
-import javafx.beans.WeakInvalidationListener;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -84,7 +82,7 @@ public class BankBalance {//Start of Class BankBalance
 
     public void writingArray(String user) {
         try {
-            FileWriter fr = new FileWriter(user+"arrayList"+".txt");
+            FileWriter fr = new FileWriter("transactionList.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
             pw.write(user);
@@ -102,7 +100,7 @@ public class BankBalance {//Start of Class BankBalance
 
     public void writingBalance(String user) {
         try {
-            FileWriter fr = new FileWriter(user+"balance"+".txt");
+            FileWriter fr = new FileWriter("balance.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
             pw.write(user);
@@ -164,8 +162,8 @@ class Transaction implements Comparable<Transaction> {
     public final double amount;
     public final double balanceAfterTransaction;
 
-    public static final Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static final Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+    public static  Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static  Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
     public Transaction(Type type, double amount, double balanceAfterTransaction) {
         this.type = type;
@@ -214,8 +212,9 @@ class DepTransaction implements Comparable<DepTransaction>{
         this.balanceAfterTransaction = balanceAfterTransaction;
         this.date = new Date();
     }
+
     @Override
-    public int compareTo(DepTransaction o) {
+    public int compareTo (DepTransaction o) {
         return Double.compare(this.amount, o.amount);
     }
 
@@ -251,7 +250,7 @@ class WithTransaction implements Comparable<WithTransaction>{
     }
 
     @Override
-    public int compareTo(WithTransaction o) {
+    public int compareTo (WithTransaction o) {
         return Double.compare(this.amount, o.amount);
     }
 

@@ -5,8 +5,6 @@ package FST;
 // Copyright © 2019 Natan Parker. All rights reserved.
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -50,6 +48,7 @@ public class Login extends Application {
 
 		Text welcomeText = new Text("Welcome To De Bank!");
 		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL, 20));
+		welcomeText.setFill(Color.PURPLE);
 		welcomeGrid.add(welcomeText, 0, 0, 2, 1);
 
 		Button signInButton = new Button("Sign In");
