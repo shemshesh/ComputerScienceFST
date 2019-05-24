@@ -14,8 +14,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Account implements Serializable {
-	String user;
+	public String user;
 	String password;
+	public static Account account;
 
 	public Account (String user, String password) {
 		this.user = user;
@@ -29,7 +30,6 @@ public class Account implements Serializable {
 		try {
 			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
-
 			accounts = (ArrayList<Account>) o.readObject();
 
 			f.close();
@@ -39,10 +39,11 @@ public class Account implements Serializable {
 			throw new IllegalArgumentException("Could not read from file");
 		}
 
-		for (var account : accounts) {
-			if (username.equalsIgnoreCase(account.user)) {
-				if (password.equals(account.password)) {
+		for (var curAccount : accounts) {
+			if (username.equalsIgnoreCase(curAccount.user)) {
+				if (password.equals(curAccount.password)) {
 					// Correct username and password
+                    account = new Account(username, password);
 					return true;
 				}
 				// Incorrect password for username
@@ -57,7 +58,7 @@ public class Account implements Serializable {
 
 	public static boolean createAccount (String username, String password) {
 
-		var account = new Account(username, password);
+	    account = new Account(username, password);
 
 		ArrayList<Account> accounts;
 		try {
@@ -100,9 +101,9 @@ public class Account implements Serializable {
 
 	}
 
-	String returnUsername () {
-		return user;
-	}
+	public static String returnName(){
+	    return account.user;
+    }
 
 	public static void main (String[] args) {
 		//for natan
