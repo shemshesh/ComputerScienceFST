@@ -16,7 +16,7 @@ import javafx.stage.Window;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LoginController {//} extends Login {
-	private final BankBalance user1 = new BankBalance(100);
+	private static final BankBalance user1 = new BankBalance(100);
 
 	@FXML
 	public Group withdrawDepositGroup;
