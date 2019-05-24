@@ -1,9 +1,6 @@
 package FST;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Date;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -82,11 +79,24 @@ public class BankBalance {//Start of Class BankBalance
 
     public void writingArray(String user) {
         try {
+            ArrayList<String> fullTransactionList = new ArrayList<>();
+            FileReader fr1 = new FileReader(user + "transactionList.txt");
+            BufferedReader br1 = new BufferedReader(fr1);
+            String line = "start";
+            while (line != null) {
+                line = br1.readLine();
+                fullTransactionList.add(line);
+            }
+
             FileWriter fr = new FileWriter(user + "transactionList.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
-            pw.write(user);
-            pw.write("\n");
+            for (int i = 0; i < fullTransactionList.size(); i++) {
+                if(fullTransactionList.get(i) != null){
+                    pw.write(fullTransactionList.get(i));
+                    pw.write("\n");
+                }
+            }
             for (int i = 0; i < transactionList.size(); i++) {
                 if (transactionList.get(i) != null)
                     pw.write(String.valueOf(transactionList.get(i)));
@@ -162,8 +172,8 @@ class Transaction implements Comparable<Transaction> {
     public final double amount;
     public final double balanceAfterTransaction;
 
-    public static  Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static  Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+    public static Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+    public static Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
     public Transaction(Type type, double amount, double balanceAfterTransaction) {
         this.type = type;
@@ -196,10 +206,10 @@ class Transaction implements Comparable<Transaction> {
     }
 }
 
-class DepTransaction implements Comparable<DepTransaction>{
+class DepTransaction implements Comparable<DepTransaction> {
     private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    public   Date date;
-    public   Type type;
+    public Date date;
+    public Type type;
     public double amount;
     public double balanceAfterTransaction;
 
@@ -214,7 +224,7 @@ class DepTransaction implements Comparable<DepTransaction>{
     }
 
     @Override
-    public int compareTo (DepTransaction o) {
+    public int compareTo(DepTransaction o) {
         return Double.compare(this.amount, o.amount);
     }
 
@@ -232,10 +242,11 @@ class DepTransaction implements Comparable<DepTransaction>{
         }
     }
 }
-class WithTransaction implements Comparable<WithTransaction>{
+
+class WithTransaction implements Comparable<WithTransaction> {
     private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    public   Date date;
-    public   Type type;
+    public Date date;
+    public Type type;
     public double amount;
     public double balanceAfterTransaction;
 
@@ -250,7 +261,7 @@ class WithTransaction implements Comparable<WithTransaction>{
     }
 
     @Override
-    public int compareTo (WithTransaction o) {
+    public int compareTo(WithTransaction o) {
         return Double.compare(this.amount, o.amount);
     }
 

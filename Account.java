@@ -107,17 +107,17 @@ public class Account implements Serializable {
 
 	public static void main (String[] args) {
 		//for natan
-//        ArrayList<Account>accounts = new ArrayList<>();
-//        try {
-//            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
-//            var o = new ObjectOutputStream(f);
-//
-//            o.writeObject(accounts);
-//            f.close();
-//            o.close();
-//
-//        } catch (Exception e) {
-//            throw new IllegalArgumentException("Could not write to file");
-//        }
+        ArrayList<Account>accounts = new ArrayList<>();
+        try {
+            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
+            var o = new ObjectOutputStream(f);
+
+            o.writeObject(accounts);
+            f.close();
+            o.close();
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Could not write to file");
+        }
 	}
 }
