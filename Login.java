@@ -202,6 +202,7 @@ public class Login extends Application {
 	public void logOutButtonPressed () {
 		System.out.println("Logout action");
 		primaryStage.setScene(login);
+		System.out.println("hello");
 	}
 
 }
