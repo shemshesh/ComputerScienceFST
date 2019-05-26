@@ -1,5 +1,6 @@
 package FST;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 // Program name: BankBalance.java
@@ -8,12 +9,13 @@ import java.io.Serializable;
 // Copyright © 2019 Evan Rimer. All rights reserved.
 public class BankBalanceTransactions implements Serializable {
 
-    public static void main(String[] args) {
-        BankBalance user = new BankBalance(100);
-        user.withdraw(95);
-        user.deposit(10);
-        user.writingBalance("");
-        user.writingArray("");
+	public static void main (String[] args) throws IOException {
+		BankBalance user = new BankBalance(Double.parseDouble(BankBalance.readingBalance("david").replace("$", "")));
+//		user.withdraw(95);
+//		user.deposit(63);
+		BankBalance.readingBalance("natan");
+		user.writingBalance("jim");
+		user.writingArray("steve");
 //        user.deposit(100);
 //        user.setAnnualInterestRate(.25);
 //        user.monthlyInterest();
@@ -22,5 +24,5 @@ public class BankBalanceTransactions implements Serializable {
 //        System.out.println(user.transactionList);
 //        user.transactionList.sort(Transaction.inverseComparator);
 //        System.out.println(user.transactionList);
-    }
+	}
 }

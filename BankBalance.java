@@ -12,71 +12,74 @@ import java.util.Comparator;
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
 // Copyright © 2019 Evan Rimer. All rights reserved.
-public class BankBalance implements Serializable{//Start of Class BankBalance
+public class BankBalance implements Serializable {//Start of Class BankBalance
 
-    private double accountBalance;
-    private double annualInterestRate;
+	private double accountBalance;
+	private double annualInterestRate;
 
-    private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    public ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
-    public ArrayList<DepTransaction> depositList = new ArrayList<>();
-    public ArrayList<WithTransaction> withdrawList = new ArrayList<>();
+	private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+	public ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
+	public ArrayList<DepTransaction> depositList = new ArrayList<>();
+	public ArrayList<WithTransaction> withdrawList = new ArrayList<>();
 
-    //Constructor method to initialize object accountBalance and annualInterestRate
-    BankBalance(double initialBalance) {
-        accountBalance = initialBalance;
-        setAccountBalance(initialBalance);
-        annualInterestRate = 0;
-    }
+	//Constructor method to initialize object accountBalance and annualInterestRate
+	BankBalance (double initialBalance) {
+		accountBalance = initialBalance;
+		setAccountBalance(initialBalance);
+		annualInterestRate = 0;
+	}
 
-    //Set the value of the initial balance of accountBalance
-    private void setAccountBalance(double initialBalance) {
-        //Error for account to not have negative balance
-        if (initialBalance < 0) {
-            throw new IllegalArgumentException("The bank account can not have a negative balance.");
-        }
-        //Calls method to insure initial balance has two decimal places
-        twoDecimalPlaces(initialBalance);
-        this.accountBalance = initialBalance;
-    }
+	//Set the value of the initial balance of accountBalance
+	private void setAccountBalance (double initialBalance) {
+		//Error for account to not have negative balance
+		if (initialBalance < 0) {
+			throw new IllegalArgumentException("The bank account can not have a negative balance.");
+		}
+		//Calls method to insure initial balance has two decimal places
+		twoDecimalPlaces(initialBalance);
+		this.accountBalance = initialBalance;
+	}
 
-    //Method to deposit money in the account
-    public void deposit(double amountToDeposit) {
-        //Insure deposit is a positive value
-        if (amountToDeposit < 0) {
-            throw new IllegalArgumentException("You can not deposit a negative value.");
-        }
-        //Calls method to insure initial deposit has two decimal places
-        twoDecimalPlaces(amountToDeposit);
-        //Adds deposit to accountBalance
-        accountBalance = accountBalance + amountToDeposit;
-        //Adds the transaction to transaction list
-        var transaction = new Transaction(Transaction.Type.deposit, amountToDeposit, accountBalance);
-        transactionList.add(transaction);
-        var transaction1 = new DepTransaction(DepTransaction.Type.deposit, amountToDeposit, accountBalance);
-        depositList.add(transaction1);
+	//Method to deposit money in the account
+	public void deposit (double amountToDeposit) {
+		//Insure deposit is a positive value
+		if (amountToDeposit < 0) {
+			throw new IllegalArgumentException("You can not deposit a negative value.");
+		}
+		//Calls method to insure initial deposit has two decimal places
+		twoDecimalPlaces(amountToDeposit);
+		//Adds deposit to accountBalance
+		accountBalance = accountBalance + amountToDeposit;
+		writingBalance(Account.returnName());
+		//Adds the transaction to transaction list
+		var transaction = new Transaction(Transaction.Type.deposit, amountToDeposit, accountBalance);
+		transactionList.add(transaction);
+		var transaction1 = new DepTransaction(DepTransaction.Type.deposit, amountToDeposit, accountBalance);
+		depositList.add(transaction1);
 
-    }
+	}
 
-    //Method to withdraw money from the account
-    public void withdraw(double amountToWithdraw) {
-        //Insure withdraw is a positive value
-        if (amountToWithdraw < 0) {
-            throw new IllegalArgumentException("You can not withdraw a negative value.");
-        }
-        //Insure that you can not withdraw more money that what is in the account
-        if (amountToWithdraw > accountBalance) {
-            throw new IllegalArgumentException("You do not have enough money in your account." + "Balance: " + accountBalance + "." + " Amount to Withdraw: " + amountToWithdraw);
-        }
-        //Calls method to insure initial withdraw has two decimal places
-        twoDecimalPlaces(amountToWithdraw);
-        //Subtracts withdraw from account
-        accountBalance -= amountToWithdraw;
-        var transaction = new Transaction(Transaction.Type.withdrawal, amountToWithdraw, accountBalance);
-        transactionList.add(transaction);
-        var transaction1 = new WithTransaction(WithTransaction.Type.withdraw, amountToWithdraw, accountBalance);
-        withdrawList.add(transaction1);
-    }
+	//Method to withdraw money from the account
+	public void withdraw (double amountToWithdraw) {
+		//Insure withdraw is a positive value
+		if (amountToWithdraw < 0) {
+			throw new IllegalArgumentException("You can not withdraw a negative value.");
+		}
+		//Insure that you can not withdraw more money that what is in the account
+		if (amountToWithdraw > accountBalance) {
+			throw new IllegalArgumentException("You do not have enough money in your account." + "Balance: " + accountBalance + "." + " Amount to Withdraw: " + amountToWithdraw);
+		}
+		//Calls method to insure initial withdraw has two decimal places
+		twoDecimalPlaces(amountToWithdraw);
+		//Subtracts withdraw from account
+		accountBalance -= amountToWithdraw;
+		writingBalance(Account.returnName());
+
+		var transaction = new Transaction(Transaction.Type.withdrawal, amountToWithdraw, accountBalance);
+		transactionList.add(transaction);
+		var transaction1 = new WithTransaction(WithTransaction.Type.withdraw, amountToWithdraw, accountBalance);
+		withdrawList.add(transaction1);
+	}
 
 //    public void writingArray(String user) {
 //        try {
@@ -109,67 +112,81 @@ public class BankBalance implements Serializable{//Start of Class BankBalance
 //        }
 //    }
 
-    public void writingArray(String user){
-        for (int i = 0; i < transactionList.size(); i++) {
-            Transaction transaction = transactionList.get(i);
-            System.out.println(transaction);
-            try {
-                FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
-                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-                objectOut.writeObject(transaction);
-                objectOut.close();
-                System.out.println("The Object  was succesfully written to a file");
+	public void writingArray (String user) throws IOException {
+		for (int i = 0; i < transactionList.size(); i++) {
+			Transaction transaction = transactionList.get(i);
+			System.out.println(transaction);
+			try {
+				FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+				objectOut.writeObject(transaction);
+				objectOut.close();
+				System.out.println("The Object  was successfully written to a file");
 
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
+			} catch (Exception ex) {
+				System.out.println("Uh oh");
+				ex.printStackTrace();
+			}
+		}
 
-        for (int i = 0; i < transactionList.size(); i++) {
-            try {
-                FileInputStream fileIn = new FileInputStream("transactionList.txt");
-                ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                while (objectIn.readObject() != null) {
-                    Object obj = objectIn.readObject();
-                    Transaction transaction = (Transaction) obj;
-                    System.out.println(transaction);
-                }
+		try {
+			FileInputStream fileIn = new FileInputStream(user + "transactionList.txt");
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			while (objectIn.readObject() != null) {
+				Object obj = objectIn.readObject();
+				Transaction transaction = (Transaction) obj;
+				System.out.println(transaction);
+			}
 
-                objectIn.close();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
+			objectIn.close();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
-    public void writingBalance(String user) {
-        try {
-            FileWriter fr = new FileWriter(user + "balance.txt");
-            BufferedWriter br = new BufferedWriter(fr);
-            PrintWriter pw = new PrintWriter(br);
-            pw.write(getAccountBalance());
-            pw.close();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-    }
-    //Method to set annual interest rate
-    public void setAnnualInterestRate(double interestRate) {
-        //Insure interest rate is positive value
-        if (interestRate < 0) {
-            throw new IllegalArgumentException("You can not have a negative interest rate.");
-        }
-        annualInterestRate = interestRate;
-    }
+	}
 
-    //Method to add monthly interest to account balance
-    public void monthlyInterest() {
-        double monthlyRate = ((annualInterestRate / 12) * accountBalance);
-        accountBalance += monthlyRate;
+	public void writingBalance (String user) {
+		try {
+			FileWriter fr = new FileWriter(user + "balance.txt");
+			BufferedWriter br = new BufferedWriter(fr);
+			PrintWriter pw = new PrintWriter(br);
+			pw.write(getAccountBalance());
+			pw.close();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+	}
 
-        var transaction = new Transaction(Transaction.Type.interest, monthlyRate, accountBalance);
-        transactionList.add(transaction);
-    }
+	public static String readingBalance (String user) throws IOException {
+		String balance;
+		try {
+			FileReader fr = new FileReader(user + "balance.txt");
+			BufferedReader br = new BufferedReader(fr);
+			balance = br.readLine();
+		} catch (Exception e) {
+			balance = "$100.00";
+		}
+		System.out.println(balance);
+		return balance;
+	}
+
+	//Method to set annual interest rate
+	public void setAnnualInterestRate (double interestRate) {
+		//Insure interest rate is positive value
+		if (interestRate < 0) {
+			throw new IllegalArgumentException("You can not have a negative interest rate.");
+		}
+		annualInterestRate = interestRate;
+	}
+
+	//Method to add monthly interest to account balance
+	public void monthlyInterest () {
+		double monthlyRate = ((annualInterestRate / 12) * accountBalance);
+		accountBalance += monthlyRate;
+
+		var transaction = new Transaction(Transaction.Type.interest, monthlyRate, accountBalance);
+		transactionList.add(transaction);
+	}
 
 //
 //    private void lowBalance() {
@@ -178,135 +195,135 @@ public class BankBalance implements Serializable{//Start of Class BankBalance
 //        }
 //    }
 
-    public String getAccountBalance() {
-        return df.format(accountBalance);
-    }
+	public String getAccountBalance () {
+		return df.format(accountBalance);
+	}
 
-    //To string method to display object accountBalance as String
-    @Override
-    public String toString() {
-        return "" + df.format(accountBalance);
-    }
+	//To string method to display object accountBalance as String
+	@Override
+	public String toString () {
+		return "" + df.format(accountBalance);
+	}
 
-    //Method to make sure the double value only has two decimal points
-    private void twoDecimalPlaces(double num) {
-        if (BigDecimal.valueOf(num).scale() > 2) {
-            throw new IllegalArgumentException("The Input can not have more than two decimal places.");
-        }
-    }
+	//Method to make sure the double value only has two decimal points
+	private void twoDecimalPlaces (double num) {
+		if (BigDecimal.valueOf(num).scale() > 2) {
+			throw new IllegalArgumentException("The Input can not have more than two decimal places.");
+		}
+	}
 }//End of Class BankBalance
 
-class Transaction implements Comparable<Transaction>, Serializable{
-    private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    public Date date;
-    public Type type;
-    public final double amount;
-    public final double balanceAfterTransaction;
+class Transaction implements Comparable<Transaction>, Serializable {
+	private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+	public Date date;
+	public Type type;
+	public final double amount;
+	public final double balanceAfterTransaction;
 
-    public static Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+	public static Comparator<Transaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+	public static Comparator<Transaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
-    public Transaction(Type type, double amount, double balanceAfterTransaction) {
-        this.type = type;
-        this.amount = amount;
-        this.balanceAfterTransaction = balanceAfterTransaction;
-        this.date = new Date();
-    }
+	public Transaction (Type type, double amount, double balanceAfterTransaction) {
+		this.type = type;
+		this.amount = amount;
+		this.balanceAfterTransaction = balanceAfterTransaction;
+		this.date = new Date();
+	}
 
-    @Override
-    public int compareTo(Transaction o) {
-        return Double.compare(this.amount, o.amount);
-    }
+	@Override
+	public int compareTo (Transaction o) {
+		return Double.compare(this.amount, o.amount);
+	}
 
-    enum Type {
-        deposit, withdrawal, interest
-    }
+	enum Type {
+		deposit, withdrawal, interest
+	}
 
-    @Override
-    public String toString() {
-        switch (type) {
-            case deposit:
-                return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
-            case withdrawal:
-                return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
-            case interest:
-                return "Interest: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
-            default:
-                throw new IllegalArgumentException("Impossible");
-        }
-    }
+	@Override
+	public String toString () {
+		switch (type) {
+			case deposit:
+				return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+			case withdrawal:
+				return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+			case interest:
+				return "Interest: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+			default:
+				throw new IllegalArgumentException("Impossible");
+		}
+	}
 }
 
 class DepTransaction implements Comparable<DepTransaction> {
-    private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    public Date date;
-    public Type type;
-    public double amount;
-    public double balanceAfterTransaction;
+	private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+	public Date date;
+	public Type type;
+	public double amount;
+	public double balanceAfterTransaction;
 
-    public static final Comparator<DepTransaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static final Comparator<DepTransaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+	public static final Comparator<DepTransaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+	public static final Comparator<DepTransaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
-    public DepTransaction(Type type, double amount, double balanceAfterTransaction) {
-        this.type = type;
-        this.amount = amount;
-        this.balanceAfterTransaction = balanceAfterTransaction;
-        this.date = new Date();
-    }
+	public DepTransaction (Type type, double amount, double balanceAfterTransaction) {
+		this.type = type;
+		this.amount = amount;
+		this.balanceAfterTransaction = balanceAfterTransaction;
+		this.date = new Date();
+	}
 
-    @Override
-    public int compareTo(DepTransaction o) {
-        return Double.compare(this.amount, o.amount);
-    }
+	@Override
+	public int compareTo (DepTransaction o) {
+		return Double.compare(this.amount, o.amount);
+	}
 
-    enum Type {
-        deposit
-    }
+	enum Type {
+		deposit
+	}
 
-    @Override
-    public String toString() {
-        switch (type) {
-            case deposit:
-                return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
-            default:
-                throw new IllegalArgumentException("Impossible");
-        }
-    }
+	@Override
+	public String toString () {
+		switch (type) {
+			case deposit:
+				return "Deposit: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+			default:
+				throw new IllegalArgumentException("Impossible");
+		}
+	}
 }
 
 class WithTransaction implements Comparable<WithTransaction> {
-    private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
-    public Date date;
-    public Type type;
-    public double amount;
-    public double balanceAfterTransaction;
+	private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
+	public Date date;
+	public Type type;
+	public double amount;
+	public double balanceAfterTransaction;
 
-    public static final Comparator<WithTransaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
-    public static final Comparator<WithTransaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
+	public static final Comparator<WithTransaction> inverseComparator = (t1, t2) -> -t1.compareTo(t2);
+	public static final Comparator<WithTransaction> timeComparator = (t1, t2) -> -t1.date.compareTo(t2.date);
 
-    public WithTransaction(Type type, double amount, double balanceAfterTransaction) {
-        this.type = type;
-        this.amount = amount;
-        this.balanceAfterTransaction = balanceAfterTransaction;
-        this.date = new Date();
-    }
+	public WithTransaction (Type type, double amount, double balanceAfterTransaction) {
+		this.type = type;
+		this.amount = amount;
+		this.balanceAfterTransaction = balanceAfterTransaction;
+		this.date = new Date();
+	}
 
-    @Override
-    public int compareTo(WithTransaction o) {
-        return Double.compare(this.amount, o.amount);
-    }
+	@Override
+	public int compareTo (WithTransaction o) {
+		return Double.compare(this.amount, o.amount);
+	}
 
-    enum Type {
-        withdraw
-    }
+	enum Type {
+		withdraw
+	}
 
-    @Override
-    public String toString() {
-        switch (type) {
-            case withdraw:
-                return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
-            default:
-                throw new IllegalArgumentException("Impossible");
-        }
-    }
+	@Override
+	public String toString () {
+		switch (type) {
+			case withdraw:
+				return "Withdraw: " + df.format(amount) + "," + " Balance: " + df.format(balanceAfterTransaction) + ", Time: " + date;
+			default:
+				throw new IllegalArgumentException("Impossible");
+		}
+	}
 }
