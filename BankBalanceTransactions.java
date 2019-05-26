@@ -1,10 +1,12 @@
 package FST;
 
+import java.io.Serializable;
+
 // Program name: BankBalance.java
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
 // Copyright © 2019 Evan Rimer. All rights reserved.
-public class BankBalanceTransactions{
+public class BankBalanceTransactions implements Serializable {
 
     public static void main(String[] args) {
         BankBalance user = new BankBalance(100);
