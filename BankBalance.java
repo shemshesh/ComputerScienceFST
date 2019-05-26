@@ -113,8 +113,6 @@ public class BankBalance {//Start of Class BankBalance
             FileWriter fr = new FileWriter(user + "balance.txt");
             BufferedWriter br = new BufferedWriter(fr);
             PrintWriter pw = new PrintWriter(br);
-            pw.write(user);
-            pw.write("\n");
             pw.write(getAccountBalance());
             pw.close();
         } catch (IOException e) {

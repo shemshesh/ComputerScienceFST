@@ -13,10 +13,17 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LoginController {//} extends Login {
-	private static final BankBalance user1 = new BankBalance(100);
+
+
+
+	private final BankBalance user1 = new BankBalance(100.00);
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -32,6 +39,9 @@ public class LoginController {//} extends Login {
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
 	public Button refreshTransactionList;
+
+	public LoginController () throws IOException {
+	}
 
 	@FXML
 	void initializeBalance () {
