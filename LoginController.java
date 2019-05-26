@@ -44,7 +44,7 @@ public class LoginController {//} extends Login {
 		user1 = new BankBalance(Double.parseDouble(BankBalance.readingBalance(Account.returnName()).replace("$", "")));
 		usernameLabel.setText("User: " + Account.returnName());
 		displayBalance.setText(BankBalance.readingBalance(Account.returnName()));
-		user1.writingBalance(BankBalance.readingBalance(Account.returnName()));
+		user1.writingBalance(Account.returnName());
 		System.out.println(user1.getAccountBalance());
 	}
 
