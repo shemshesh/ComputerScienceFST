@@ -1,5 +1,6 @@
 package FST;
 
+import javax.annotation.processing.FilerException;
 import java.io.*;
 import java.util.Date;
 import java.math.BigDecimal;
@@ -11,7 +12,7 @@ import java.util.Comparator;
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
 // Copyright © 2019 Evan Rimer. All rights reserved.
-public class BankBalance {//Start of Class BankBalance
+public class BankBalance implements Serializable{//Start of Class BankBalance
 
     private double accountBalance;
     private double annualInterestRate;
@@ -77,34 +78,67 @@ public class BankBalance {//Start of Class BankBalance
         withdrawList.add(transaction1);
     }
 
-    public void writingArray(String user) {
-        try {
-            ArrayList<String> fullTransactionList = new ArrayList<>();
-            FileReader fr1 = new FileReader(user + "transactionList.txt");
-            BufferedReader br1 = new BufferedReader(fr1);
-            String line = "start";
-            while (line != null) {
-                line = br1.readLine();
-                fullTransactionList.add(line);
-            }
+//    public void writingArray(String user) {
+//        try {
+//            ArrayList<String> fullTransactionList = new ArrayList<>();
+//            FileReader fr1 = new FileReader(user + "transactionList.txt");
+//            BufferedReader br1 = new BufferedReader(fr1);
+//            String line = "start";
+//            while (line != null) {
+//                line = br1.readLine();
+//                fullTransactionList.add(line);
+//            }
+//
+//            FileWriter fw = new FileWriter(user + "transactionList.txt");
+//            BufferedWriter bw = new BufferedWriter(fw);
+//            PrintWriter pw = new PrintWriter(bw);
+//            for (int i = 0; i < fullTransactionList.size(); i++) {
+//                if(fullTransactionList.get(i) != null){
+//                    pw.write(fullTransactionList.get(i));
+//                    pw.write("\n");
+//                }
+//            }
+//            for (int i = 0; i < transactionList.size(); i++) {
+//                if (transactionList.get(i) != null)
+//                    pw.write(String.valueOf(transactionList.get(i)));
+//                pw.write("\n");
+//            }
+//            pw.close();
+//        } catch (IOException e) {
+//            System.out.println(e);
+//        }
+//    }
 
-            FileWriter fr = new FileWriter(user + "transactionList.txt");
-            BufferedWriter br = new BufferedWriter(fr);
-            PrintWriter pw = new PrintWriter(br);
-            for (int i = 0; i < fullTransactionList.size(); i++) {
-                if(fullTransactionList.get(i) != null){
-                    pw.write(fullTransactionList.get(i));
-                    pw.write("\n");
+    public void writingArray(String user){
+        for (int i = 0; i < transactionList.size(); i++) {
+            Transaction transaction = transactionList.get(i);
+            System.out.println(transaction);
+            try {
+                FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+                ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+                objectOut.writeObject(transaction);
+                objectOut.close();
+                System.out.println("The Object  was succesfully written to a file");
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        for (int i = 0; i < transactionList.size(); i++) {
+            try {
+                FileInputStream fileIn = new FileInputStream("transactionList.txt");
+                ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+                while (objectIn.readObject() != null) {
+                    Object obj = objectIn.readObject();
+                    Transaction transaction = (Transaction) obj;
+                    System.out.println(transaction);
                 }
+
+                objectIn.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            for (int i = 0; i < transactionList.size(); i++) {
-                if (transactionList.get(i) != null)
-                    pw.write(String.valueOf(transactionList.get(i)));
-                pw.write("\n");
-            }
-            pw.close();
-        } catch (IOException e) {
-            System.out.println(e);
         }
     }
 
@@ -119,7 +153,6 @@ public class BankBalance {//Start of Class BankBalance
             System.out.println(e);
         }
     }
-
     //Method to set annual interest rate
     public void setAnnualInterestRate(double interestRate) {
         //Insure interest rate is positive value
@@ -163,7 +196,7 @@ public class BankBalance {//Start of Class BankBalance
     }
 }//End of Class BankBalance
 
-class Transaction implements Comparable<Transaction> {
+class Transaction implements Comparable<Transaction>, Serializable{
     private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
     public Date date;
     public Type type;
