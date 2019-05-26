@@ -18,11 +18,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LoginController {//} extends Login {
-    FileReader fr = new FileReader(Account.returnName() + "balance.txt");
-    BufferedReader br = new BufferedReader(fr);
-    String useless = br.readLine();
-    String line2 = br.readLine();
-    private final BankBalance user1 = new BankBalance(Double.parseDouble(line2));
+
+    private final BankBalance user1 = new BankBalance(100.00);
 
     @FXML
     public Group withdrawDepositGroup;
