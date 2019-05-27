@@ -183,6 +183,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
             Object obj = objectIn.readObject();
             while (i<10000) {
                 Transaction transaction = (Transaction) obj;
+                System.out.println("Transaction stored " + transaction);
                 transactions.add(transaction);
                 //   System.out.println(transaction.amount);
                 i++;
@@ -190,58 +191,82 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
             }
 
             objectIn.close();
-        } catch (Exception ex) {
-            //	System.out.println("Oof");
-        }
+        } catch (Exception ex) { }
 
-        boolean initialize = true;
         try {
-            for (int i = 0; i < transactions.size(); i++) {
-                if (transactions.get(i) == allTransactions.get(0)) {
-                    initialize = false;
-                }
+            allTransactions.get(0);
+        }catch (Exception eeeee) {
+            if(transactionList.size() < transactions.size()) {
+                allTransactions.addAll(transactions);
             }
-        }catch(Exception eee){ }
 
-        if(initialize){
-            for (int i = 0; i < transactions.size(); i++) {
-                allTransactions.add(transactions.get(i));
-            }
+            allTransactions.addAll(transactionList);
+
+            transactionList.clear();
+            transactionList.addAll(allTransactions);
         }
 
-
-		try {
-		    boolean alreadyAdded = false;
-
-            for (int h = 0; h < allTransactions.size(); h++) {
-                if(transactionList.get(transactionList.size()-1) == allTransactions.get(h)){
-                    alreadyAdded=true;
-                }
-            }
-
-			if (!alreadyAdded) {
-                for (int i = 0; i < transactionList.size(); i++) {
-                    allTransactions.add(transactionList.get(i));
-                }
-			    transactionList.clear();
-
-                for (int i = 0; i < allTransactions.size(); i++) {
-                    transactionList.add(allTransactions.get(i));
-                }
-
-				System.out.println("00000000");
-                for (int i = 0; i < transactionList.size(); i++) {
-                    System.out.println("j = "+i);
-                    System.out.println("transaction "+i+" is "+transactionList.get(i));
-                }
-			}
-		}catch (Exception e){}
-//		set.toArray();
-//		transactionList.clear();
+//        boolean initialize = true;
+//        try {
+//            System.out.println("allTransactions 0 is "+ allTransactions.get(0));
+//            for (int i = 0; i < transactions.size(); i++) {
+//                System.out.println("Transactions " + i + " is " + transactions.get(i));
+//                if (transactions.get(i).compareTo(allTransactions.get(0)) > 0) {
+//                    initialize = false;
+//                }
+//            }
+//        }catch(Exception eee){
+////            if(transactions.size() != 0) {
+////                System.out.println(transactions.size());
+////                initialize = false;
+////            }
+//        }
 //
-//		for (int i = 0; i < set.size(); i++) {
-//			transactionList.add(set[i]);
-//		}
+//        System.out.println("Initialize is " + initialize);
+//
+//        if(initialize){
+//            for (int i = 0; i < transactions.size(); i++) {
+//                allTransactions.add(transactions.get(i));
+//            }
+//        }
+//
+//
+//		try {
+//		    boolean alreadyAdded = false;
+//		    boolean test = false;
+//		    try {
+//                for (int i = 0; i < transactionList.size(); i++) {
+//                    if(transactionList.get(i).compareTo(allTransactions.get(0)) > 0){
+//                        test = true;
+//                    }
+//                }
+//
+//                if (test) {
+//                    for (int h = 0; h < allTransactions.size(); h++) {
+//                        if (transactionList.get(transactionList.size() - 1) == allTransactions.get(h)) {
+//                            alreadyAdded = true;
+//                        }
+//                    }
+//                }
+//            }catch (Exception eeee){
+//                for (int h = 0; h < allTransactions.size(); h++) {
+//                    if (transactionList.get(transactionList.size() - 1) == allTransactions.get(h)) {
+//                        alreadyAdded = true;
+//                    }
+//                }
+//            }
+//
+//			if (!alreadyAdded) {
+//                for (int i = 0; i < transactionList.size(); i++) {
+//                    allTransactions.add(transactionList.get(i));
+//                }
+//			    transactionList.clear();
+//
+//                for (int i = 0; i < allTransactions.size(); i++) {
+//                    transactionList.add(allTransactions.get(i));
+//                }
+//			}
+//		}catch (Exception e){}
 	}
 
     public void writingBalance (String user) {
