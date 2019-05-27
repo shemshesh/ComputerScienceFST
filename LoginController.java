@@ -16,6 +16,7 @@ import javafx.stage.Window;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginController {
 
@@ -45,7 +46,18 @@ public class LoginController {
 
 	@FXML
 	void initializeBalance () throws IOException {
+		ArrayList<Transaction> transactions = new ArrayList<>();
+		try {
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				transactions.add(user1.transactionList.get(i));
+			}
+		}catch (Exception e){ }
 		user1 = new BankBalance(Double.parseDouble(BankBalance.readingBalance(Account.returnName()).replace("$", "")));
+		try {
+			for (int i = 0; i < transactions.size(); i++) {
+				user1.transactionList.add(transactions.get(i));
+			}
+		}catch (Exception e){}
 		usernameLabel.setText("User: " + Account.returnName());
 		displayBalance.setText(BankBalance.readingBalance(Account.returnName()));
 		user1.writingBalance(Account.returnName());
