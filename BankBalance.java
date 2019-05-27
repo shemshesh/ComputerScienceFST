@@ -119,19 +119,13 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 	    ArrayList<Transaction> transactions = new ArrayList<>();
         try {
             FileInputStream fileIn = new FileInputStream(user + "transactionList.txt");
-            System.out.println("RIGHTHERE");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            System.out.println("Now");
             int i = 0;
             Object obj = objectIn.readObject();
             while (i<10000) {
-                System.out.println("Yeehaw");
                 Transaction transaction = (Transaction) obj;
-                System.out.println("Nein");
                 transactions.add(transaction);
-                System.out.println("NONONONONO");
                 System.out.println(transaction.amount);
-                System.out.println("SSSSSSSSSSSS");
                 i++;
                 obj = objectIn.readObject();
             }
