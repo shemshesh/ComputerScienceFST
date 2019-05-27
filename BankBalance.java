@@ -2,11 +2,9 @@ package FST;
 
 import javax.annotation.processing.FilerException;
 import java.io.*;
-import java.util.Date;
+import java.util.*;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
 
 // Program name: BankBalance.java
 // Purpose:
@@ -159,27 +157,69 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 //        System.out.println("writingArray"+transactionList.get(0).amount);
 	}
 
-	public void readingArray () {
-	    try {
-            transactionList.get(1);
-        }catch (Exception e){
-            try {
-                FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
-                ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-                int i = 0;
-                Object obj = objectIn.readObject();
-                while (i < 10000) {
-                    Transaction transaction = (Transaction) obj;
-                    transactionList.add(transaction);
-                    i++;
-                    obj = objectIn.readObject();
-                }
-                objectIn.close();
-            } catch (Exception e1) {
-            }
-        }
-    }
+//	public void readingArray () {
+//	    try {
+//			FileInputStream fileIn2 = new FileInputStream(Account.returnName() + "transactionList.txt");
+//			ObjectInputStream objectIn2 = new ObjectInputStream(fileIn2);
+//			Object obj2 = objectIn2.readObject();
+//			Transaction compare = (Transaction) obj2;
+//
+//			Object obj3 = objectIn2.readObject();
+//			Transaction transaction1 = (Transaction) obj3;
+//
+//			boolean duplicate = false;
+//			while (transaction1 != null) {
+//				if(compare == transaction1){
+//					duplicate = true;
+//					break;
+//				}
+//				obj3 = objectIn2.readObject();
+//				transaction1 = (Transaction) obj3;
+//			}
+//			objectIn2.close();
+//
+//			if (!duplicate){
+//				try {
+//					FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
+//					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+//					int i = 0;
+//					Object obj = objectIn.readObject();
+//					while (i < 10000) {
+//						Transaction transaction = (Transaction) obj;
+//						transactionList.add(transaction);
+//						i++;
+//						obj = objectIn.readObject();
+//					}
+//					objectIn.close();
+//				} catch (Exception e1) {
+//				}
+//			}
+//        }catch (Exception e){ }
+//    }
 
+	public void readingArray(){
+		try {
+			FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			int i = 0;
+			Object obj = objectIn.readObject();
+			while (i < 10000) {
+				Transaction transaction = (Transaction) obj;
+				transactionList.add(transaction);
+				i++;
+				obj = objectIn.readObject();
+			}
+			objectIn.close();
+		} catch (Exception e1) { }
+
+		Set<Transaction> set = new HashSet<Transaction>(transactionList);
+//		set.toArray();
+//		transactionList.clear();
+//
+//		for (int i = 0; i < set.size(); i++) {
+//			transactionList.add(set[i]);
+//		}
+	}
 
     public void writingBalance (String user) {
 		try {

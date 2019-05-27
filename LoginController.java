@@ -76,6 +76,7 @@ public class LoginController {
 	@FXML
 	protected void handleRefreshBalanceButtonAction (ActionEvent event) throws IOException {
 		initializeBalance();
+		refreshBalanceButton.setVisible(false);
 	}
 
 	@FXML
@@ -179,7 +180,7 @@ public class LoginController {
 
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
-		refreshBalanceButton.setVisible(true);
+		refreshBalanceButton.setVisible(false);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
 	}
