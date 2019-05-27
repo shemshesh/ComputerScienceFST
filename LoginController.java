@@ -80,7 +80,7 @@ public class LoginController {
 
 	@FXML
 	public void handleRefreshButtonTransactionList (ActionEvent event) {
-
+		user1.readingArray();
 		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
 			transactionLogsView.getItems().clear();
 		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {

@@ -159,7 +159,29 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 //        System.out.println("writingArray"+transactionList.get(0).amount);
 	}
 
-	public void writingBalance (String user) {
+	public void readingArray () {
+	    try {
+            transactionList.get(1);
+        }catch (Exception e){
+            try {
+                FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
+                ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+                int i = 0;
+                Object obj = objectIn.readObject();
+                while (i < 10000) {
+                    Transaction transaction = (Transaction) obj;
+                    transactionList.add(transaction);
+                    i++;
+                    obj = objectIn.readObject();
+                }
+                objectIn.close();
+            } catch (Exception e1) {
+            }
+        }
+    }
+
+
+    public void writingBalance (String user) {
 		try {
 			FileWriter fr = new FileWriter(user + "balance.txt");
 			BufferedWriter br = new BufferedWriter(fr);
