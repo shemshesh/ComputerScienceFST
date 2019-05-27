@@ -185,7 +185,6 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
                 Transaction transaction = (Transaction) obj;
                 System.out.println("Transaction stored " + transaction);
                 transactions.add(transaction);
-                //   System.out.println(transaction.amount);
                 i++;
                 obj = objectIn.readObject();
             }
@@ -205,68 +204,6 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
             transactionList.clear();
             transactionList.addAll(allTransactions);
         }
-
-//        boolean initialize = true;
-//        try {
-//            System.out.println("allTransactions 0 is "+ allTransactions.get(0));
-//            for (int i = 0; i < transactions.size(); i++) {
-//                System.out.println("Transactions " + i + " is " + transactions.get(i));
-//                if (transactions.get(i).compareTo(allTransactions.get(0)) > 0) {
-//                    initialize = false;
-//                }
-//            }
-//        }catch(Exception eee){
-////            if(transactions.size() != 0) {
-////                System.out.println(transactions.size());
-////                initialize = false;
-////            }
-//        }
-//
-//        System.out.println("Initialize is " + initialize);
-//
-//        if(initialize){
-//            for (int i = 0; i < transactions.size(); i++) {
-//                allTransactions.add(transactions.get(i));
-//            }
-//        }
-//
-//
-//		try {
-//		    boolean alreadyAdded = false;
-//		    boolean test = false;
-//		    try {
-//                for (int i = 0; i < transactionList.size(); i++) {
-//                    if(transactionList.get(i).compareTo(allTransactions.get(0)) > 0){
-//                        test = true;
-//                    }
-//                }
-//
-//                if (test) {
-//                    for (int h = 0; h < allTransactions.size(); h++) {
-//                        if (transactionList.get(transactionList.size() - 1) == allTransactions.get(h)) {
-//                            alreadyAdded = true;
-//                        }
-//                    }
-//                }
-//            }catch (Exception eeee){
-//                for (int h = 0; h < allTransactions.size(); h++) {
-//                    if (transactionList.get(transactionList.size() - 1) == allTransactions.get(h)) {
-//                        alreadyAdded = true;
-//                    }
-//                }
-//            }
-//
-//			if (!alreadyAdded) {
-//                for (int i = 0; i < transactionList.size(); i++) {
-//                    allTransactions.add(transactionList.get(i));
-//                }
-//			    transactionList.clear();
-//
-//                for (int i = 0; i < allTransactions.size(); i++) {
-//                    transactionList.add(allTransactions.get(i));
-//                }
-//			}
-//		}catch (Exception e){}
 	}
 
     public void writingBalance (String user) {
@@ -276,11 +213,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 			PrintWriter pw = new PrintWriter(br);
 			pw.write(getAccountBalance());
 			pw.close();
-		} catch (IOException e) {
-		//	System.out.println(e);
-		}
-
-//        System.out.println("writing balance"+transactionList.get(0).amount);
+		} catch (IOException e) { }
 	}
 
 	public static String readingBalance (String user) throws IOException {
@@ -292,7 +225,6 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		} catch (Exception e) {
 			balance = "$100.00";
 		}
-		//System.out.println(balance);
 		return balance;
 	}
 
