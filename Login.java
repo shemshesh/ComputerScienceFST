@@ -5,6 +5,7 @@ package FST;
 // Copyright © 2019 Natan Parker. All rights reserved.
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.net.URL;
 
 public class Login extends Application {
 
@@ -35,8 +37,11 @@ public class Login extends Application {
 		primaryStage.setTitle("De Bank");
 		primaryStage.show();
 
+
+
 		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml"));
 		Scene accountView = new Scene(root, 800, 450);
+
 		//primaryStage.setScene(accountView);
 
 		GridPane welcomeGrid = new GridPane();
