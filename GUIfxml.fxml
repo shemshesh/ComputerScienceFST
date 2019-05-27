@@ -40,7 +40,7 @@
                <Button fx:id="withdrawButton" layoutX="51.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleWithdrawButtonAction" text="Withdraw" />
                <Button fx:id="depositButton" layoutX="143.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleDepositButtonAction" text="Deposit" />
                <TextField fx:id="enterFundsField" layoutX="51.0" layoutY="139.0" promptText="Enter funds:" />
-               <Label fx:id="balancelabel" text="Balance:">
+               <Label fx:id="balanceLabel" text="Balance:">
                   <font>
                      <Font size="28.0" />
                   </font>

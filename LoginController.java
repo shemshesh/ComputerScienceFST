@@ -37,7 +37,7 @@ public class LoginController {
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
 	public Button refreshTransactionList;
-	public Label balancelabel;
+	public Label balanceLabel;
 
 
 	public LoginController () throws IOException {
