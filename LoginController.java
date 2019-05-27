@@ -20,7 +20,8 @@ import java.io.IOException;
 public class LoginController {
 
 
-	private BankBalance user1 = new BankBalance(100.00);
+	//private BankBalance user1 = new BankBalance(100.00);
+	private BankBalance user1;
 
 	@FXML
 	public Group withdrawDepositGroup;

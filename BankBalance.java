@@ -57,6 +57,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		var transaction1 = new DepTransaction(DepTransaction.Type.deposit, amountToDeposit, accountBalance);
 		depositList.add(transaction1);
 
+//        System.out.println("deposit"+transactionList.get(0).amount);
 	}
 
 	//Method to withdraw money from the account
@@ -79,6 +80,8 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		transactionList.add(transaction);
 		var transaction1 = new WithTransaction(WithTransaction.Type.withdraw, amountToWithdraw, accountBalance);
 		withdrawList.add(transaction1);
+
+//        System.out.println("withdraw"+transactionList.get(0).amount);
 	}
 
 //    public void writingArray(String user) {
@@ -113,36 +116,53 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 //    }
 
 	public void writingArray (String user) throws IOException {
-		for (int i = 0; i < transactionList.size(); i++) {
-			Transaction transaction = transactionList.get(i);
-			System.out.println(transaction);
-			try {
-				FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
-				ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-				objectOut.writeObject(transaction);
-				objectOut.close();
-				System.out.println("The Object  was successfully written to a file");
+	    ArrayList<Transaction> transactions = new ArrayList<>();
+        try {
+            FileInputStream fileIn = new FileInputStream(user + "transactionList.txt");
+            System.out.println("RIGHTHERE");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            System.out.println("Now");
+            int i = 0;
+            Object obj = objectIn.readObject();
+            while (i<10000) {
+                System.out.println("Yeehaw");
+                Transaction transaction = (Transaction) obj;
+                System.out.println("Nein");
+                transactions.add(transaction);
+                System.out.println("NONONONONO");
+                System.out.println(transaction.amount);
+                System.out.println("SSSSSSSSSSSS");
+                i++;
+                obj = objectIn.readObject();
+            }
 
-			} catch (Exception ex) {
-				System.out.println("Uh oh");
-				ex.printStackTrace();
-			}
+            objectIn.close();
+        } catch (Exception ex) {
+			System.out.println("Oof");
+        }
+
+//        System.out.println("$"+transactionList.get(0).amount);
+		for (int i = 0; i < transactionList.size(); i++) {
+			transactions.add(transactionList.get(i));
+            System.out.println(transactions.get(i).amount);
 		}
 
 		try {
-			FileInputStream fileIn = new FileInputStream(user + "transactionList.txt");
-			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			while (objectIn.readObject() != null) {
-				Object obj = objectIn.readObject();
-				Transaction transaction = (Transaction) obj;
-				System.out.println(transaction);
-			}
-
-			objectIn.close();
+            FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+		    for (int i = 0; i < transactions.size(); i++) {
+		        objectOut.writeObject(transactions.get(i));
+                System.out.println(transactions.get(i).amount);
+                System.out.println(transactions.get(i).date);
+		    }
+		    objectOut.close();
+		    System.out.println("The Object  was successfully written to a file");
 		} catch (Exception ex) {
-			ex.printStackTrace();
+		    System.out.println("Uh oh");
+		    ex.printStackTrace();
 		}
 
+//        System.out.println("writingArray"+transactionList.get(0).amount);
 	}
 
 	public void writingBalance (String user) {
@@ -155,6 +175,8 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		} catch (IOException e) {
 			System.out.println(e);
 		}
+
+//        System.out.println("writing balance"+transactionList.get(0).amount);
 	}
 
 	public static String readingBalance (String user) throws IOException {
@@ -254,7 +276,7 @@ class Transaction implements Comparable<Transaction>, Serializable {
 	}
 }
 
-class DepTransaction implements Comparable<DepTransaction> {
+class DepTransaction implements Comparable<DepTransaction>, Serializable {
 	private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
 	public Date date;
 	public Type type;
@@ -291,7 +313,7 @@ class DepTransaction implements Comparable<DepTransaction> {
 	}
 }
 
-class WithTransaction implements Comparable<WithTransaction> {
+class WithTransaction implements Comparable<WithTransaction>, Serializable {
 	private final DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
 	public Date date;
 	public Type type;
