@@ -17,7 +17,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LoginController {//} extends Login {
+public class LoginController {
+
 
 	private BankBalance user1 = new BankBalance(100.00);
 
@@ -35,6 +36,8 @@ public class LoginController {//} extends Login {
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
 	public Button refreshTransactionList;
+	public Label balancelabel;
+
 
 	public LoginController () throws IOException {
 	}
