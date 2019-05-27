@@ -1,21 +1,21 @@
 package FST;
 
+import java.io.IOException;
+import java.io.Serializable;
+
 // Program name: BankBalance.java
 // Purpose:
 // Created by Evan Rimer on Saturday April 11 2019.
 // Copyright © 2019 Evan Rimer. All rights reserved.
-public class BankBalanceTransactions{
+public class BankBalanceTransactions implements Serializable {
 
-    public static void main(String[] args) {
-        BankBalance user = new BankBalance(100);
-        Account.signIn("Evan", "123");
-        user.withdraw(95);
-        user.deposit(100);
-        user.withdraw(100);
-        System.out.println(user.withdrawList);
-        user.deposit(100);
-        user.writingBalance(Account.returnName());
-        user.writingArray("Evan");
+	public static void main (String[] args) throws IOException {
+		BankBalance user = new BankBalance(Double.parseDouble(BankBalance.readingBalance("david").replace("$", "")));
+//		user.withdraw(95);
+//		user.deposit(63);
+		BankBalance.readingBalance("natan");
+		user.writingBalance("jim");
+		user.writingArray("steve");
 //        user.deposit(100);
 //        user.setAnnualInterestRate(.25);
 //        user.monthlyInterest();
@@ -24,5 +24,5 @@ public class BankBalanceTransactions{
 //        System.out.println(user.transactionList);
 //        user.transactionList.sort(Transaction.inverseComparator);
 //        System.out.println(user.transactionList);
-    }
+	}
 }

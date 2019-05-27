@@ -13,10 +13,16 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
-public class LoginController {//} extends Login {
-	private static final BankBalance user1 = new BankBalance(100);
+public class LoginController {
+
+
+	//private BankBalance user1 = new BankBalance(100.00);
+	private BankBalance user1;
 
 	@FXML
 	public Group withdrawDepositGroup;
@@ -32,11 +38,30 @@ public class LoginController {//} extends Login {
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
 	public Button refreshTransactionList;
+	public Label balancelabel;
+
+
+	public LoginController () throws IOException {
+	}
 
 	@FXML
-	void initializeBalance () {
+	void initializeBalance () throws IOException {
+		ArrayList<Transaction> transactions = new ArrayList<>();
+		try {
+			for (int i = 0; i < user1.transactionList.size(); i++) {
+				transactions.add(user1.transactionList.get(i));
+			}
+		}catch (Exception e){ }
+		user1 = new BankBalance(Double.parseDouble(BankBalance.readingBalance(Account.returnName()).replace("$", "")));
+		try {
+			for (int i = 0; i < transactions.size(); i++) {
+				user1.transactionList.add(transactions.get(i));
+			}
+		}catch (Exception e){}
 		usernameLabel.setText("User: " + Account.returnName());
-		displayBalance.setText(user1.getAccountBalance());
+		displayBalance.setText(BankBalance.readingBalance(Account.returnName()));
+		user1.writingBalance(Account.returnName());
+		System.out.println(user1.getAccountBalance());
 	}
 
 	@FXML
@@ -49,13 +74,14 @@ public class LoginController {//} extends Login {
 	private Button withdrawButton;
 
 	@FXML
-	protected void handleRefreshBalanceButtonAction (ActionEvent event) {
+	protected void handleRefreshBalanceButtonAction (ActionEvent event) throws IOException {
 		initializeBalance();
+		refreshBalanceButton.setVisible(false);
 	}
 
 	@FXML
 	public void handleRefreshButtonTransactionList (ActionEvent event) {
-
+		user1.readingArray();
 		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
 			transactionLogsView.getItems().clear();
 		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
@@ -87,7 +113,7 @@ public class LoginController {//} extends Login {
 	}
 
 	@FXML
-	protected void handleDepositButtonAction (ActionEvent event) {
+	protected void handleDepositButtonAction (ActionEvent event) throws IOException {
 		Window owner = depositButton.getScene().getWindow();
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
@@ -99,11 +125,12 @@ public class LoginController {//} extends Login {
 			user1.deposit(Double.parseDouble(enterFundsField.getText()));
 			enterFundsField.setText("");
 		}
+		System.out.println(usernameLabel.getText().replace("User: ", ""));
 		initializeBalance();
 	}
 
 	@FXML
-	protected void handleWithdrawButtonAction (ActionEvent event) {
+	protected void handleWithdrawButtonAction (ActionEvent event) throws IOException {
 		Window owner = withdrawButton.getScene().getWindow();
 
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
@@ -142,7 +169,7 @@ public class LoginController {//} extends Login {
 	}
 
 	@FXML
-	public void handleLogOutButtonAction (ActionEvent event) {
+	public void handleLogOutButtonAction (ActionEvent event) throws IOException {
 		user1.writingBalance(Account.returnName());
 		user1.writingArray(Account.returnName());
 		// get a handle to the stage
@@ -153,7 +180,7 @@ public class LoginController {//} extends Login {
 
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
-		refreshBalanceButton.setVisible(true);
+		refreshBalanceButton.setVisible(false);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
 	}

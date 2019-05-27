@@ -17,7 +17,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-//delete this
 
 public class Login extends Application {
 
@@ -48,7 +47,6 @@ public class Login extends Application {
 
 		Text welcomeText = new Text("Welcome To De Bank!");
 		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL, 20));
-		welcomeText.setFill(Color.PURPLE);
 		welcomeGrid.add(welcomeText, 0, 0, 2, 1);
 
 		Button signInButton = new Button("Sign In");
@@ -202,6 +200,7 @@ public class Login extends Application {
 	public void logOutButtonPressed () {
 		System.out.println("Logout action");
 		primaryStage.setScene(login);
+		System.out.println("hello");
 	}
 
 }

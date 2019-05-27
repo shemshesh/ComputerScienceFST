@@ -105,6 +105,7 @@ public class Account implements Serializable {
 	    return account.user;
     }
 
+
 	public static void main (String[] args) {
 		//for natan
         ArrayList<Account>accounts = new ArrayList<>();
