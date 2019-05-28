@@ -14,7 +14,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
 	private double accountBalance;
 	private double annualInterestRate;
-	private ArrayList<Transaction> allTransactions = new ArrayList<>();
+	private ArrayList<Transaction> allTransactions= new ArrayList<>();
 
 	private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
 	public ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
@@ -115,21 +115,21 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 //    }
 
 	public void writingArray (String user) throws IOException {
-		readingArray();
+        readingArray();
 
 		try {
-			FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
-			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-			for (int i = 0; i < allTransactions.size(); i++) {
-				objectOut.writeObject(allTransactions.get(i));
-				System.out.println(allTransactions.get(i).amount);
-				System.out.println(allTransactions.get(i).date);
-			}
-			objectOut.close();
-			System.out.println("The Object  was successfully written to a file");
+            FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+		    for (int i = 0; i < allTransactions.size(); i++) {
+		        objectOut.writeObject(allTransactions.get(i));
+                System.out.println(allTransactions.get(i).amount);
+                System.out.println(allTransactions.get(i).date);
+		    }
+		    objectOut.close();
+		    System.out.println("The Object  was successfully written to a file");
 		} catch (Exception ex) {
-			System.out.println("Uh oh");
-			ex.printStackTrace();
+		    System.out.println("Uh oh");
+		    ex.printStackTrace();
 		}
 
 	}
@@ -174,48 +174,58 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 //        }catch (Exception e){ }
 //    }
 
-	public void readingArray () {
-		ArrayList<Transaction> transactions = new ArrayList<>();
-		try {
-			FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
-			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-			int i = 0;
-			Object obj = objectIn.readObject();
-			while (i < 10000) {
-				Transaction transaction = (Transaction) obj;
-				System.out.println("Transaction stored " + transaction);
-				transactions.add(transaction);
-				i++;
-				obj = objectIn.readObject();
+	public void readingArray(){
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        try {
+            FileInputStream fileIn = new FileInputStream(Account.returnName()+ "transactionList.txt");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+            int i = 0;
+            Object obj = objectIn.readObject();
+            while (i<10000) {
+                Transaction transaction = (Transaction) obj;
+                System.out.println("Transaction stored " + transaction);
+                transactions.add(transaction);
+                i++;
+                obj = objectIn.readObject();
+            }
+
+            objectIn.close();
+        } catch (Exception ex) { }
+
+        try {
+            allTransactions.get(0);
+        }catch (Exception eeeee) {
+            if(transactionList.size() < transactions.size()) {
+                allTransactions.addAll(transactions);
+            }
+
+            allTransactions.addAll(transactionList);
+
+            transactionList.clear();
+            transactionList.addAll(allTransactions);
+
+			for (int i = 0; i < transactionList.size(); i++) {
+				if(transactionList.get(i).type == Transaction.Type.deposit){
+					var transaction = new DepTransaction(DepTransaction.Type.deposit, transactionList.get(i).amount, transactionList.get(i).balanceAfterTransaction);
+					transaction.date = transactionList.get(i).date;
+					depositList.add(transaction);
+				}else if(transactionList.get(i).type == Transaction.Type.withdrawal){
+					var transaction = new WithTransaction(WithTransaction.Type.withdraw, transactionList.get(i).amount, transactionList.get(i).balanceAfterTransaction);
+					transaction.date = transactionList.get(i).date;
+					withdrawList.add(transaction);
+				}
 			}
-
-			objectIn.close();
-		} catch (Exception ex) {
-		}
-
-		try {
-			allTransactions.get(0);
-		} catch (Exception eeeee) {
-			if (transactionList.size() < transactions.size()) {
-				allTransactions.addAll(transactions);
-			}
-
-			allTransactions.addAll(transactionList);
-
-			transactionList.clear();
-			transactionList.addAll(allTransactions);
-		}
+        }
 	}
 
-	public void writingBalance (String user) {
+    public void writingBalance (String user) {
 		try {
 			FileWriter fr = new FileWriter(user + "balance.txt");
 			BufferedWriter br = new BufferedWriter(fr);
 			PrintWriter pw = new PrintWriter(br);
 			pw.write(getAccountBalance());
 			pw.close();
-		} catch (IOException e) {
-		}
+		} catch (IOException e) { }
 	}
 
 	public static String readingBalance (String user) throws IOException {
