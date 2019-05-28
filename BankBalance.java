@@ -203,6 +203,18 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
             transactionList.clear();
             transactionList.addAll(allTransactions);
+
+			for (int i = 0; i < transactionList.size(); i++) {
+				if(transactionList.get(i).type == Transaction.Type.deposit){
+					var transaction = new DepTransaction(DepTransaction.Type.deposit, transactionList.get(i).amount, accountBalance);
+					transaction.date = transactionList.get(i).date;
+					depositList.add(transaction);
+				}else if(transactionList.get(i).type == Transaction.Type.withdrawal){
+					var transaction = new WithTransaction(WithTransaction.Type.withdraw, transactionList.get(i).amount, accountBalance);
+					transaction.date = transactionList.get(i).date;
+					withdrawList.add(transaction);
+				}
+			}
         }
 	}
 
