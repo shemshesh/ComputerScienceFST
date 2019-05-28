@@ -7,7 +7,8 @@ package FST;
 // Created by David Shemesh on 2019-04-10.
 // Copyright © 2018 David Shemesh. All rights reserved.
 //Evan Rimer
-
+//Natan Parker
+//David Shemesh was dead weight. He sucks at coding.
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
