@@ -41,7 +41,7 @@ public class LoginController {
 	public Label balancelabel;
 
 
-	public LoginController () throws IOException {
+	public LoginController () {
 	}
 
 	@FXML
@@ -117,7 +117,7 @@ public class LoginController {
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) throws IOException {
 		Window owner = depositButton.getScene().getWindow();
-		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
+		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?") || Double.parseDouble(enterFundsField.getText().replace("$", "")) < 0) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
 			enterFundsField.setText("");
@@ -135,7 +135,7 @@ public class LoginController {
 	protected void handleWithdrawButtonAction (ActionEvent event) throws IOException {
 		Window owner = withdrawButton.getScene().getWindow();
 
-		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
+		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")|| Double.parseDouble(enterFundsField.getText().replace("$", "")) < 0) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
