@@ -38,10 +38,10 @@ public class LoginController {
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
 	public Button refreshTransactionList;
-	public Label balanceLabel;
+	public Label balancelabel;
 
 
-	public LoginController () throws IOException {
+	public LoginController () {
 	}
 
 	@FXML
@@ -61,7 +61,7 @@ public class LoginController {
 		usernameLabel.setText("User: " + Account.returnName());
 		displayBalance.setText(BankBalance.readingBalance(Account.returnName()));
 		user1.writingBalance(Account.returnName());
-		System.out.println(user1.getAccountBalance());
+		//System.out.println(user1.getAccountBalance());
 	}
 
 	@FXML
@@ -76,10 +76,14 @@ public class LoginController {
 	@FXML
 	protected void handleRefreshBalanceButtonAction (ActionEvent event) throws IOException {
 		initializeBalance();
+		refreshBalanceButton.setVisible(false);
 	}
 
 	@FXML
 	public void handleRefreshButtonTransactionList (ActionEvent event) {
+		try {
+			user1.writingArray(Account.returnName());
+		} catch (IOException e) { }
 		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
 			transactionLogsView.getItems().clear();
 		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
@@ -113,7 +117,7 @@ public class LoginController {
 	@FXML
 	protected void handleDepositButtonAction (ActionEvent event) throws IOException {
 		Window owner = depositButton.getScene().getWindow();
-		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
+		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?") || Double.parseDouble(enterFundsField.getText().replace("$", "")) < 0) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to deposit");
 			enterFundsField.setText("");
@@ -131,7 +135,7 @@ public class LoginController {
 	protected void handleWithdrawButtonAction (ActionEvent event) throws IOException {
 		Window owner = withdrawButton.getScene().getWindow();
 
-		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")) {
+		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")|| Double.parseDouble(enterFundsField.getText().replace("$", "")) < 0) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
 					"Please enter an amount to withdraw");
 			enterFundsField.setText("");
@@ -178,7 +182,7 @@ public class LoginController {
 
 	@FXML
 	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
-		refreshBalanceButton.setVisible(true);
+		refreshBalanceButton.setVisible(false);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);
 	}

@@ -2,11 +2,9 @@ package FST;
 
 import javax.annotation.processing.FilerException;
 import java.io.*;
-import java.util.Date;
+import java.util.*;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
 
 // Program name: BankBalance.java
 // Purpose:
@@ -16,6 +14,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
 	private double accountBalance;
 	private double annualInterestRate;
+	private ArrayList<Transaction> allTransactions = new ArrayList<>();
 
 	private DecimalFormat df = new DecimalFormat("'$'0.00");//Decimal format that rounds to two decimal places
 	public ArrayList<Transaction> transactionList = new ArrayList<>();//Creating array list of transactions
@@ -116,47 +115,96 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 //    }
 
 	public void writingArray (String user) throws IOException {
-	    ArrayList<Transaction> transactions = new ArrayList<>();
-        try {
-            FileInputStream fileIn = new FileInputStream(user + "transactionList.txt");
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            int i = 0;
-            Object obj = objectIn.readObject();
-            while (i<10000) {
-                Transaction transaction = (Transaction) obj;
-                transactions.add(transaction);
-                System.out.println(transaction.amount);
-                i++;
-                obj = objectIn.readObject();
-            }
+		readingArray();
 
-            objectIn.close();
-        } catch (Exception ex) {
-			System.out.println("Oof");
-        }
+		try {
+			FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			for (int i = 0; i < allTransactions.size(); i++) {
+				objectOut.writeObject(allTransactions.get(i));
+				System.out.println(allTransactions.get(i).amount);
+				System.out.println(allTransactions.get(i).date);
+			}
+			objectOut.close();
+			System.out.println("The Object  was successfully written to a file");
+		} catch (Exception ex) {
+			System.out.println("Uh oh");
+			ex.printStackTrace();
+		}
 
-//        System.out.println("$"+transactionList.get(0).amount);
-		for (int i = 0; i < transactionList.size(); i++) {
-			transactions.add(transactionList.get(i));
-            System.out.println(transactions.get(i).amount);
+	}
+
+//	public void readingArray () {
+//	    try {
+//			FileInputStream fileIn2 = new FileInputStream(Account.returnName() + "transactionList.txt");
+//			ObjectInputStream objectIn2 = new ObjectInputStream(fileIn2);
+//			Object obj2 = objectIn2.readObject();
+//			Transaction compare = (Transaction) obj2;
+//
+//			Object obj3 = objectIn2.readObject();
+//			Transaction transaction1 = (Transaction) obj3;
+//
+//			boolean duplicate = false;
+//			while (transaction1 != null) {
+//				if(compare == transaction1){
+//					duplicate = true;
+//					break;
+//				}
+//				obj3 = objectIn2.readObject();
+//				transaction1 = (Transaction) obj3;
+//			}
+//			objectIn2.close();
+//
+//			if (!duplicate){
+//				try {
+//					FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
+//					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+//					int i = 0;
+//					Object obj = objectIn.readObject();
+//					while (i < 10000) {
+//						Transaction transaction = (Transaction) obj;
+//						transactionList.add(transaction);
+//						i++;
+//						obj = objectIn.readObject();
+//					}
+//					objectIn.close();
+//				} catch (Exception e1) {
+//				}
+//			}
+//        }catch (Exception e){ }
+//    }
+
+	public void readingArray () {
+		ArrayList<Transaction> transactions = new ArrayList<>();
+		try {
+			FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			int i = 0;
+			Object obj = objectIn.readObject();
+			while (i < 10000) {
+				Transaction transaction = (Transaction) obj;
+				System.out.println("Transaction stored " + transaction);
+				transactions.add(transaction);
+				i++;
+				obj = objectIn.readObject();
+			}
+
+			objectIn.close();
+		} catch (Exception ex) {
 		}
 
 		try {
-            FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-		    for (int i = 0; i < transactions.size(); i++) {
-		        objectOut.writeObject(transactions.get(i));
-                System.out.println(transactions.get(i).amount);
-                System.out.println(transactions.get(i).date);
-		    }
-		    objectOut.close();
-		    System.out.println("The Object  was successfully written to a file");
-		} catch (Exception ex) {
-		    System.out.println("Uh oh");
-		    ex.printStackTrace();
-		}
+			allTransactions.get(0);
+		} catch (Exception eeeee) {
+			if (transactionList.size() < transactions.size()) {
+				allTransactions.addAll(transactions);
+			}
 
-//        System.out.println("writingArray"+transactionList.get(0).amount);
+			allTransactions.addAll(transactionList);
+
+			transactionList.clear();
+			transactionList.addAll(allTransactions);
+		}
 	}
 
 	public void writingBalance (String user) {
@@ -167,10 +215,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 			pw.write(getAccountBalance());
 			pw.close();
 		} catch (IOException e) {
-			System.out.println(e);
 		}
-
-//        System.out.println("writing balance"+transactionList.get(0).amount);
 	}
 
 	public static String readingBalance (String user) throws IOException {
@@ -182,7 +227,6 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		} catch (Exception e) {
 			balance = "$100.00";
 		}
-		System.out.println(balance);
 		return balance;
 	}
 
