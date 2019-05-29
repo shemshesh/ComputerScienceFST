@@ -118,7 +118,8 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
         readingArray();
 
 		try {
-            FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+
+            FileOutputStream fileOut = new FileOutputStream("src/FST/files/" + user + "transactionList.txt");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 		    for (int i = 0; i < allTransactions.size(); i++) {
 		        objectOut.writeObject(allTransactions.get(i));
@@ -177,7 +178,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 	public void readingArray(){
         ArrayList<Transaction> transactions = new ArrayList<>();
         try {
-            FileInputStream fileIn = new FileInputStream(Account.returnName()+ "transactionList.txt");
+            FileInputStream fileIn = new FileInputStream("src/FST/files/" + Account.returnName()+ "transactionList.txt");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             int i = 0;
             Object obj = objectIn.readObject();
@@ -219,8 +220,10 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 	}
 
     public void writingBalance (String user) {
+	    String path = "src/FST/files/" + user + "balance.txt";
+	    File file = new File(path);
 		try {
-			FileWriter fr = new FileWriter(user + "balance.txt");
+			FileWriter fr = new FileWriter(file);
 			BufferedWriter br = new BufferedWriter(fr);
 			PrintWriter pw = new PrintWriter(br);
 			pw.write(getAccountBalance());
@@ -230,8 +233,10 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
 	public static String readingBalance (String user) throws IOException {
 		String balance;
+		String path = "src/FST/files/" + user + "balance.txt";
+		File file = new File(path);
 		try {
-			FileReader fr = new FileReader(user + "balance.txt");
+			FileReader fr = new FileReader(path);
 			BufferedReader br = new BufferedReader(fr);
 			balance = br.readLine();
 		} catch (Exception e) {

@@ -4,11 +4,10 @@ package FST;
 // Project name: FSTGrade11
 // Program name: Account.java
 // Purpose: 
-// Created by David Shemesh on 2019-04-10.
-// Copyright © 2018 David Shemesh. All rights reserved.
+// Created by not David Shemesh on 2019-04-10.
+// Copyright © 2018 David not Shemesh. All rights reserved.
 //Evan Rimer
 //Natan Parker
-//David Shemesh was dead weight. He sucks at coding.
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,7 +28,7 @@ public class Account implements Serializable {
 		ArrayList<Account> accounts;
 
 		try {
-			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
+			var f = new FileInputStream(new File("src/FST/files/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 			accounts = (ArrayList<Account>) o.readObject();
 
@@ -63,7 +62,7 @@ public class Account implements Serializable {
 
 		ArrayList<Account> accounts;
 		try {
-			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
+			var f = new FileInputStream(new File("src/FST/files/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 
 			accounts = (ArrayList<Account>) o.readObject();
@@ -87,7 +86,7 @@ public class Account implements Serializable {
 		accounts.add(account);
 
 		try {
-			var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
+			var f = new FileOutputStream(new File("src/FST/files/usernameAndPassword.txt"));
 			var o = new ObjectOutputStream(f);
 
 			o.writeObject(accounts);
@@ -111,7 +110,7 @@ public class Account implements Serializable {
 		//for natan
         ArrayList<Account>accounts = new ArrayList<>();
         try {
-            var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
+            var f = new FileOutputStream(new File("src/FST/files/usernameAndPassword.txt"));
             var o = new ObjectOutputStream(f);
 
             o.writeObject(accounts);
