@@ -105,19 +105,29 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 			//if it is clear it will send to catch and add the transactions to allTransactions
 			allTransactions.get(0);
 		}catch (Exception eeeee) {
-			//If transactionList is larger than transactions, it already contains transactions
-			//If it is smaller or the same size it means that it only contains the new transactions and the old ones must be added
-			if(transactionList.size() <= transactions.size()) {
+			boolean add = true;
+			try {
+				//Checks if any new transactions are the same as old saved ones
+				for (int i = 0; i < transactionList.size(); i++) {
+					if (transactionList.get(i).compareTo(transactions.get(0)) == 0) {
+						add = false;
+					}
+				}
+			}catch (Exception f){}
+			//If none are the same it means transactionList is all new transactions
+			//Therefore must add back transactions
+			if(add) {
 				allTransactions.addAll(transactions);
 			}
-
 			//Add new transactions
 			allTransactions.addAll(transactionList);
+
 			transactionList.clear();
-			//Add transactions back to transactionList because this ArrayList is used to display
+			//add allTransactions to transactionList because transactionList is used in other classes
 			transactionList.addAll(allTransactions);
 
-			//Goes through all transactions and adds all deposits to depositList and all withdrawals to withdrawList for sorting
+			//Adds deposits to deposit list
+			//Adds withdrawals to withdrawal list
 			for (int i = 0; i < transactionList.size(); i++) {
 				if(transactionList.get(i).type == Transaction.Type.deposit){
 					var transaction = new DepTransaction(DepTransaction.Type.deposit, transactionList.get(i).amount, transactionList.get(i).balanceAfterTransaction);
@@ -153,8 +163,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
 	}
 
-
-	//writes balance when called to file called user followed by balance.txt
+    //Writes balance to file called the user's name followed by balance.txt
     public void writingBalance (String user) {
 		try {
 			FileWriter fr = new FileWriter(user + "balance.txt");
@@ -165,7 +174,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		} catch (IOException e) { }
 	}
 
-	//reads balance stored. If new user has no stored balance, balance is set to 100 automatically
+	//reads stored balance of user
 	public static String readingBalance (String user) throws IOException {
 		String balance;
 		try {
