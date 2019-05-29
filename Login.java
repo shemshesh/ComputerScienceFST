@@ -1,10 +1,11 @@
 package FST;
 // Program name: Login.java
-// Purpose:
+// Purpose: To make a sign-in page for a bank application
 // Created by Natan Parker on Saturday April 06 2019.
 // Copyright © 2019 Natan Parker. All rights reserved.
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -17,6 +18,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URL;
 
 public class Login extends Application {
 
@@ -30,20 +33,20 @@ public class Login extends Application {
 	}
 
 	@Override
-	public void start (Stage primaryStage) throws Exception {
+	public void start (Stage primaryStage) throws IOException {
 
 		primaryStage.setTitle("De Bank");
 		primaryStage.show();
 
-		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml"));
-		Scene accountView = new Scene(root, 800, 450);
-		//primaryStage.setScene(accountView);
+		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml")); //Loading FXML file created in SceneBuilder
+		Scene accountView = new Scene(root, 800, 450); //Setting the account view Sceme
 
 		GridPane welcomeGrid = new GridPane();
 		welcomeGrid.setAlignment(Pos.CENTER);
 		welcomeGrid.setHgap(10);
 		welcomeGrid.setVgap(10);
-//		welcomeGrid.setPadding(new Insets(25, 25, 25, 25));
+
+		//The following lines of code add different JavaFX containers and controls to the scene
 
 		Text welcomeText = new Text("Welcome To De Bank!");
 		welcomeText.setFont(Font.font("Comic sans MS", FontWeight.NORMAL, 20));
@@ -63,19 +66,20 @@ public class Login extends Application {
 
 		final Text actionTarget1 = new Text();
 
-		signInButton.setOnAction(e -> primaryStage.setScene(loginPage));
+		signInButton.setOnAction(e -> primaryStage.setScene(loginPage)); //Sets the action for the sign in button to change the view to the login page
 
-		createAccountButton.setOnAction(e -> primaryStage.setScene(createAccountPage));
+		createAccountButton.setOnAction(e -> primaryStage.setScene(createAccountPage)); //Sets the action for the create account page to change the view to the create account page
 
 		login = new Scene(welcomeGrid, 800, 450);
 
-		primaryStage.setScene(login);
+		primaryStage.setScene(login); //Sets the Scene to the login page
+
+		//The following lines add JavaFX containers and controls to the sign in page
 
 		GridPane signInGrid = new GridPane();
 		signInGrid.setAlignment(Pos.CENTER);
 		signInGrid.setHgap(100);
 		signInGrid.setVgap(10);
-//		signInGrid.setPadding(new Insets(25, 25, 25, 25));
 
 		Text signInTitle = new Text("Log in:");
 		signInTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
@@ -104,7 +108,7 @@ public class Login extends Application {
 
 		signInGrid.add(actionTarget, 1, 6);
 
-		continueButton.setOnAction(e -> {
+		continueButton.setOnAction(e -> { //Sets the action for the continue button to check for acceptable inputs
 			actionTarget.setFill(Color.RED);
 			actionTarget.setText("");
 
@@ -121,7 +125,7 @@ public class Login extends Application {
 
 		});
 
-		backButton.setOnAction(e -> {
+		backButton.setOnAction(e -> { //Sets the action for the back button to return to the main screen
 			primaryStage.setScene(login);
 			actionTarget.setText("");
 			userNameField.setText("");
@@ -129,6 +133,8 @@ public class Login extends Application {
 		});
 
 		loginPage = new Scene(signInGrid, 800, 450);
+
+		//The following lines positions JavaFX containers and controls in a grid which is added to the create account page
 
 		GridPane createAccountGrid = new GridPane();
 		createAccountGrid.setAlignment(Pos.CENTER);
@@ -155,7 +161,7 @@ public class Login extends Application {
 
 		Button backButton2 = new Button("Back");
 		createAccountGrid.add(backButton2, 0, 4);
-		backButton2.setOnAction(e -> {
+		backButton2.setOnAction(e -> { //Sets the back button action to return to the main page and clear all text fields
 			primaryStage.setScene(login);
 			actionTarget1.setText("");
 			userNameField2.setText("");
@@ -175,6 +181,8 @@ public class Login extends Application {
 		createAccountTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
 		createAccountGrid.add(createAccountTitle, 0, 0, 2, 1);
 
+		 /*The following block of code sets the action for the second continue button, and checks if passwords match and if the account already exists.
+		 If all the inputs are acceptable, it passes the username and password into the createAccount method of Account.java.*/
 		continueButton2.setOnAction(e -> {
 			actionTarget1.setFill(Color.RED);
 			actionTarget1.setText("");
@@ -194,13 +202,7 @@ public class Login extends Application {
 			}
 		});
 
-		createAccountPage = new Scene(createAccountGrid, 800, 450);
-	}
-
-	public void logOutButtonPressed () {
-		System.out.println("Logout action");
-		primaryStage.setScene(login);
-		System.out.println("hello");
+		createAccountPage = new Scene(createAccountGrid, 800, 450); //Declaring a new scene and adding the grid containing all of the JavaFX controls and containers to the scene
 	}
 
 }
