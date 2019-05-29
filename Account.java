@@ -24,11 +24,14 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 
+	//Called when login with existing account to check if proper username and password are given
+	//username and password are given by the user, and may be incorrect
 	public static boolean signIn (String username, String password) {
 
 		ArrayList<Account> accounts;
 
 		try {
+			//adds accounts on file to ArrayList accounts
 			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 			accounts = (ArrayList<Account>) o.readObject();
@@ -40,6 +43,9 @@ public class Account implements Serializable {
 			throw new IllegalArgumentException("Could not read from file");
 		}
 
+		//Goes though every account in accounts and checks if any username stored matches the one the user gave
+		//If yes, checks if the passwords match
+		//If yes, returns true allowing the login and creates global account called account which is used to check current username
 		for (var curAccount : accounts) {
 			if (username.equalsIgnoreCase(curAccount.user)) {
 				if (password.equals(curAccount.password)) {
@@ -57,12 +63,14 @@ public class Account implements Serializable {
 
 	}
 
+	//Called when creating new account to be saved
 	public static boolean createAccount (String username, String password) {
-
+		//global account to access current username
 	    account = new Account(username, password);
 
 		ArrayList<Account> accounts;
 		try {
+			//adds all current accounts to ArrayList called accounts
 			var f = new FileInputStream(new File("src/FST/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 
@@ -76,17 +84,19 @@ public class Account implements Serializable {
 			throw new IllegalArgumentException("Could not read from file");
 		}
 
-		System.out.println("account.user: " + account.user);
+		//Goes through every account stored and checks if any username matches username given by user
+		//If yes, username is taken and account can't be created so return false
 		for (var a : accounts) {
-			System.out.println("a.user: " + a.user);
 			if (account.user.equalsIgnoreCase(a.user)) {
 				System.out.println("Already exists");
 				return false;
 			}
 		}
+		//If username doesn't exist, add new account to ArrayList accounts, which now contains all existing accounts
 		accounts.add(account);
 
 		try {
+			//writes all accounts to file
 			var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));
 			var o = new ObjectOutputStream(f);
 
@@ -102,13 +112,13 @@ public class Account implements Serializable {
 
 	}
 
+	//return current username for naming/reading files
 	public static String returnName(){
 	    return account.user;
     }
 
 
 	public static void main (String[] args) {
-		//for natan
         ArrayList<Account>accounts = new ArrayList<>();
         try {
             var f = new FileOutputStream(new File("src/FST/usernameAndPassword.txt"));

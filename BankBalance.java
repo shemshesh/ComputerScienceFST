@@ -55,8 +55,6 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		transactionList.add(transaction);
 		var transaction1 = new DepTransaction(DepTransaction.Type.deposit, amountToDeposit, accountBalance);
 		depositList.add(transaction1);
-
-//        System.out.println("deposit"+transactionList.get(0).amount);
 	}
 
 	//Method to withdraw money from the account
@@ -79,131 +77,47 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		transactionList.add(transaction);
 		var transaction1 = new WithTransaction(WithTransaction.Type.withdraw, amountToWithdraw, accountBalance);
 		withdrawList.add(transaction1);
-
-//        System.out.println("withdraw"+transactionList.get(0).amount);
 	}
 
-//    public void writingArray(String user) {
-//        try {
-//            ArrayList<String> fullTransactionList = new ArrayList<>();
-//            FileReader fr1 = new FileReader(user + "transactionList.txt");
-//            BufferedReader br1 = new BufferedReader(fr1);
-//            String line = "start";
-//            while (line != null) {
-//                line = br1.readLine();
-//                fullTransactionList.add(line);
-//            }
-//
-//            FileWriter fw = new FileWriter(user + "transactionList.txt");
-//            BufferedWriter bw = new BufferedWriter(fw);
-//            PrintWriter pw = new PrintWriter(bw);
-//            for (int i = 0; i < fullTransactionList.size(); i++) {
-//                if(fullTransactionList.get(i) != null){
-//                    pw.write(fullTransactionList.get(i));
-//                    pw.write("\n");
-//                }
-//            }
-//            for (int i = 0; i < transactionList.size(); i++) {
-//                if (transactionList.get(i) != null)
-//                    pw.write(String.valueOf(transactionList.get(i)));
-//                pw.write("\n");
-//            }
-//            pw.close();
-//        } catch (IOException e) {
-//            System.out.println(e);
-//        }
-//    }
-
-	public void writingArray (String user) throws IOException {
-        readingArray();
+	//Method to put old and new transactions into a single ArrayList called allTransactions
+	public void readingArray() throws IOException{
+		ArrayList<Transaction> transactions = new ArrayList<>();
 
 		try {
-            FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-		    for (int i = 0; i < allTransactions.size(); i++) {
-		        objectOut.writeObject(allTransactions.get(i));
-                System.out.println(allTransactions.get(i).amount);
-                System.out.println(allTransactions.get(i).date);
-		    }
-		    objectOut.close();
-		    System.out.println("The Object  was successfully written to a file");
-		} catch (Exception ex) {
-		    System.out.println("Uh oh");
-		    ex.printStackTrace();
-		}
+			//reads all old transactions already stored and adds to array called transactions
+			FileInputStream fileIn = new FileInputStream(Account.returnName()+ "transactionList.txt");
+			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+			Object obj = objectIn.readObject();
+			int i=0;
+			while (i < 1000000000) {
+				Transaction transaction = (Transaction) obj;
+				transactions.add(transaction);
+				obj = objectIn.readObject();
+				i++;
+			}
 
-	}
+			objectIn.close();
+		} catch (Exception ex) { }
 
-//	public void readingArray () {
-//	    try {
-//			FileInputStream fileIn2 = new FileInputStream(Account.returnName() + "transactionList.txt");
-//			ObjectInputStream objectIn2 = new ObjectInputStream(fileIn2);
-//			Object obj2 = objectIn2.readObject();
-//			Transaction compare = (Transaction) obj2;
-//
-//			Object obj3 = objectIn2.readObject();
-//			Transaction transaction1 = (Transaction) obj3;
-//
-//			boolean duplicate = false;
-//			while (transaction1 != null) {
-//				if(compare == transaction1){
-//					duplicate = true;
-//					break;
-//				}
-//				obj3 = objectIn2.readObject();
-//				transaction1 = (Transaction) obj3;
-//			}
-//			objectIn2.close();
-//
-//			if (!duplicate){
-//				try {
-//					FileInputStream fileIn = new FileInputStream(Account.returnName() + "transactionList.txt");
-//					ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-//					int i = 0;
-//					Object obj = objectIn.readObject();
-//					while (i < 10000) {
-//						Transaction transaction = (Transaction) obj;
-//						transactionList.add(transaction);
-//						i++;
-//						obj = objectIn.readObject();
-//					}
-//					objectIn.close();
-//				} catch (Exception e1) {
-//				}
-//			}
-//        }catch (Exception e){ }
-//    }
+		try {
+			//if refresh button is pressed without adding new transactions, allTransactions isn't clear
+			//if it isn't clear that means that the transactions are already being displayed
+			//if it is clear it will send to catch and add the transactions to allTransactions
+			allTransactions.get(0);
+		}catch (Exception eeeee) {
+			//If transactionList is larger than transactions, it already contains transactions
+			//If it is smaller or the same size it means that it only contains the new transactions and the old ones must be added
+			if(transactionList.size() <= transactions.size()) {
+				allTransactions.addAll(transactions);
+			}
 
-	public void readingArray(){
-        ArrayList<Transaction> transactions = new ArrayList<>();
-        try {
-            FileInputStream fileIn = new FileInputStream(Account.returnName()+ "transactionList.txt");
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            int i = 0;
-            Object obj = objectIn.readObject();
-            while (i<10000) {
-                Transaction transaction = (Transaction) obj;
-                System.out.println("Transaction stored " + transaction);
-                transactions.add(transaction);
-                i++;
-                obj = objectIn.readObject();
-            }
+			//Add new transactions
+			allTransactions.addAll(transactionList);
+			transactionList.clear();
+			//Add transactions back to transactionList because this ArrayList is used to display
+			transactionList.addAll(allTransactions);
 
-            objectIn.close();
-        } catch (Exception ex) { }
-
-        try {
-            allTransactions.get(0);
-        }catch (Exception eeeee) {
-            if(transactionList.size() < transactions.size()) {
-                allTransactions.addAll(transactions);
-            }
-
-            allTransactions.addAll(transactionList);
-
-            transactionList.clear();
-            transactionList.addAll(allTransactions);
-
+			//Goes through all transactions and adds all deposits to depositList and all withdrawals to withdrawList for sorting
 			for (int i = 0; i < transactionList.size(); i++) {
 				if(transactionList.get(i).type == Transaction.Type.deposit){
 					var transaction = new DepTransaction(DepTransaction.Type.deposit, transactionList.get(i).amount, transactionList.get(i).balanceAfterTransaction);
@@ -215,9 +129,32 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 					withdrawList.add(transaction);
 				}
 			}
-        }
+		}
 	}
 
+	//Method to write transactions as Transactions (Objects) to file for current user
+	public void writingArray (String user) throws IOException{
+        readingArray();
+
+		try {
+			//Initializes file with name of user followed by transactionList.txt
+            FileOutputStream fileOut = new FileOutputStream(user + "transactionList.txt");
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+
+            //Writes all transactions stored in allTransactions ArrayList to the file
+		    for (int i = 0; i < allTransactions.size(); i++) {
+		        objectOut.writeObject(allTransactions.get(i));
+		    }
+		    objectOut.close();
+		} catch (Exception ex) {
+		    System.out.println("Uh oh");
+		    ex.printStackTrace();
+		}
+
+	}
+
+
+	//writes balance when called to file called user followed by balance.txt
     public void writingBalance (String user) {
 		try {
 			FileWriter fr = new FileWriter(user + "balance.txt");
@@ -228,6 +165,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		} catch (IOException e) { }
 	}
 
+	//reads balance stored. If new user has no stored balance, balance is set to 100 automatically
 	public static String readingBalance (String user) throws IOException {
 		String balance;
 		try {
@@ -257,13 +195,6 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 		var transaction = new Transaction(Transaction.Type.interest, monthlyRate, accountBalance);
 		transactionList.add(transaction);
 	}
-
-//
-//    private void lowBalance() {
-//        if (accountBalance < 10) {
-//            System.out.println("Your balance is running low.");
-//        }
-//    }
 
 	public String getAccountBalance () {
 		return df.format(accountBalance);
