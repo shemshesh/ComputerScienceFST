@@ -2,10 +2,11 @@ package FST;
 
 // Project name: ComSciFST
 // Program name: LoginController.java
-// Purpose: 
+// Purpose: This class sets actions to all of the FXML elements contained in GUIfxml
 // Created by Natan Parker on Wednesday April 17 2019.
 // Copyright © 2019 Natan Parker. All rights reserved.
 
+import javafx.beans.binding.When;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -21,9 +22,9 @@ import java.util.ArrayList;
 public class LoginController {
 
 
-	//private BankBalance user1 = new BankBalance(100.00);
 	private BankBalance user1;
 
+	//The following lines create the controls and containers referenced in the FXML file
 	@FXML
 	public Group withdrawDepositGroup;
 	public Button transactionLogsButton;
@@ -38,30 +39,25 @@ public class LoginController {
 	public CheckBox depositsOnly;
 	public Label usernameLabel;
 	public Button refreshTransactionList;
-	public Label balancelabel;
 
-
-	public LoginController () {
-	}
 
 	@FXML
-	void initializeBalance () throws IOException {
+	void initializeBalance () throws IOException { //This method initializes the balance value and also updates the transaction list
 		ArrayList<Transaction> transactions = new ArrayList<>();
 		try {
 			for (int i = 0; i < user1.transactionList.size(); i++) {
 				transactions.add(user1.transactionList.get(i));
 			}
 		}catch (Exception e){ }
-		user1 = new BankBalance(Double.parseDouble(BankBalance.readingBalance(Account.returnName()).replace("$", "")));
+		user1 = new BankBalance(Double.parseDouble(BankBalance.readingBalance(Account.returnName()).replace("$", ""))); //Updates the balance
 		try {
 			for (int i = 0; i < transactions.size(); i++) {
 				user1.transactionList.add(transactions.get(i));
 			}
 		}catch (Exception e){}
-		usernameLabel.setText("User: " + Account.returnName());
-		displayBalance.setText(BankBalance.readingBalance(Account.returnName()));
-		user1.writingBalance(Account.returnName());
-		//System.out.println(user1.getAccountBalance());
+		usernameLabel.setText("User: " + Account.returnName()); //Sets a label to isplay the username
+		displayBalance.setText(BankBalance.readingBalance(Account.returnName())); //Sets a label to display the balance
+		user1.writingBalance(Account.returnName()); //Writes current balance to a file
 	}
 
 	@FXML
@@ -74,33 +70,33 @@ public class LoginController {
 	private Button withdrawButton;
 
 	@FXML
-	protected void handleRefreshBalanceButtonAction (ActionEvent event) throws IOException {
+	protected void handleRefreshBalanceButtonAction (ActionEvent event) throws IOException { //Refresh button adds in balance and username on initial run, since the initialize() method cannot be called from another class
 		initializeBalance();
 		refreshBalanceButton.setVisible(false);
 	}
 
 	@FXML
-	public void handleRefreshButtonTransactionList (ActionEvent event) {
+	public void handleRefreshButtonTransactionList (ActionEvent event) { //Updates the transaction list according to selected sorting and filtering
 		try {
 			user1.writingArray(Account.returnName());
 		} catch (IOException e) { }
-		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
+		if (!depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) { //Clears table if neither box is checked
 			transactionLogsView.getItems().clear();
-		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) {
+		} else if (depositsOnly.isSelected() && !withdrawalsOnly.isSelected()) { //Clears the table, then sorts array of only deposits based on user selection
 			transactionLogsView.getItems().clear();
 			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
 				user1.depositList.sort(DepTransaction.timeComparator);
 			} else user1.depositList.sort(DepTransaction.inverseComparator);
 
 			for (int i = 0; i < user1.depositList.size(); i++) {
-				transactionLogsView.getItems().add(user1.depositList.get(i).toString());
+				transactionLogsView.getItems().add(user1.depositList.get(i).toString()); //Adding sorted and filtered array to table
 			}
-		} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {
+		} else if (!depositsOnly.isSelected() && withdrawalsOnly.isSelected()) {  //Clears the table, then sorts array of only withdrawals based on user selection
 			transactionLogsView.getItems().clear();
 			if (transactionLogsViewSortChoice.getValue().equals("Date")) {
 				user1.withdrawList.sort(WithTransaction.timeComparator);
 			} else user1.withdrawList.sort(WithTransaction.inverseComparator);
-			for (int i = 0; i < user1.withdrawList.size(); i++) {
+			for (int i = 0; i < user1.withdrawList.size(); i++) { //Adding sorted and filtered array to table
 				transactionLogsView.getItems().add(user1.withdrawList.get(i).toString());
 			}
 		} else {
@@ -109,13 +105,14 @@ public class LoginController {
 				user1.transactionList.sort(Transaction.timeComparator);
 			} else user1.transactionList.sort(Transaction.inverseComparator);
 			for (int i = 0; i < user1.transactionList.size(); i++) {
-				transactionLogsView.getItems().add(user1.transactionList.get(i).toString());
+				transactionLogsView.getItems().add(user1.transactionList.get(i).toString()); //Adding all transactions to the table, sorted based on user selection
 			}
 		}
 	}
 
 	@FXML
-	protected void handleDepositButtonAction (ActionEvent event) throws IOException {
+	protected void handleDepositButtonAction (ActionEvent event) throws IOException { /*Takes string value from text field, converts it to a double and passes the value
+	                                                                                    into the BankBalance class for processing, after checking for proper user input */
 		Window owner = depositButton.getScene().getWindow();
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?") || Double.parseDouble(enterFundsField.getText().replace("$", "")) < 0) {
 			AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Error!",
@@ -132,7 +129,8 @@ public class LoginController {
 	}
 
 	@FXML
-	protected void handleWithdrawButtonAction (ActionEvent event) throws IOException {
+	protected void handleWithdrawButtonAction (ActionEvent event) throws IOException {/*Takes string value from text field, converts it to a double and passes the value
+	                                                                                    into the BankBalance class for processing, after checking for proper user input */
 		Window owner = withdrawButton.getScene().getWindow();
 
 		if (enterFundsField.getText().isEmpty() || !enterFundsField.getText().matches("(\\+|-)?\\d+(\\.\\d{1,2})?")|| Double.parseDouble(enterFundsField.getText().replace("$", "")) < 0) {
@@ -153,7 +151,8 @@ public class LoginController {
 	}
 
 	@FXML
-	protected void handleTransactionLogsButtonAction (ActionEvent event) {
+	protected void handleTransactionLogsButtonAction (ActionEvent event) { /*Sets actions for the transaction logs button. Makes the withdraw/deposit
+																			 controls invisible, makes the transaction log table visible */
 		refreshBalanceButton.setVisible(false);
 
 		withdrawDepositGroup.setVisible(false);
@@ -171,7 +170,8 @@ public class LoginController {
 	}
 
 	@FXML
-	public void handleLogOutButtonAction (ActionEvent event) throws IOException {
+	public void handleLogOutButtonAction (ActionEvent event) throws IOException { /* When the logout button is pressed, the balance will write to a file, the
+																					transaction list will write to a file, and the window will close */
 		user1.writingBalance(Account.returnName());
 		user1.writingArray(Account.returnName());
 		// get a handle to the stage
@@ -181,7 +181,8 @@ public class LoginController {
 	}
 
 	@FXML
-	protected void handleWithdrawDepositButtonAction (ActionEvent event) {
+	protected void handleWithdrawDepositButtonAction (ActionEvent event) { /* When the withdraw/deposit button is pressed, the refresh button becomes invisible, the
+																			  withdraw/deposit controls become visible, and the transaction list becomes invisible */
 		refreshBalanceButton.setVisible(false);
 		withdrawDepositGroup.setVisible(true);
 		transactionLogsViewGroup.setVisible(false);

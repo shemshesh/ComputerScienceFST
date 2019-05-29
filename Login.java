@@ -38,11 +38,8 @@ public class Login extends Application {
 		primaryStage.setTitle("De Bank");
 		primaryStage.show();
 
-
-
 		Parent root = FXMLLoader.load(getClass().getResource("GUIfxml.fxml")); //Loading FXML file created in SceneBuilder
 		Scene accountView = new Scene(root, 800, 450); //Setting the account view Sceme
-
 
 		GridPane welcomeGrid = new GridPane();
 		welcomeGrid.setAlignment(Pos.CENTER);
@@ -137,7 +134,7 @@ public class Login extends Application {
 
 		loginPage = new Scene(signInGrid, 800, 450);
 
-		//The following lines add JavaFX containers and controls to the create account page
+		//The following lines positions JavaFX containers and controls in a grid which is added to the create account page
 
 		GridPane createAccountGrid = new GridPane();
 		createAccountGrid.setAlignment(Pos.CENTER);
@@ -164,7 +161,7 @@ public class Login extends Application {
 
 		Button backButton2 = new Button("Back");
 		createAccountGrid.add(backButton2, 0, 4);
-		backButton2.setOnAction(e -> { //Sets the back button action to return to the main page
+		backButton2.setOnAction(e -> { //Sets the back button action to return to the main page and clear all text fields
 			primaryStage.setScene(login);
 			actionTarget1.setText("");
 			userNameField2.setText("");
@@ -184,6 +181,8 @@ public class Login extends Application {
 		createAccountTitle.setFont(Font.font("ARIAL", FontWeight.NORMAL, 20));
 		createAccountGrid.add(createAccountTitle, 0, 0, 2, 1);
 
+		 /*The following block of code sets the action for the second continue button, and checks if passwords match and if the account already exists.
+		 If all the inputs are acceptable, it passes the username and password into the createAccount method of Account.java.*/
 		continueButton2.setOnAction(e -> {
 			actionTarget1.setFill(Color.RED);
 			actionTarget1.setText("");
@@ -203,13 +202,7 @@ public class Login extends Application {
 			}
 		});
 
-		createAccountPage = new Scene(createAccountGrid, 800, 450);
-	}
-
-	public void logOutButtonPressed () {
-		System.out.println("Logout action");
-		primaryStage.setScene(login);
-		System.out.println("hello");
+		createAccountPage = new Scene(createAccountGrid, 800, 450); //Declaring a new scene and adding the grid containing all of the JavaFX controls and containers to the scene
 	}
 
 }
