@@ -194,7 +194,10 @@ public class Login extends Application {
 				actionTarget1.setText("No username entered");
 			} else if (!passwordBox2.getText().equals(confirmPasswordBox.getText())) {
 				actionTarget1.setText("Passwords do not match!");
-			} else {
+			} else if (passwordBox2.getText().equals("")){
+				actionTarget1.setText("Password cannot be blank!");
+			}else
+			{
 				if (Account.createAccount(userNameField2.getText(), passwordBox2.getText())) {
 					primaryStage.setScene(accountView);
 				} else actionTarget1.setText("That account already exists!");
