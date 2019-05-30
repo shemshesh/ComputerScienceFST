@@ -119,7 +119,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
 		try {
 
-            FileOutputStream fileOut = new FileOutputStream("src/FST/files/" + user + "transactionList.txt");
+            FileOutputStream fileOut = new FileOutputStream("C:/Users/natan/Documents/Bank Files/" + user + "transactionList.txt");
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 		    for (int i = 0; i < allTransactions.size(); i++) {
 		        objectOut.writeObject(allTransactions.get(i));
@@ -178,7 +178,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 	public void readingArray(){
         ArrayList<Transaction> transactions = new ArrayList<>();
         try {
-            FileInputStream fileIn = new FileInputStream("src/FST/files/" + Account.returnName()+ "transactionList.txt");
+            FileInputStream fileIn = new FileInputStream("C:/Users/natan/Documents/Bank Files/" + Account.returnName()+ "transactionList.txt");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
             int i = 0;
             Object obj = objectIn.readObject();
@@ -220,7 +220,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 	}
 
     public void writingBalance (String user) {
-	    String path = "src/FST/files/" + user + "balance.txt";
+	    String path = "C:/Users/natan/Documents/Bank Files/" + user + "balance.txt";
 	    File file = new File(path);
 		try {
 			FileWriter fr = new FileWriter(file);
@@ -233,7 +233,7 @@ public class BankBalance implements Serializable {//Start of Class BankBalance
 
 	public static String readingBalance (String user) throws IOException {
 		String balance;
-		String path = "src/FST/files/" + user + "balance.txt";
+		String path = "C:/Users/natan/Documents/Bank Files/" + user + "balance.txt";
 		File file = new File(path);
 		try {
 			FileReader fr = new FileReader(path);

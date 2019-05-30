@@ -28,7 +28,8 @@ public class Account implements Serializable {
 		ArrayList<Account> accounts;
 
 		try {
-			var f = new FileInputStream(new File("src/FST/files/usernameAndPassword.txt"));
+
+			var f = new FileInputStream(new File("C:/Users/natan/Documents/Bank Files/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 			accounts = (ArrayList<Account>) o.readObject();
 
@@ -62,7 +63,7 @@ public class Account implements Serializable {
 
 		ArrayList<Account> accounts;
 		try {
-			var f = new FileInputStream(new File("src/FST/files/usernameAndPassword.txt"));
+			var f = new FileInputStream(new File("C:/Users/natan/Documents/Bank Files/usernameAndPassword.txt"));
 			var o = new ObjectInputStream(f);
 
 			accounts = (ArrayList<Account>) o.readObject();
@@ -86,7 +87,7 @@ public class Account implements Serializable {
 		accounts.add(account);
 
 		try {
-			var f = new FileOutputStream(new File("src/FST/files/usernameAndPassword.txt"));
+			var f = new FileOutputStream(new File("C:/Users/natan/Documents/Bank Files/usernameAndPassword.txt"));
 			var o = new ObjectOutputStream(f);
 
 			o.writeObject(accounts);
@@ -110,7 +111,7 @@ public class Account implements Serializable {
 		//for natan
         ArrayList<Account>accounts = new ArrayList<>();
         try {
-            var f = new FileOutputStream(new File("src/FST/files/usernameAndPassword.txt"));
+            var f = new FileOutputStream(new File("C:/Users/natan/Documents/Bank Files/usernameAndPassword.txt"));
             var o = new ObjectOutputStream(f);
 
             o.writeObject(accounts);
